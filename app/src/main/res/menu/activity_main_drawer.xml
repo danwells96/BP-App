@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/graph"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Graph" />
+        <item
+            android:id="@+id/reader"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Reader" />
+        <item
+            android:id="@+id/calendar"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Calendar" />
+        <item
+            android:id="@+id/about"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="About" />
+    </group>
+
+</menu>
