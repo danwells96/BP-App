@@ -2,6 +2,7 @@ package com.project.paulo.bpapp;
 
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -427,160 +428,19 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
 
 //                    Log.w(TAG, Arrays.toString(databaseHandler.getAllData().toArray()));
 
-                    // TODO finish feature extraction
                     // FEATURE EXTRACTION
                     if (pap.size() < windowLength*(1000/arsr)) {
                         pap.add(Double.parseDouble(y));
                     } else {
-                        // FILTERING
-
-                        // BEAT ONSET DETECTION
                         double[] abp = new double[pap.size()];
                         for(int i = 0; i < pap.size(); i++)
                         {
                             abp[i] = pap.get(i);
                         }
 
-//                        double[] onsets1 = {};
-//                        int[] onsets_size = {};
-//
-//                        wabp(abp, onsets1, onsets_size);
-//
-//                        Log.e(TAG, "Calculated onsets");
-//                        Log.e(TAG, Double.toString(onsets1[0]));
+                        Log.e(TAG, "Async Start");
 
-                        double[] temp = new double[abp.length];
-                        System.arraycopy(abp, 0, temp, 0, abp.length);
-
-                        long startTime = System.nanoTime();
-
-                        int[] onsets = WabpJAVA.wabpJAVA(temp);
-
-                        long endTime = System.nanoTime();
-                        long duration = (endTime - startTime)/1000000;
-
-                        Log.e(TAG, "Onset indexes = " + Arrays.toString(onsets));
-                        Log.e(TAG, "Took in seconds: " + Long.toString(duration));
-
-                        double[][] beats = new double[onsets.length - 1][];
-
-                        for (int i = 0; i < onsets.length - 1; i++) {
-                            beats[i] = new double[onsets[i + 1] - onsets[i]];
-                            System.arraycopy(abp, onsets[i], beats[i], 0, onsets[i + 1] - onsets[i]);
-                        }
-
-                        Log.e(TAG,"");
-
-                        // SYSTOLIC
-
-                        double[] systolicPressures = new double[beats.length];
-
-                        for (int i = 0; i < systolicPressures.length; i++) {
-                            systolicPressures[i] = SystolicPressure.getSystolicPressure(beats[i]);
-                        }
-
-                        double systolicPressure = ArrayMean.getArrayMean(systolicPressures);
-                        Log.e(TAG, "Systolic Pressure = " + Double.toString(systolicPressure));
-
-                        // DIASTOLIC
-
-                        double[] diastolicPressures = new double[beats.length];
-
-                        for (int i = 0; i < diastolicPressures.length; i++) {
-                            int systolicIndex = ArrayIndex.getArrayIndex(beats[i], systolicPressures[i]);
-                            double[] tempBeat = new double[beats[i].length-systolicIndex];
-                            System.arraycopy(beats[i], systolicIndex, tempBeat, 0, beats[i].length-systolicIndex);
-
-                            diastolicPressures[i] = DiastolicPressure.getDiastolicPressure(tempBeat);
-                        }
-
-                        double diastolicPressure = ArrayMean.getArrayMean(diastolicPressures);
-                        Log.e(TAG, "Diastolic Pressure = " + Double.toString(diastolicPressure));
-
-                        // MEAN
-
-                        double[] meanPressures = new double[beats.length];
-
-                        for (int i = 0; i < meanPressures.length; i++) {
-                            meanPressures[i] = (systolicPressures[i] + 2*diastolicPressures[i])/3.0;
-                        }
-
-                        double meanPressure = ArrayMean.getArrayMean(meanPressures);
-                        Log.e(TAG, "Mean Pressure = " + Double.toString(meanPressure));
-
-                        // HEART BEAT
-
-                        double[] heartBeats = new double[beats.length];
-
-                        for (int i = 0; i < heartBeats.length; i++) {
-                            heartBeats[i] = 60.0/(beats[i].length*arsr/1000.0);
-                        }
-
-                        double heartBeat = ArrayMean.getArrayMean(heartBeats);
-                        Log.e(TAG, "Heart Beat = " + Double.toString(heartBeat));
-
-                        // DICROTIC NOTCH
-
-                        double[] dicroticNotches = new double[beats.length];
-
-                        for (int i = 0; i < dicroticNotches.length; i++) {
-                            int systolicIndex = ArrayIndex.getArrayIndex(beats[i], systolicPressures[i]);
-                            double[] tempBeat = new double[beats[i].length-systolicIndex];
-                            System.arraycopy(beats[i], systolicIndex, tempBeat, 0, beats[i].length-systolicIndex);
-                            int diastolicIndex = ArrayIndex.getArrayIndex(tempBeat, diastolicPressures[i]);
-                            diastolicIndex += systolicIndex;
-
-                            double[] lineFromSystoleToDiastole = new double[beats[i].length];
-                            double a = (diastolicPressures[i] - systolicPressures[i])/(diastolicIndex - systolicIndex);
-                            double b = systolicPressures[i] - a*systolicIndex;
-                            for (int j = 0; j < lineFromSystoleToDiastole.length; j++) {
-                                lineFromSystoleToDiastole[j] = a*beats[i][j] + b;
-                            }
-
-                            double[] differenceStraightLineAndBeat = ArraySubstract.getArraySubstraction(lineFromSystoleToDiastole, beats[i]);
-                            double minDifference = ArrayMin.getArrayMin(differenceStraightLineAndBeat);
-                            int minDifferenceIndex = ArrayIndex.getArrayIndex(differenceStraightLineAndBeat, minDifference);
-                            dicroticNotches[i] = beats[i][minDifferenceIndex];
-
-                        }
-
-                        double dicroticNotch = ArrayMean.getArrayMean(dicroticNotches);
-                        Log.e(TAG, "Dicrotic Notch = " + Double.toString(dicroticNotch));
-
-                        // DICROTIC PEAK
-
-                        double[] dicroticPeaks = new double[beats.length];
-
-                        for (int i = 0; i < dicroticPeaks.length; i++) {
-                            int dicroticNotchIndex = ArrayIndex.getArrayIndex(beats[i], dicroticNotches[i]);
-                            double[] tempBeat = new double[beats[i].length-dicroticNotchIndex];
-                            System.arraycopy(beats[i], dicroticNotchIndex, tempBeat, 0, beats[i].length-dicroticNotchIndex);
-                            dicroticPeaks[i] = ArrayMax.getArrayMax(tempBeat);
-                        }
-
-                        double dicroticPeak = ArrayMean.getArrayMean(dicroticPeaks);
-                        Log.e(TAG, "Dicrotic Peak = " + Double.toString(dicroticPeak));
-
-                        // MAX DP/DT
-
-                        double[] maxPressureChangeRates = new double[beats.length];
-
-                        for (int i = 0; i < maxPressureChangeRates.length; i++) {
-                            double[] pressureChangeRate = Diff.diff(beats[i]);
-                            pressureChangeRate = ArrayDivision.getRealArrayScalarDiv(pressureChangeRate, arsr/1000.0);
-                            maxPressureChangeRates[i] = ArrayMax.getArrayMax(pressureChangeRate);
-                        }
-
-                        double maxPressureChangeRate = ArrayMean.getArrayMean(maxPressureChangeRates);
-                        Log.e(TAG, "Max dp/dt = " + Double.toString(maxPressureChangeRate));
-
-                        // UPDATE UI
-
-                        TextView systolicTextView = (TextView) getActivity().findViewById(R.id.systolic);
-
-                        int randomSystolic = (int) (Math.random() * (40 - 20)) + 20;
-
-                        systolicTextView.setText(Integer.toString(randomSystolic));
+                        new FeatureExtraction().execute(abp);
 
                         pap.clear();
                     }
@@ -651,6 +511,176 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
 
         YAxis rightAxis = mChart.getAxisRight();
         rightAxis.setEnabled(false);
+    }
+
+    private class FeatureExtraction extends AsyncTask<double[], Integer, double[]> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected double[] doInBackground(double[]... params) {
+            double[] abp = params[0];
+
+//            double[] onsets1 = {};
+//            int[] onsets_size = {};
+//
+//            wabp(abp, onsets1, onsets_size);
+//
+//            Log.e(TAG, "Calculated onsets");
+//            Log.e(TAG, Double.toString(onsets1[0]));
+
+            // FILTERING
+
+            // BEAT ONSET DETECTION
+            double[] temp = new double[abp.length];
+            System.arraycopy(abp, 0, temp, 0, abp.length);
+
+            long startTime = System.nanoTime();
+
+            int[] onsets = WabpJAVA.wabpJAVA(temp);
+
+            long endTime = System.nanoTime();
+            long duration = (endTime - startTime)/1000000000;
+
+            Log.e(TAG, "Onset indexes = " + Arrays.toString(onsets));
+            Log.e(TAG, "Took in seconds: " + Long.toString(duration));
+
+            double[][] beats = new double[onsets.length - 1][];
+
+            for (int i = 0; i < onsets.length - 1; i++) {
+                beats[i] = new double[onsets[i + 1] - onsets[i]];
+                System.arraycopy(abp, onsets[i], beats[i], 0, onsets[i + 1] - onsets[i]);
+            }
+
+            Log.e(TAG,"");
+
+            // SYSTOLIC
+
+            double[] systolicPressures = new double[beats.length];
+
+            for (int i = 0; i < systolicPressures.length; i++) {
+                systolicPressures[i] = SystolicPressure.getSystolicPressure(beats[i]);
+            }
+
+            double systolicPressure = ArrayMean.getArrayMean(systolicPressures);
+            Log.e(TAG, "Systolic Pressure = " + Double.toString(systolicPressure));
+
+            // DIASTOLIC
+
+            double[] diastolicPressures = new double[beats.length];
+
+            for (int i = 0; i < diastolicPressures.length; i++) {
+                int systolicIndex = ArrayIndex.getArrayIndex(beats[i], systolicPressures[i]);
+                double[] tempBeat = new double[beats[i].length-systolicIndex];
+                System.arraycopy(beats[i], systolicIndex, tempBeat, 0, beats[i].length-systolicIndex);
+
+                diastolicPressures[i] = DiastolicPressure.getDiastolicPressure(tempBeat);
+            }
+
+            double diastolicPressure = ArrayMean.getArrayMean(diastolicPressures);
+            Log.e(TAG, "Diastolic Pressure = " + Double.toString(diastolicPressure));
+
+            // MEAN
+
+            double[] meanPressures = new double[beats.length];
+
+            for (int i = 0; i < meanPressures.length; i++) {
+                meanPressures[i] = (systolicPressures[i] + 2*diastolicPressures[i])/3.0;
+            }
+
+            double meanPressure = ArrayMean.getArrayMean(meanPressures);
+            Log.e(TAG, "Mean Pressure = " + Double.toString(meanPressure));
+
+            // HEART BEAT
+
+            double[] heartBeats = new double[beats.length];
+
+            for (int i = 0; i < heartBeats.length; i++) {
+                heartBeats[i] = 60.0/(beats[i].length*arsr/1000.0);
+            }
+
+            double heartBeat = ArrayMean.getArrayMean(heartBeats);
+            Log.e(TAG, "Heart Beat = " + Double.toString(heartBeat));
+
+            // DICROTIC NOTCH
+
+            double[] dicroticNotches = new double[beats.length];
+
+            for (int i = 0; i < dicroticNotches.length; i++) {
+                int systolicIndex = ArrayIndex.getArrayIndex(beats[i], systolicPressures[i]);
+                double[] tempBeat = new double[beats[i].length-systolicIndex];
+                System.arraycopy(beats[i], systolicIndex, tempBeat, 0, beats[i].length-systolicIndex);
+                int diastolicIndex = ArrayIndex.getArrayIndex(tempBeat, diastolicPressures[i]);
+                diastolicIndex += systolicIndex;
+
+                double[] lineFromSystoleToDiastole = new double[beats[i].length];
+                double a = (diastolicPressures[i] - systolicPressures[i])/(diastolicIndex - systolicIndex);
+                double b = systolicPressures[i] - a*systolicIndex;
+                for (int j = 0; j < lineFromSystoleToDiastole.length; j++) {
+                    lineFromSystoleToDiastole[j] = a*beats[i][j] + b;
+                }
+
+                double[] differenceStraightLineAndBeat = ArraySubstract.getArraySubstraction(lineFromSystoleToDiastole, beats[i]);
+                double minDifference = ArrayMin.getArrayMin(differenceStraightLineAndBeat);
+                int minDifferenceIndex = ArrayIndex.getArrayIndex(differenceStraightLineAndBeat, minDifference);
+                dicroticNotches[i] = beats[i][minDifferenceIndex];
+
+            }
+
+            double dicroticNotch = ArrayMean.getArrayMean(dicroticNotches);
+            Log.e(TAG, "Dicrotic Notch = " + Double.toString(dicroticNotch));
+
+            // DICROTIC PEAK
+
+            double[] dicroticPeaks = new double[beats.length];
+
+            for (int i = 0; i < dicroticPeaks.length; i++) {
+                int dicroticNotchIndex = ArrayIndex.getArrayIndex(beats[i], dicroticNotches[i]);
+                double[] tempBeat = new double[beats[i].length-dicroticNotchIndex];
+                System.arraycopy(beats[i], dicroticNotchIndex, tempBeat, 0, beats[i].length-dicroticNotchIndex);
+                dicroticPeaks[i] = ArrayMax.getArrayMax(tempBeat);
+            }
+
+            double dicroticPeak = ArrayMean.getArrayMean(dicroticPeaks);
+            Log.e(TAG, "Dicrotic Peak = " + Double.toString(dicroticPeak));
+
+            // MAX DP/DT
+
+            double[] maxPressureChangeRates = new double[beats.length];
+
+            for (int i = 0; i < maxPressureChangeRates.length; i++) {
+                double[] pressureChangeRate = Diff.diff(beats[i]);
+                pressureChangeRate = ArrayDivision.getRealArrayScalarDiv(pressureChangeRate, arsr/1000.0);
+                maxPressureChangeRates[i] = ArrayMax.getArrayMax(pressureChangeRate);
+            }
+
+            double maxPressureChangeRate = ArrayMean.getArrayMean(maxPressureChangeRates);
+            Log.e(TAG, "Max dp/dt = " + Double.toString(maxPressureChangeRate));
+
+            double[] features = {systolicPressure, diastolicPressure, meanPressure, heartBeat, dicroticNotch, dicroticPeak, maxPressureChangeRate};
+
+            return features;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(double[] features) {
+            super.onPostExecute(features);
+
+            // UPDATE UI
+
+            TextView systolicTextView = getActivity().findViewById(R.id.systolic);
+
+            systolicTextView.setText(Double.toString(features[0]));
+
+            Log.e(TAG, "Async End");
+        }
     }
 
     @Override
