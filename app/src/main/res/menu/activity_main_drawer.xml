@@ -9,10 +9,6 @@
             android:icon="@drawable/ic_menu_camera"
             android:title="Graph" />
         <item
-            android:id="@+id/reader"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Reader" />
-        <item
             android:id="@+id/calendar"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Calendar" />
