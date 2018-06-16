@@ -77,6 +77,16 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
     protected Typeface mTfRegular;
     protected Typeface mTfLight;
 
+    // C++ LIBRARY DECLARATION
+    // Used to load the C++ library on application startup.
+    static {
+        System.loadLibrary("mult");
+        System.loadLibrary("wabp");
+    }
+
+    public native double mult(double a, double b);
+    public native void wabp(double[] abp, double[] onsets_data, int[] onsets_size);
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -113,6 +123,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
 //        msgFilter.setNext(logFragment.getLogView());
 
         Log.i(TAG, "Ready");
+        Log.i(TAG, Double.toString(mult(2.0, 4.0)));
     }
 
     @Override
