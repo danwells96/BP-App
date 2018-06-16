@@ -659,7 +659,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
             double maxPressureChangeRate = ArrayMean.getArrayMean(maxPressureChangeRates);
             Log.e(TAG, "Max dp/dt = " + Double.toString(maxPressureChangeRate));
 
-            double[] features = {systolicPressure, diastolicPressure, meanPressure, heartBeat, dicroticNotch, dicroticPeak, maxPressureChangeRate};
+            double[] features = {systolicPressure, diastolicPressure, meanPressure, heartBeat, maxPressureChangeRate, dicroticNotch, dicroticPeak};
 
             return features;
         }
@@ -676,8 +676,19 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
             // UPDATE UI
 
             TextView systolicTextView = getActivity().findViewById(R.id.systolic);
-
             systolicTextView.setText(Double.toString(features[0]));
+            TextView diastolicTextView = getActivity().findViewById(R.id.diastolic);
+            diastolicTextView.setText(Double.toString(features[1]));
+            TextView meanTextView = getActivity().findViewById(R.id.mean);
+            meanTextView.setText(Double.toString(features[2]));
+            TextView heartRateTextView = getActivity().findViewById(R.id.heart_rate);
+            heartRateTextView.setText(Double.toString(features[3]));
+            TextView maxPressureChangeRateTextView = getActivity().findViewById(R.id.max_pressure_change);
+            maxPressureChangeRateTextView.setText(Double.toString(features[4]));
+            TextView dicroticNotchTextView = getActivity().findViewById(R.id.dicrotic_notch);
+            dicroticNotchTextView.setText(Double.toString(features[5]));
+            TextView dicroticPeakTextView = getActivity().findViewById(R.id.dicrotic_peak);
+            dicroticPeakTextView.setText(Double.toString(features[6]));
 
             Log.e(TAG, "Async End");
         }
