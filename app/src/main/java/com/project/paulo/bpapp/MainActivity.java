@@ -61,12 +61,12 @@ public class MainActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
 
-        return super.onOptionsItemSelected(item);
+        return false;
+//        return super.onOptionsItemSelected(item);
     }
 
     private void displayFragment(int id) {
@@ -106,5 +106,13 @@ public class MainActivity extends AppCompatActivity
         displayFragment(id);
 
         return true;
+    }
+
+    public void setBarSubtitle(CharSequence subTitle){
+        getSupportActionBar().setSubtitle(subTitle);
+    }
+
+    public void setBarSubtitle(int resId){
+        getSupportActionBar().setSubtitle(resId);
     }
 }

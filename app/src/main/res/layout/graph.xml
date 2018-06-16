@@ -1,8 +1,217 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/sample_main_layout">
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/chart1"
+        android:layout_width="match_parent"
+        android:layout_height="540dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
+            android:text="Active resonator frequency (MHz)"/>
+        <EditText
+            android:id="@+id/active_resonator_frequency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="916.3"
+            android:maxLength="5"
+            android:inputType="number|numberDecimal"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="Reference resonator frequency (MHz)"/>
+        <EditText
+            android:id="@+id/reference_resonator_frequency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="919.9"
+            android:maxLength="5"
+            android:inputType="number|numberDecimal"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="Active resonator sampling rate (ms)"/>
+        <EditText
+            android:id="@+id/active_resonator_sampling_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="5"
+            android:maxLength="2"
+            android:inputType="number"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="Reference resonator sampling rate (ms)"/>
+        <EditText
+            android:id="@+id/reference_resonator_sampling_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="5"
+            android:maxLength="2"
+            android:inputType="number"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="300dp"
+            android:text="Sweeps"/>
+        <EditText
+            android:id="@+id/sweeps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="100"
+            android:maxLength="4"
+            android:inputType="number"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="Samples"/>
+        <EditText
+            android:id="@+id/samples"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="1024"
+            android:maxLength="5"
+            android:inputType="number"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="Averages"/>
+        <EditText
+            android:id="@+id/averages"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="1023"
+            android:maxLength="5"
+            android:inputType="number"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="Tx Power"/>
+        <EditText
+            android:id="@+id/tx_power"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="511"
+            android:maxLength="4"
+            android:inputType="number"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="Tx Time"/>
+        <EditText
+            android:id="@+id/tx_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="114"
+            android:maxLength="4"
+            android:inputType="number"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="5dp"
+            android:text="Systolic Pressure (mmHg)"/>
+        <TextView
+            android:id="@+id/systolic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/sample_output"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight="0"
+        android:visibility="gone">
+
+        <!--<FrameLayout-->
+        <!--style="@style/Widget.SampleMessageTile"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
+
+        <!--<TextView-->
+        <!--style="@style/Widget.SampleMessage"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:paddingLeft="@dimen/margin_medium"-->
+        <!--android:paddingRight="@dimen/margin_medium"-->
+        <!--android:paddingTop="@dimen/margin_large"-->
+        <!--android:paddingBottom="@dimen/margin_large"-->
+        <!--</FrameLayout>-->
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:visibility="gone"/>
+
+        <fragment
+            android:name="com.project.paulo.bpapp.common.logger.LogFragment"
+            android:id="@+id/log_fragment"
+            android:layout_width="0dp"
+            android:layout_height="0dp" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/darker_gray"
+            android:visibility="gone"/>
+
+        <FrameLayout
+            android:id="@+id/sample_content_fragment"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:tint="@android:color/white"
+        app:srcCompat="@android:drawable/ic_input_add"/>
+
+</LinearLayout>
 
 
-
-</android.support.constraint.ConstraintLayout>
