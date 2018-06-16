@@ -685,7 +685,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
             mChart.notifyDataSetChanged();
 
             // limit the number of visible entries
-            mChart.setVisibleXRangeMaximum(2);
+            mChart.setVisibleXRangeMaximum(5);
             // mChart.setVisibleYRange(30, AxisDependency.LEFT);
 
             // move to the latest entry
