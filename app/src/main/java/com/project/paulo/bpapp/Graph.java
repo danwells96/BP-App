@@ -707,11 +707,6 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
                 return true;
 //                break;
             }
-            case R.id.dataSend: {
-                fragment.sendMessage("parameter1:" + Math.random() * 10 + ",parameter2:" + Math.random() * 10 + ",parameter3:" + Math.random() * 10 + "／n");
-                return true;
-//                break;
-            }
             case R.id.exportData: {
                 new ExportDatabaseCSVTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 return true;
