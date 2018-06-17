@@ -1,9 +1,11 @@
 package com.project.paulo.bpapp;
 
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -32,10 +34,9 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.project.paulo.bpapp.bluetooth.BluetoothChatFragment;
 import com.project.paulo.bpapp.bluetooth.ChartValue;
+import com.project.paulo.bpapp.common.CSVWriter;
 import com.project.paulo.bpapp.common.logger.Log;
-import com.project.paulo.bpapp.common.logger.LogFragment;
 import com.project.paulo.bpapp.common.logger.LogWrapper;
-import com.project.paulo.bpapp.common.logger.MessageOnlyLogFilter;
 import com.project.paulo.bpapp.database.ChartValueDB;
 import com.project.paulo.bpapp.database.DatabaseHandler;
 import com.project.paulo.bpapp.featureextraction.DiastolicPressure;
@@ -49,6 +50,9 @@ import com.project.paulo.bpapp.mathematics.ArrayMin;
 import com.project.paulo.bpapp.mathematics.ArraySubstract;
 import com.project.paulo.bpapp.mathematics.Diff;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.regex.Matcher;
@@ -708,6 +712,10 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
                 return true;
 //                break;
             }
+            case R.id.exportData: {
+                new ExportDatabaseCSVTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                return true;
+            }
         }
 
         return false;
@@ -779,5 +787,50 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
     @Override
     public void onNothingSelected() {
         android.util.Log.i("Nothing selected", "Nothing selected.");
+    }
+
+    public class ExportDatabaseCSVTask extends AsyncTask<String, Void, Boolean> {
+
+        DatabaseHandler databaseHandler;
+        @Override
+        protected void onPreExecute() {
+            Toast.makeText(getActivity(), "Exporting database", Toast.LENGTH_SHORT).show();
+            databaseHandler = new DatabaseHandler(getActivity());
+        }
+
+        protected Boolean doInBackground(final String... args) {
+
+            File exportDirectory = new File(Environment.getExternalStorageDirectory(), "/bpapp/");
+            if (!exportDirectory.exists()) { exportDirectory.mkdirs(); }
+
+            File file = new File(exportDirectory, "blood_pressure_data.csv");
+            try {
+                file.createNewFile();
+                CSVWriter csvWriter = new CSVWriter(new FileWriter(file));
+                Cursor cursor = databaseHandler.raw();
+                csvWriter.writeNext(cursor.getColumnNames());
+                while(cursor.moveToNext()) {
+                    String[] newRow = new String[cursor.getColumnNames().length];
+                    for(int i = 0; i < cursor.getColumnNames().length; i++)
+                    {
+                        newRow[i] = cursor.getString(i);
+                    }
+                    csvWriter.writeNext(newRow);
+                }
+                csvWriter.close();
+                cursor.close();
+                return true;
+            } catch (IOException e) {
+                return false;
+            }
+        }
+
+        protected void onPostExecute(final Boolean success) {
+            if (success) {
+                Toast.makeText(getActivity(), "Export successful", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getActivity(), "Export failed", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

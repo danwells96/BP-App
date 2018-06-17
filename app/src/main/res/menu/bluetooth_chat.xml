@@ -42,4 +42,9 @@
         android:title="Send data">
     </item>
 
+    <item
+        android:id="@+id/exportData"
+        android:title="Export data">
+    </item>
+
 </menu>
