@@ -469,6 +469,8 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
         Description description = new Description();
         description.setText("Time (s)");
         mChart.setDescription(description);
+        TextView yAxisTitle = getActivity().findViewById(R.id.y_axis_title);
+        yAxisTitle.setTextColor(Color.BLACK);
 
         // enable touch gestures
         mChart.setTouchEnabled(true);
