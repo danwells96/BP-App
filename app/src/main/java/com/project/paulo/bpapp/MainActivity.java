@@ -99,9 +99,6 @@ public class MainActivity extends AppCompatActivity
             case R.id.graph:
                 fragment = new Graph();
                 break;
-            case R.id.calendar:
-                fragment = new Calendar();
-                break;
             case R.id.about:
                 fragment = new About();
                 break;

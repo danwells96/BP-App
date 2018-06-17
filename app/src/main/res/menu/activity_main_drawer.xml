@@ -9,10 +9,6 @@
             android:icon="@drawable/ic_show_chart_black_24dp"
             android:title="Graph" />
         <item
-            android:id="@+id/calendar"
-            android:icon="@drawable/ic_perm_contact_calendar_black_24dp"
-            android:title="Calendar" />
-        <item
             android:id="@+id/about"
             android:icon="@drawable/ic_menu_manage"
             android:title="About" />
