@@ -2,7 +2,10 @@ package com.project.paulo.bpapp;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,6 +16,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.project.paulo.bpapp.common.CSVWriter;
+import com.project.paulo.bpapp.database.DatabaseHandler;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class About extends Fragment {
 
@@ -186,5 +196,59 @@ public class About extends Fragment {
                         Toast.LENGTH_LONG).show();
             }
         });
+
+        Button exportButton = getActivity().findViewById(R.id.btn_export);
+        exportButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new ExportDatabaseCSVTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+//                new ExportDatabaseCSVTask().execute();
+            }
+        });
+    }
+
+    public class ExportDatabaseCSVTask extends AsyncTask<String, Void, Boolean> {
+
+        DatabaseHandler databaseHandler;
+        @Override
+        protected void onPreExecute() {
+            Toast.makeText(getActivity(), "Exporting database", Toast.LENGTH_SHORT).show();
+            databaseHandler = new DatabaseHandler(getActivity());
+        }
+
+        protected Boolean doInBackground(final String... args) {
+
+            File exportDirectory = new File(Environment.getExternalStorageDirectory(), "/bpapp/");
+            if (!exportDirectory.exists()) { exportDirectory.mkdirs(); }
+
+            File file = new File(exportDirectory, "blood_pressure_data.csv");
+            try {
+                file.createNewFile();
+                CSVWriter csvWriter = new CSVWriter(new FileWriter(file));
+                Cursor cursor = databaseHandler.raw();
+                csvWriter.writeNext(cursor.getColumnNames());
+                while(cursor.moveToNext()) {
+                    String[] newRow = new String[cursor.getColumnNames().length];
+                    for(int i = 0; i < cursor.getColumnNames().length; i++)
+                    {
+                        newRow[i] = cursor.getString(i);
+                    }
+                    csvWriter.writeNext(newRow);
+                }
+                csvWriter.close();
+                cursor.close();
+                return true;
+            } catch (IOException e) {
+                return false;
+            }
+        }
+
+        protected void onPostExecute(final Boolean success) {
+            if (success) {
+                Toast.makeText(getActivity(), "Export successful", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getActivity(), "Export failed", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

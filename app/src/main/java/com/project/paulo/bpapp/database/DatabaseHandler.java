@@ -114,4 +114,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // return count
         return cursor.getCount();
     }
+
+    public Cursor raw() {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("SELECT * FROM " + TABLE_DATA , new String[]{});
+
+        return res;
+    }
 }
