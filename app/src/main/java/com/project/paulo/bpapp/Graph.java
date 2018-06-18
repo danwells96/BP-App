@@ -365,6 +365,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
                             "rrs" + referenceResonatorSamplingRateText +
                             "swe" + sweepsText +
                             "sam" + samplesText +
+                            "ave" + averagesText +
                             "txp" + txPowerText +
                             "txt" + txTimeText +
                             "rxd" + rxDelayText);
