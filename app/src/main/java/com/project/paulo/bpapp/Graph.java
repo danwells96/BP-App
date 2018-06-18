@@ -1,5 +1,6 @@
 package com.project.paulo.bpapp;
 
+import android.app.ProgressDialog;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -376,6 +377,12 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
 
         databaseHandler = new DatabaseHandler(getActivity());
 
+        // DATABASE EXPORT CODE
+        mProgressDialog = new ProgressDialog(getActivity());
+        mProgressDialog.setCancelable(true);
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        mProgressDialog.setMessage("Exporting database ...");
+
         // CHART CODE
         getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -712,6 +719,8 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
 //                break;
             }
             case R.id.exportData: {
+                /** Show the progress dialog window */
+                mProgressDialog.show();
                 new ExportDatabaseCSVTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 return true;
             }
@@ -788,16 +797,26 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
         android.util.Log.i("Nothing selected", "Nothing selected.");
     }
 
-    public class ExportDatabaseCSVTask extends AsyncTask<String, Void, Boolean> {
+    private int mProgressStatus = 0;
+    private ProgressDialog mProgressDialog ;
+
+    public class ExportDatabaseCSVTask extends AsyncTask<String, Integer, Boolean> {
 
         DatabaseHandler databaseHandler;
+        int numberOFDatabaseRows;
+        double mProgressDouble;
+
         @Override
         protected void onPreExecute() {
             Toast.makeText(getActivity(), "Exporting database", Toast.LENGTH_SHORT).show();
             databaseHandler = new DatabaseHandler(getActivity());
+            mProgressStatus = 0;
+            mProgressDouble = 0.0;
         }
 
         protected Boolean doInBackground(final String... args) {
+
+            numberOFDatabaseRows = databaseHandler.getDataCount();
 
             File exportDirectory = new File(Environment.getExternalStorageDirectory(), "/bpapp/");
             if (!exportDirectory.exists()) { exportDirectory.mkdirs(); }
@@ -815,6 +834,10 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
                         newRow[i] = cursor.getString(i);
                     }
                     csvWriter.writeNext(newRow);
+
+                    mProgressDouble = mProgressDouble + 1.0/((double) numberOFDatabaseRows);
+                    mProgressStatus = (int) (100*mProgressDouble);
+                    publishProgress(mProgressStatus);
                 }
                 csvWriter.close();
                 cursor.close();
@@ -824,11 +847,20 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
             }
         }
 
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+
+            mProgressDialog.setProgress(mProgressStatus);
+        }
+
         protected void onPostExecute(final Boolean success) {
             if (success) {
                 Toast.makeText(getActivity(), "Export successful", Toast.LENGTH_SHORT).show();
+                mProgressDialog.dismiss();
             } else {
                 Toast.makeText(getActivity(), "Export failed", Toast.LENGTH_SHORT).show();
+                mProgressDialog.dismiss();
             }
         }
     }

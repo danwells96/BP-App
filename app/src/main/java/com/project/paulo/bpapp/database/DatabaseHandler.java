@@ -4,6 +4,7 @@ package com.project.paulo.bpapp.database;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -106,13 +107,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // Getting data Count
     public int getDataCount() {
-        String countQuery = "SELECT  * FROM " + TABLE_DATA;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(countQuery, null);
-        cursor.close();
+//        String countQuery = "SELECT  * FROM " + TABLE_DATA;
+//        SQLiteDatabase db = this.getReadableDatabase();
+//        Cursor cursor = db.rawQuery(countQuery, null);
+//        cursor.close();
+//
+//        // return count
+//        return cursor.getCount();
 
-        // return count
-        return cursor.getCount();
+        SQLiteDatabase db = this.getReadableDatabase();
+        long count = DatabaseUtils.queryNumEntries(db, TABLE_DATA);
+        db.close();
+        return (int) count;
     }
 
     public Cursor raw() {
