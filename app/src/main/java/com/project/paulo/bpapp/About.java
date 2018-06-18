@@ -36,25 +36,25 @@ public class About extends Fragment {
         SharedPreferences aboutPrefs;
         aboutPrefs = getActivity().getSharedPreferences("aboutPrefID", Context.MODE_PRIVATE);
 
-        String clinicianName = aboutPrefs.getString("clinianName","");
+        String clinicianName = aboutPrefs.getString("clinicianName","");
         if(!clinicianName.isEmpty()) {
             EditText clinicianNameField = getActivity().findViewById(R.id.clinician_name);
             clinicianNameField.setText(clinicianName);
         }
 
-        String clinicianEmail = aboutPrefs.getString("clinianEmail","");
+        String clinicianEmail = aboutPrefs.getString("clinicianEmail","");
         if(!clinicianEmail.isEmpty()) {
             EditText clinicianEmailField = getActivity().findViewById(R.id.clinician_email);
             clinicianEmailField.setText(clinicianEmail);
         }
 
-        String clinicianPhone = aboutPrefs.getString("clinianPhone","");
+        String clinicianPhone = aboutPrefs.getString("clinicianPhone","");
         if(!clinicianPhone.isEmpty()) {
             EditText clinicianPhoneField = getActivity().findViewById(R.id.clinician_phone);
             clinicianPhoneField.setText(clinicianPhone);
         }
 
-        String clinicianPractice = aboutPrefs.getString("clinianPractice","");
+        String clinicianPractice = aboutPrefs.getString("clinicianPractice","");
         if(!clinicianPractice.isEmpty()) {
             EditText clinicianPracticeField = getActivity().findViewById(R.id.clinician_practice);
             clinicianPracticeField.setText(clinicianPractice);
