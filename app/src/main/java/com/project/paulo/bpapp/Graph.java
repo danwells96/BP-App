@@ -40,6 +40,7 @@ import com.project.paulo.bpapp.common.logger.Log;
 import com.project.paulo.bpapp.common.logger.LogWrapper;
 import com.project.paulo.bpapp.database.ChartValueDB;
 import com.project.paulo.bpapp.database.DatabaseHandler;
+import com.project.paulo.bpapp.database.FeatureValueDB;
 import com.project.paulo.bpapp.featureextraction.DiastolicPressure;
 import com.project.paulo.bpapp.featureextraction.DicroticNotch;
 import com.project.paulo.bpapp.featureextraction.DicroticPeak;
@@ -53,8 +54,10 @@ import com.project.paulo.bpapp.mathematics.Filter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -406,7 +409,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
                         y = matcher.group(1);
                     }
 
-                    ChartValueDB newData = new ChartValueDB(x, y);
+                    ChartValueDB newData = new ChartValueDB(getCurrentLocalDateTimeStamp(), y);
 
                     databaseHandler.addData(newData);
 
@@ -527,6 +530,32 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
         YAxis rightAxis = mChart.getAxisRight();
         rightAxis.setEnabled(false);
     }
+
+    private double previousSystolicPressure = -1;
+    private double previousDiastolicPressure = -1;
+    private double previousMeanPressure = -1;
+
+    private boolean isSystolicHigh = false;
+    private boolean isDiastolicLow = false;
+    private boolean isMeanHigh = false;
+    private boolean isHeartRateHigh = false;
+    private boolean isMaxPressureLow = false;
+    private boolean isNotchPressureAbnormal = false;
+    private boolean isPeakPressureAbnoral = false;
+    private boolean isSystolicDifferingMuch = false;
+    private boolean isDiastolicDifferingMuch = false;
+    private boolean isMeanDifferingMuch = false;
+
+    private String isSystolicHighText = "Systolic pressure is above 70mmHg";
+    private String isDiastolicLowText = "Diastolic pressure is below 25mmHg";
+    private String isMeanHighText = "Mean pressure is above 40mmHg";
+    private String isHeartRateHighText = "Heart rate is above 100bpm";
+    private String isMaxPressureLowText = "Max dp/dt is below 25mmHg/s";
+    private String isNotchPressureAbnormalText = "Dicrotic notch pressure is abnormal";
+    private String isPeakPressureAbnoralText = "Dicrotic peak pressure is weak";
+    private String isSystolicDifferingMuchText = "Systolic pressure rise is above 20mmHg";
+    private String isDiastolicDifferingMuchText = "Diastolic pressure rise is above 20mmHg";
+    private String isMeanDifferingMuchText = "Mean pressure rise is above 15mmHg";
 
     private class FeatureExtraction extends AsyncTask<double[], Integer, double[]> {
         @Override
@@ -658,6 +687,35 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
 
             double[] features = {systolicPressure, diastolicPressure, meanPressure, heartRate, maxPressureChangeRate, dicroticNotch, dicroticPeak};
 
+            // ABNORMALITY DETECTION
+
+            if(previousSystolicPressure == -1){
+                previousSystolicPressure = systolicPressure;
+            }
+
+            if(previousDiastolicPressure == -1){
+                previousDiastolicPressure = diastolicPressure;
+            }
+
+            if(previousMeanPressure == -1){
+                previousMeanPressure = meanPressure;
+            }
+
+            isSystolicHigh = systolicPressure > 70;
+            isDiastolicLow = diastolicPressure < 25;
+            isMeanHigh = meanPressure > 40;
+            isHeartRateHigh = heartRate > 100;
+            isMaxPressureLow = maxPressureChangeRate < 25;
+            isNotchPressureAbnormal = Math.abs(dicroticNotch - diastolicPressure) < 1 || Math.abs(dicroticNotch - systolicPressure) < 1;
+            isPeakPressureAbnoral = Math.abs(dicroticPeak - dicroticNotch) < 1;
+            isSystolicDifferingMuch = Math.abs(systolicPressure - previousSystolicPressure) > 20;
+            isDiastolicDifferingMuch = Math.abs(diastolicPressure - previousDiastolicPressure) > 20;
+            isMeanDifferingMuch = Math.abs(meanPressure - previousMeanPressure) > 15;
+
+            previousSystolicPressure = systolicPressure;
+            previousDiastolicPressure = diastolicPressure;
+            previousMeanPressure = meanPressure;
+
             return features;
         }
 
@@ -670,22 +728,97 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
         protected void onPostExecute(double[] features) {
             super.onPostExecute(features);
 
+            String abnormalities = "";
+
             // UPDATE UI
 
             TextView systolicTextView = getActivity().findViewById(R.id.systolic);
+            systolicTextView.setError(null);
             systolicTextView.setText(Double.toString(features[0]));
+
+            if(isSystolicHigh && !isSystolicDifferingMuch){
+                systolicTextView.setError(isSystolicHighText);
+                abnormalities = abnormalities + isSystolicHigh;
+            } else if(!isSystolicHigh && isSystolicDifferingMuch){
+                systolicTextView.setError(isSystolicDifferingMuchText);
+                abnormalities = abnormalities + isSystolicDifferingMuchText;
+            } else if(isSystolicHigh && isSystolicDifferingMuch) {
+                systolicTextView.setError(isSystolicHighText + " and " + isSystolicDifferingMuchText);
+                abnormalities = abnormalities + isSystolicHighText + " and " + isSystolicDifferingMuchText;
+            }
+
             TextView diastolicTextView = getActivity().findViewById(R.id.diastolic);
+            diastolicTextView.setError(null);
             diastolicTextView.setText(Double.toString(features[1]));
+
+            if(isDiastolicLow && !isDiastolicDifferingMuch){
+                diastolicTextView.setError(isDiastolicLowText);
+                abnormalities = abnormalities + " and " + isDiastolicLowText;
+            } else if(!isDiastolicLow && isDiastolicDifferingMuch){
+                diastolicTextView.setError(isDiastolicDifferingMuchText);
+                abnormalities = abnormalities + " and " + isDiastolicDifferingMuchText;
+            } else if(isDiastolicLow && isDiastolicDifferingMuch) {
+                diastolicTextView.setError(isDiastolicLowText + " and " + isDiastolicDifferingMuchText);
+                abnormalities = abnormalities + isDiastolicLowText + " and " + isDiastolicDifferingMuchText;
+            }
+
             TextView meanTextView = getActivity().findViewById(R.id.mean);
+            meanTextView.setError(null);
             meanTextView.setText(Double.toString(features[2]));
+
+            if(isMeanHigh && !isMeanDifferingMuch){
+                meanTextView.setError(isMeanHighText);
+                abnormalities = abnormalities + " and " + isMeanHighText;
+            } else if(!isMeanHigh && isMeanDifferingMuch){
+                meanTextView.setError(isMeanDifferingMuchText);
+                abnormalities = abnormalities + " and " + isMeanDifferingMuchText;
+            } else if(isMeanHigh && isMeanDifferingMuch) {
+                meanTextView.setError(isMeanHighText + " and " + isMeanDifferingMuchText);
+                abnormalities = abnormalities + isMeanHighText + " and " + isMeanDifferingMuchText;
+            }
+
             TextView heartRateTextView = getActivity().findViewById(R.id.heart_rate);
+            heartRateTextView.setError(null);
             heartRateTextView.setText(Double.toString(features[3]));
+
+            if(isHeartRateHigh){
+                heartRateTextView.setError(isHeartRateHighText);
+                abnormalities = abnormalities + " and " + isHeartRateHighText;
+            }
+
             TextView maxPressureChangeRateTextView = getActivity().findViewById(R.id.max_pressure_change);
+            maxPressureChangeRateTextView.setError(null);
             maxPressureChangeRateTextView.setText(Double.toString(features[4]));
+
+            if(isMaxPressureLow){
+                maxPressureChangeRateTextView.setError(isMaxPressureLowText);
+                abnormalities = abnormalities + " and " + isMaxPressureLowText;
+            }
+
             TextView dicroticNotchTextView = getActivity().findViewById(R.id.dicrotic_notch);
+            dicroticNotchTextView.setError(null);
             dicroticNotchTextView.setText(Double.toString(features[5]));
+
+            if(isNotchPressureAbnormal) {
+                dicroticNotchTextView.setError(isNotchPressureAbnormalText);
+                abnormalities = abnormalities + " and " + isNotchPressureAbnormalText;
+            }
+
             TextView dicroticPeakTextView = getActivity().findViewById(R.id.dicrotic_peak);
+            dicroticPeakTextView.setError(null);
             dicroticPeakTextView.setText(Double.toString(features[6]));
+
+            if(isPeakPressureAbnoral) {
+                dicroticPeakTextView.setError(isPeakPressureAbnoralText);
+                abnormalities = abnormalities + " and " + isPeakPressureAbnoralText;
+            }
+
+            FeatureValueDB newData = new FeatureValueDB(getCurrentLocalDateTimeStamp(),
+                    Double.toString(features[0]), Double.toString(features[1]),
+                            Double.toString(features[2]), Double.toString(features[4]),
+                                    Double.toString(features[3]), Double.toString(features[5]), Double.toString(features[6]), abnormalities);
+
+            databaseHandler.addFeatureData(newData);
 
             Log.e(TAG, "Async End");
         }
@@ -798,7 +931,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
 
         protected Boolean doInBackground(final String... args) {
 
-            numberOFDatabaseRows = databaseHandler.getDataCount();
+            numberOFDatabaseRows = databaseHandler.getDataCount() + databaseHandler.getDataCount2();
 
             File exportDirectory = new File(Environment.getExternalStorageDirectory(), "/bpapp/");
             if (!exportDirectory.exists()) { exportDirectory.mkdirs(); }
@@ -823,6 +956,30 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
                 }
                 csvWriter.close();
                 cursor.close();
+            } catch (IOException e) {
+                return false;
+            }
+
+                File file2 = new File(exportDirectory, "blood_pressure_features.csv");
+                try {
+                    file2.createNewFile();
+                    CSVWriter csvWriter2 = new CSVWriter(new FileWriter(file2));
+                    Cursor cursor2 = databaseHandler.raw2();
+                    csvWriter2.writeNext(cursor2.getColumnNames());
+                    while(cursor2.moveToNext()) {
+                        String[] newRow = new String[cursor2.getColumnNames().length];
+                        for(int i = 0; i < cursor2.getColumnNames().length; i++)
+                        {
+                            newRow[i] = cursor2.getString(i);
+                        }
+                        csvWriter2.writeNext(newRow);
+
+                        mProgressDouble = mProgressDouble + 1.0/((double) numberOFDatabaseRows);
+                        mProgressStatus = (int) (100*mProgressDouble);
+                        publishProgress(mProgressStatus);
+                    }
+                    csvWriter2.close();
+                    cursor2.close();
                 return true;
             } catch (IOException e) {
                 return false;
@@ -845,5 +1002,18 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
                 mProgressDialog.dismiss();
             }
         }
+    }
+
+    public String getCurrentLocalDateTimeStamp() {
+//        TimeZone tz = TimeZone.getTimeZone("UTC");
+//        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+//        df.setTimeZone(tz);
+//        String nowAsISO = df.format(new Date());
+
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");//dd/MM/yyyy
+        Date now = new Date();
+        String strDate = sdfDate.format(now);
+
+        return strDate;
     }
 }
