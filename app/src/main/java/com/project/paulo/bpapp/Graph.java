@@ -494,10 +494,12 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
         mChart.setPinchZoom(true);
 
         // set an alternative background color
-        mChart.setBackgroundColor(Color.LTGRAY);
+        mChart.setBackgroundColor(Color.BLACK);
+        mChart.setDrawGridBackground(true);
+        mChart.setGridBackgroundColor(Color.GREEN);
 
         LineData data = new LineData();
-        data.setValueTextColor(Color.WHITE);
+        data.setValueTextColor(Color.GREEN);
 
         // add empty data
         mChart.setData(data);
