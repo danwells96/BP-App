@@ -516,7 +516,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
         mChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
         xl.setTypeface(mTfLight);
         xl.setTextColor(Color.WHITE);
-        xl.setDrawGridLines(false);
+        xl.setDrawGridLines(true);
         xl.setAvoidFirstLastClipping(true);
         xl.setEnabled(true);
         xl.setTextColor(getResources().getColor(R.color.black));

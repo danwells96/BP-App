@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        System.out.println("Started");
         // REQUEST WRITE PERMISSION
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, requestCode);
         onRequestPermissionsResult(requestCode, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, grantResults);
@@ -83,7 +83,6 @@ public class MainActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
 //        if (id == R.id.action_settings) {
 //            return true;
 //        }
@@ -99,9 +98,11 @@ public class MainActivity extends AppCompatActivity
             case R.id.graph:
                 fragment = new Graph();
                 break;
-            case R.id.about:
+            case R.id.features:
                 fragment = new About();
                 break;
+            case R.id.settings:
+                fragment = new About();
         }
 
         if (fragment != null){
