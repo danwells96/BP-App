@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity
                 fragment = new Graph();
                 break;
             case R.id.features:
-                fragment = new About();
+                fragment = new Features();
                 break;
             case R.id.settings:
                 fragment = new About();
