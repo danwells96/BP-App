@@ -488,7 +488,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
         // enable scaling and dragging
         mChart.setDragEnabled(true);
         mChart.setScaleEnabled(true);
-        mChart.setDrawGridBackground(false);
+        mChart.setDrawGridBackground(true);
 
         // if disabled, scaling can be done on x- and y-axis separately
         mChart.setPinchZoom(true);
@@ -496,7 +496,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
         // set an alternative background color
         mChart.setBackgroundColor(Color.BLACK);
         mChart.setDrawGridBackground(true);
-        mChart.setGridBackgroundColor(Color.GREEN);
+        mChart.setGridBackgroundColor(Color.BLACK);
 
         LineData data = new LineData();
         data.setValueTextColor(Color.GREEN);
