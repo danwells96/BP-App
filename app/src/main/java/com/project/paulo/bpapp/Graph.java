@@ -526,6 +526,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
         xl.setTypeface(mTfLight);
         xl.setTextColor(Color.WHITE);
         xl.setDrawGridLines(true);
+        xl.setGridColor(Color.GREEN);
         xl.setAvoidFirstLastClipping(true);
         xl.setEnabled(true);
         xl.setTextColor(getResources().getColor(R.color.black));
@@ -536,6 +537,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
         leftAxis.setAxisMaximum(60f);
         leftAxis.setAxisMinimum(0f);
         leftAxis.setDrawGridLines(true);
+        leftAxis.setGridColor(Color.GREEN);
         leftAxis.setTextColor(getResources().getColor(R.color.black));
 
         YAxis rightAxis = mChart.getAxisRight();
