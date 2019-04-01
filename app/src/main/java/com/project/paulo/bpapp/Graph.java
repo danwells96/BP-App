@@ -14,12 +14,16 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Html;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,6 +66,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 public class Graph extends Fragment implements OnChartValueSelectedListener {
 
@@ -143,6 +149,29 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
         setHasOptionsMenu(true);
 
         // Reader parameter logic
+
+        TextView readerParams = (TextView) getActivity().findViewById(R.id.readerParams);
+        readerParams.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                System.out.println("Clicked");
+                LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(LAYOUT_INFLATER_SERVICE);
+                View popupView = inflater.inflate(R.layout.popup_readerparams, null);
+
+                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                final PopupWindow pw = new PopupWindow(popupView, width, height, false);
+                pw.showAtLocation(view, Gravity.CENTER, 0, 0);
+                //View popView = pw.getContentView();
+                Button save = (Button) popupView.findViewById(R.id.save_button);
+                save.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        System.out.println("CLicmed");
+                    }
+                });
+            }
+        });
 
         FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

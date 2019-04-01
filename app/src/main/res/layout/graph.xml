@@ -8,7 +8,7 @@
     android:id="@+id/sample_main_layout">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="600dp"
         android:orientation="horizontal">
         <LinearLayout
             android:layout_width="0dp"
@@ -38,8 +38,8 @@
         android:layout_gravity="center">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2">
+            android:layout_height="match_parent"
+            android:layout_weight="1">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -85,13 +85,17 @@
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_weight="2"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
             android:layout_gravity="center">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="CXN Details"
+                android:id="@+id/readerParams"
+                android:gravity="center"
+                android:clickable="true"
+                android:text="CXN Details go in this sublayout"
                 android:textSize="40dp"/>
         </LinearLayout>
     </LinearLayout>
@@ -103,7 +107,7 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:orientation="horizontal"> />
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/textView15"
