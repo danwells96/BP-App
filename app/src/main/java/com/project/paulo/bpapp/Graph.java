@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -169,6 +171,13 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
                 String rxDelayText;
 
                 Boolean isThereAnythingToSend = false;
+
+                //New Code between here
+
+
+
+
+                // and here
 
                 if(!activeResonatorFrequency.getText().toString().isEmpty()){
                     activeResonatorFrequencyText = activeResonatorFrequency.getText().toString();
