@@ -8,18 +8,18 @@
     android:id="@+id/sample_main_layout">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="horizontal">
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="4"
             android:orientation="vertical">
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/chart1"
         android:layout_width="match_parent"
-        android:layout_height="460dp" >
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/y_axis_title"
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:text="Pressure (mmHg)"
             android:textSize="8dp"
-            tools:textColor="@android:color/black" />
+            tools:textColor="@android:color/white" />
     </com.github.mikephil.charting.charts.LineChart>
     </LinearLayout>
     <LinearLayout
@@ -82,204 +82,6 @@
     </LinearLayout>
 
     <!-- Below graph -->
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="243dp"
-            android:layout_height="28dp"
-            android:layout_marginStart="44dp"
-            android:layout_marginTop="7dp"
-            android:singleLine="true"
-            android:text="Systolic Pressure (mmHg)"
-            android:textSize="20dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/systolic"
-            android:layout_width="71dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="300dp"
-            android:layout_marginTop="7dp"
-            android:maxLength="5"
-            android:maxLines="1"
-            android:text="-"
-            android:textSize="20dp"
-            android:focusable="true"
-            android:clickable="true"
-            android:focusableInTouchMode="true"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="376dp"
-            android:layout_marginTop="7dp"
-            android:text="Diastolic Pressure (mmHg)"
-            android:textSize="20dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/diastolic"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="636dp"
-            android:layout_marginTop="7dp"
-            android:maxLength="5"
-            android:maxLines="1"
-            android:text="-"
-            android:textSize="20dp"
-            android:focusable="true"
-            android:clickable="true"
-            android:focusableInTouchMode="true"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="712dp"
-            android:layout_marginTop="7dp"
-            android:text="Mean Pressure (mmHg)"
-            android:textSize="20dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/mean"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="936dp"
-            android:layout_marginTop="7dp"
-            android:maxLength="5"
-            android:maxLines="1"
-            android:text="-"
-            android:textSize="20dp"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:clickable="true"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="1008dp"
-            android:layout_marginTop="7dp"
-            android:text="Heart Rate (bpm)"
-            android:textSize="20dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/heart_rate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="1188dp"
-            android:layout_marginTop="7dp"
-            android:maxLength="5"
-            android:maxLines="1"
-            android:text="-"
-            android:textSize="20dp"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:clickable="true"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </android.support.constraint.ConstraintLayout>
-
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="80dp"
-            android:layout_marginTop="7dp"
-            android:text="Max Pressure Change (mmHg/s)"
-            android:textSize="20dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/max_pressure_change"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="384dp"
-            android:layout_marginTop="7dp"
-            android:maxLength="5"
-            android:maxLines="1"
-            android:text="-"
-            android:textSize="20dp"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:clickable="true"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="460dp"
-            android:layout_marginTop="7dp"
-            android:text="Dicrotic Peak Pressure (mmHg)"
-            android:textSize="20dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/dicrotic_peak"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="752dp"
-            android:layout_marginTop="7dp"
-            android:maxLength="5"
-            android:maxLines="1"
-            android:text="-"
-            android:textSize="20dp"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:clickable="true"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="828dp"
-            android:layout_marginTop="7dp"
-            android:text="Dicrotic Notch Pressure (mmHg)"
-            android:textSize="20dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/dicrotic_notch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="1132dp"
-            android:layout_marginTop="7dp"
-            android:maxLength="5"
-            android:maxLines="1"
-            android:text="-"
-            android:textSize="20dp"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:clickable="true"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"

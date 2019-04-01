@@ -743,7 +743,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
 
             // UPDATE UI
 
-            TextView systolicTextView = getActivity().findViewById(R.id.systolic);
+            /*TextView systolicTextView = getActivity().findViewById(R.id.systolic);
             systolicTextView.setError(null);
             systolicTextView.setText(Double.toString(features[0]));
 
@@ -823,7 +823,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
                 dicroticPeakTextView.setError(isPeakPressureAbnoralText);
                 abnormalities = abnormalities + " and " + isPeakPressureAbnoralText;
             }
-
+            */
             FeatureValueDB newData = new FeatureValueDB(getCurrentLocalDateTimeStamp(),
                     Double.toString(features[0]), Double.toString(features[1]),
                             Double.toString(features[2]), Double.toString(features[4]),
