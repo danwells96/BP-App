@@ -1,6 +1,7 @@
 package com.project.paulo.bpapp;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -14,6 +15,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Html;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -56,6 +58,8 @@ import com.project.paulo.bpapp.featureextraction.WabpJAVA;
 import com.project.paulo.bpapp.mathematics.ArrayIndex;
 import com.project.paulo.bpapp.mathematics.ArrayMean;
 import com.project.paulo.bpapp.mathematics.Filter;
+
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -109,9 +113,60 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
         return inflater.inflate(R.layout.graph, container, false);
     }
 
+    PopupWindow pop;
+    Button save;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        TextView readerParams = (TextView) getActivity().findViewById(R.id.readerParams);
+        readerParams.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                System.out.println("Clicked");
+
+                //LayoutInflater inflater = (LayoutInflater) getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                //View popupView = inflater.inflate(R.layout.popup_readerparams, null);
+                View popupView = getLayoutInflater().inflate(R.layout.popup_readerparams, null);
+
+                //int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                //int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                //final PopupWindow pw = new PopupWindow(popupView, width, height, true);
+
+//                pop.setContentView(popupView);
+//                DisplayMetrics dm = getActivity().getResources().getDisplayMetrics();
+//                pop.setWidth(dm.widthPixels);
+//                pop.setHeight(dm.heightPixels);
+//                pop.setFocusable(true);
+//                pop.setBackgroundDrawable(null);
+//                pop.showAtLocation(popupView, Gravity.CENTER, 1, 1);
+                pop = new PopupWindow(popupView, LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+                pop.setAnimationStyle(android.R.style.Animation_Dialog);
+                pop.showAtLocation(popupView, Gravity.CENTER, 0, 0);
+
+                save = (Button)popupView.findViewById(R.id.save_button);
+                TextView tv = (TextView) popupView.findViewById(R.id.tv);
+
+                tv.setText("Hi");
+                if(tv == null){
+                    System.out.println("TV null");
+                }
+
+                if(save != null) {
+                    save.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            System.out.println("Clicked SAVE");
+                        }
+                    });
+                }else{
+                    System.out.println("NULL POINTER");
+                }
+
+            }
+        });
+
+
+
 
         getActivity().setTitle("Graph");
     }
@@ -142,6 +197,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
         Log.i(TAG, Double.toString(mult(2.0, 4.0)));
     }
 
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -150,28 +206,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
 
         // Reader parameter logic
 
-        TextView readerParams = (TextView) getActivity().findViewById(R.id.readerParams);
-        readerParams.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                System.out.println("Clicked");
-                LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(LAYOUT_INFLATER_SERVICE);
-                View popupView = inflater.inflate(R.layout.popup_readerparams, null);
 
-                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                final PopupWindow pw = new PopupWindow(popupView, width, height, false);
-                pw.showAtLocation(view, Gravity.CENTER, 0, 0);
-                //View popView = pw.getContentView();
-                Button save = (Button) popupView.findViewById(R.id.save_button);
-                save.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        System.out.println("CLicmed");
-                    }
-                });
-            }
-        });
 
         FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
