@@ -1,6 +1,7 @@
 package com.project.paulo.bpapp;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -102,7 +103,7 @@ public class MainActivity extends AppCompatActivity
                 fragment = new Features();
                 break;
             case R.id.settings:
-                fragment = new About();
+                fragment = new SettingsFragment();
         }
 
         if (fragment != null){
