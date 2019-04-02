@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -114,7 +115,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
     }
 
     PopupWindow pop;
-    Button save;
+    //Button save;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -139,16 +140,27 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
 //                pop.setFocusable(true);
 //                pop.setBackgroundDrawable(null);
 //                pop.showAtLocation(popupView, Gravity.CENTER, 1, 1);
-                pop = new PopupWindow(popupView, LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+                pop = new PopupWindow(popupView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, false);
                 pop.setAnimationStyle(android.R.style.Animation_Dialog);
-                pop.showAtLocation(popupView, Gravity.CENTER, 0, 0);
 
-                save = (Button)popupView.findViewById(R.id.save_button);
+                pop.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+
+                Button save = (Button)popupView.findViewById(R.id.save_button);
+
                 TextView tv = (TextView) popupView.findViewById(R.id.tv);
 
                 tv.setText("Hi");
                 if(tv == null){
                     System.out.println("TV null");
+                }else{
+                    tv.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            System.out.println("TV Clicked");
+                            pop.dismiss();
+                        }
+                    });
                 }
 
                 if(save != null) {
