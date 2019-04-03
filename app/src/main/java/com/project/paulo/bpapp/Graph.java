@@ -119,6 +119,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        //Need to get these values from memory to fill out
         TextView readerParams = (TextView) getActivity().findViewById(R.id.readerParams);
         readerParams.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -148,6 +149,17 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
         @Override
         public void onClick(View view) {
             System.out.println("Save");
+            EditText activeFrequency = pop.getContentView().findViewById(R.id.edit_active_frequency);
+            pop.setFocusable(true);
+            pop.update();
+            if(activeFrequency.getText().toString()==""){
+                System.out.println("EMPTY");
+                Toast.makeText(getActivity().getParent().getBaseContext(), "You must enter a value for active frequency in order to save", Toast.LENGTH_LONG).show();
+            }else {
+                System.out.println("NOT EMPTY");
+                System.out.println(activeFrequency.getText().toString());
+            }
+
         }
     };
 
@@ -196,247 +208,247 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
 
 
         FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EditText activeResonatorFrequency = getActivity().findViewById(R.id.active_resonator_frequency);
-                EditText referenceResonatorFrequency = getActivity().findViewById(R.id.reference_resonator_frequency);
-                EditText activeResonatorSamplingRate = getActivity().findViewById(R.id.active_resonator_sampling_rate);
-                EditText referenceResonatorSamplingRate = getActivity().findViewById(R.id.reference_resonator_sampling_rate);
-                EditText sweeps = getActivity().findViewById(R.id.sweeps);
-                EditText samples = getActivity().findViewById(R.id.samples);
-                EditText averages = getActivity().findViewById(R.id.averages);
-                EditText txPower = getActivity().findViewById(R.id.tx_power);
-                EditText txTime = getActivity().findViewById(R.id.tx_time);
-                EditText rxDelay = getActivity().findViewById(R.id.rx_delay);
-
-                String activeResonatorFrequencyText;
-                String referenceResonatorFrequencyText;
-                String activeResonatorSamplingRateText;
-                String referenceResonatorSamplingRateText;
-                String sweepsText;
-                String samplesText;
-                String averagesText;
-                String txPowerText;
-                String txTimeText;
-                String rxDelayText;
-
-                Boolean isThereAnythingToSend = false;
-
-                //New Code between here
-
-
-
-
-                // and here
-
-                if(!activeResonatorFrequency.getText().toString().isEmpty()){
-                    activeResonatorFrequencyText = activeResonatorFrequency.getText().toString();
-                    isThereAnythingToSend = true;
-                } else {
-                    activeResonatorFrequencyText = activeResonatorFrequency.getHint().toString();
-                }
-
-                if(!referenceResonatorFrequency.getText().toString().isEmpty()){
-                    referenceResonatorFrequencyText = referenceResonatorFrequency.getText().toString();
-                    isThereAnythingToSend = true;
-                } else {
-                    referenceResonatorFrequencyText = referenceResonatorFrequency.getHint().toString();
-                }
-
-                if(!activeResonatorSamplingRate.getText().toString().isEmpty()){
-                    activeResonatorSamplingRateText = activeResonatorSamplingRate.getText().toString();
-                    isThereAnythingToSend = true;
-                } else {
-                    activeResonatorSamplingRateText = activeResonatorSamplingRate.getHint().toString();
-                }
-
-                if(!referenceResonatorSamplingRate.getText().toString().isEmpty()){
-                    referenceResonatorSamplingRateText = referenceResonatorSamplingRate.getText().toString();
-                    isThereAnythingToSend = true;
-                } else {
-                    referenceResonatorSamplingRateText = referenceResonatorSamplingRate.getHint().toString();
-                }
-
-                if(!sweeps.getText().toString().isEmpty()){
-                    sweepsText = sweeps.getText().toString();
-                    isThereAnythingToSend = true;
-                } else {
-                    sweepsText = sweeps.getHint().toString();
-                }
-
-                if(!samples.getText().toString().isEmpty()){
-                    samplesText = samples.getText().toString();
-                    isThereAnythingToSend = true;
-                } else {
-                    samplesText = samples.getHint().toString();
-                }
-
-                if(!averages.getText().toString().isEmpty()){
-                    averagesText = averages.getText().toString();
-                    isThereAnythingToSend = true;
-                } else {
-                    averagesText = averages.getHint().toString();
-                }
-
-                if(!txPower.getText().toString().isEmpty()){
-                    txPowerText = txPower.getText().toString();
-                    isThereAnythingToSend = true;
-                } else {
-                    txPowerText = txPower.getHint().toString();
-                }
-
-                if(!txTime.getText().toString().isEmpty()){
-                    txTimeText = txTime.getText().toString();
-                    isThereAnythingToSend = true;
-                } else {
-                    txTimeText = txTime.getHint().toString();
-                }
-
-                if(!rxDelay.getText().toString().isEmpty()){
-                    rxDelayText = rxDelay.getText().toString();
-                    isThereAnythingToSend = true;
-                } else {
-                    rxDelayText = rxDelay.getHint().toString();
-                }
-
-                Boolean isThereAnErrorInParams = false;
-
-                if(Double.parseDouble(activeResonatorFrequencyText) > 920.0 ||
-                        Double.parseDouble(activeResonatorFrequencyText) < 915.0 ||
-                        Double.parseDouble(activeResonatorFrequencyText) > Double.parseDouble(referenceResonatorFrequencyText)) {
-
-                    isThereAnErrorInParams = true;
-
-                    activeResonatorFrequency.setError("Must be in range 915-920Mhz and less than reference resonator frequency.");
-                }
-
-                if(Double.parseDouble(referenceResonatorFrequencyText) > 920.0 ||
-                        Double.parseDouble(referenceResonatorFrequencyText) < 915.0) {
-
-                    isThereAnErrorInParams = true;
-
-                    referenceResonatorFrequency.setError("Must be in range 915-920Mhz.");
-                }
-
-                if(Double.parseDouble(activeResonatorSamplingRateText) > 100 ||
-                        Double.parseDouble(activeResonatorSamplingRateText) < 5) {
-
-                    isThereAnErrorInParams = true;
-
-                    activeResonatorSamplingRate.setError("Must be in range 5-100ms.");
-                }
-
-                if(Double.parseDouble(referenceResonatorSamplingRateText) > 7 ||
-                        Double.parseDouble(referenceResonatorSamplingRateText) < 1) {
-
-                    isThereAnErrorInParams = true;
-
-                    referenceResonatorSamplingRate.setError("Must be in range 1-7s.");
-                }
-
-                if(Double.parseDouble(sweepsText) > 2047 ||
-                        Double.parseDouble(sweepsText) < 1) {
-
-                    isThereAnErrorInParams = true;
-
-                    sweeps.setError("Must be in range 1-2047.");
-                }
-
-                if(Double.parseDouble(samplesText) > 1000 ||
-                        Double.parseDouble(samplesText) < 64) {
-
-                    isThereAnErrorInParams = true;
-
-                    samples.setError("Must be in range 64-1000.");
-                }
-
-                if(Double.parseDouble(averagesText) > 999 ||
-                        Double.parseDouble(averagesText) < 63 ||
-                        Double.parseDouble(averagesText) > Double.parseDouble(samplesText)) {
-
-                    isThereAnErrorInParams = true;
-
-                    averages.setError("Must be in range 63-999 and less than samples.");
-                }
-
-                if(Double.parseDouble(txPowerText) > 1023 ||
-                        Double.parseDouble(txPowerText) < 0) {
-
-                    isThereAnErrorInParams = true;
-
-                    txPower.setError("Must be in range 0-1023.");
-                }
-
-                if(Double.parseDouble(txTimeText) > 1023 ||
-                        Double.parseDouble(txTimeText) < 0) {
-
-                    isThereAnErrorInParams = true;
-
-                    txTime.setError("Must be in range 0-1023.");
-                }
-
-                if(Double.parseDouble(rxDelayText) > 1023 ||
-                        Double.parseDouble(rxDelayText) < 0) {
-
-                    isThereAnErrorInParams = true;
-
-                    rxDelay.setError("Must be in range 0-1023.");
-                }
-
-                if(isThereAnErrorInParams) {
-                    Toast.makeText(getActivity(), "Please recheck parameter values.",
-                            Toast.LENGTH_LONG).show();
-
-                    return;
-                }
-
-                if(!isThereAnErrorInParams && !isThereAnythingToSend) {
-                    activeResonatorFrequency.setError(null);
-                    referenceResonatorFrequency.setError(null);
-                    activeResonatorSamplingRate.setError(null);
-                    referenceResonatorSamplingRate.setError(null);
-                    sweeps.setError(null);
-                    samples.setError(null);
-                    averages.setError(null);
-                    txPower.setError(null);
-                    txTime.setError(null);
-                    rxDelay.setError(null);
-
-                    Toast.makeText(getActivity(), "Nothing to send.",
-                            Toast.LENGTH_LONG).show();
-
-                    return;
-                }
-
-                if(!isThereAnErrorInParams && isThereAnythingToSend) {
-                    activeResonatorFrequency.setError(null);
-                    referenceResonatorFrequency.setError(null);
-                    activeResonatorSamplingRate.setError(null);
-                    referenceResonatorSamplingRate.setError(null);
-                    sweeps.setError(null);
-                    samples.setError(null);
-                    averages.setError(null);
-                    txPower.setError(null);
-                    txTime.setError(null);
-                    rxDelay.setError(null);
-
-                    fragment.sendMessage("arf" + activeResonatorFrequencyText +
-                            "rrf" + referenceResonatorFrequencyText +
-                            "ars" + activeResonatorSamplingRateText +
-                            "rrs" + referenceResonatorSamplingRateText +
-                            "swe" + sweepsText +
-                            "sam" + samplesText +
-                            "ave" + averagesText +
-                            "txp" + txPowerText +
-                            "txt" + txTimeText +
-                            "rxd" + rxDelayText);
-
-                    Toast.makeText(getActivity(), "Parameters sent to reader.",
-                            Toast.LENGTH_LONG).show();
-                }
-            }
-        });
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                EditText activeResonatorFrequency = getActivity().findViewById(R.id.active_resonator_frequency);
+//                EditText referenceResonatorFrequency = getActivity().findViewById(R.id.reference_resonator_frequency);
+//                EditText activeResonatorSamplingRate = getActivity().findViewById(R.id.active_resonator_sampling_rate);
+//                EditText referenceResonatorSamplingRate = getActivity().findViewById(R.id.reference_resonator_sampling_rate);
+//                EditText sweeps = getActivity().findViewById(R.id.sweeps);
+//                EditText samples = getActivity().findViewById(R.id.samples);
+//                EditText averages = getActivity().findViewById(R.id.averages);
+//                EditText txPower = getActivity().findViewById(R.id.tx_power);
+//                EditText txTime = getActivity().findViewById(R.id.tx_time);
+//                EditText rxDelay = getActivity().findViewById(R.id.rx_delay);
+//
+//                String activeResonatorFrequencyText;
+//                String referenceResonatorFrequencyText;
+//                String activeResonatorSamplingRateText;
+//                String referenceResonatorSamplingRateText;
+//                String sweepsText;
+//                String samplesText;
+//                String averagesText;
+//                String txPowerText;
+//                String txTimeText;
+//                String rxDelayText;
+//
+//                Boolean isThereAnythingToSend = false;
+//
+//                //New Code between here
+//
+//
+//
+//
+//                // and here
+//
+//                if(!activeResonatorFrequency.getText().toString().isEmpty()){
+//                    activeResonatorFrequencyText = activeResonatorFrequency.getText().toString();
+//                    isThereAnythingToSend = true;
+//                } else {
+//                    activeResonatorFrequencyText = activeResonatorFrequency.getHint().toString();
+//                }
+//
+//                if(!referenceResonatorFrequency.getText().toString().isEmpty()){
+//                    referenceResonatorFrequencyText = referenceResonatorFrequency.getText().toString();
+//                    isThereAnythingToSend = true;
+//                } else {
+//                    referenceResonatorFrequencyText = referenceResonatorFrequency.getHint().toString();
+//                }
+//
+//                if(!activeResonatorSamplingRate.getText().toString().isEmpty()){
+//                    activeResonatorSamplingRateText = activeResonatorSamplingRate.getText().toString();
+//                    isThereAnythingToSend = true;
+//                } else {
+//                    activeResonatorSamplingRateText = activeResonatorSamplingRate.getHint().toString();
+//                }
+//
+//                if(!referenceResonatorSamplingRate.getText().toString().isEmpty()){
+//                    referenceResonatorSamplingRateText = referenceResonatorSamplingRate.getText().toString();
+//                    isThereAnythingToSend = true;
+//                } else {
+//                    referenceResonatorSamplingRateText = referenceResonatorSamplingRate.getHint().toString();
+//                }
+//
+//                if(!sweeps.getText().toString().isEmpty()){
+//                    sweepsText = sweeps.getText().toString();
+//                    isThereAnythingToSend = true;
+//                } else {
+//                    sweepsText = sweeps.getHint().toString();
+//                }
+//
+//                if(!samples.getText().toString().isEmpty()){
+//                    samplesText = samples.getText().toString();
+//                    isThereAnythingToSend = true;
+//                } else {
+//                    samplesText = samples.getHint().toString();
+//                }
+//
+//                if(!averages.getText().toString().isEmpty()){
+//                    averagesText = averages.getText().toString();
+//                    isThereAnythingToSend = true;
+//                } else {
+//                    averagesText = averages.getHint().toString();
+//                }
+//
+//                if(!txPower.getText().toString().isEmpty()){
+//                    txPowerText = txPower.getText().toString();
+//                    isThereAnythingToSend = true;
+//                } else {
+//                    txPowerText = txPower.getHint().toString();
+//                }
+//
+//                if(!txTime.getText().toString().isEmpty()){
+//                    txTimeText = txTime.getText().toString();
+//                    isThereAnythingToSend = true;
+//                } else {
+//                    txTimeText = txTime.getHint().toString();
+//                }
+//
+//                if(!rxDelay.getText().toString().isEmpty()){
+//                    rxDelayText = rxDelay.getText().toString();
+//                    isThereAnythingToSend = true;
+//                } else {
+//                    rxDelayText = rxDelay.getHint().toString();
+//                }
+//
+//                Boolean isThereAnErrorInParams = false;
+//
+//                if(Double.parseDouble(activeResonatorFrequencyText) > 920.0 ||
+//                        Double.parseDouble(activeResonatorFrequencyText) < 915.0 ||
+//                        Double.parseDouble(activeResonatorFrequencyText) > Double.parseDouble(referenceResonatorFrequencyText)) {
+//
+//                    isThereAnErrorInParams = true;
+//
+//                    activeResonatorFrequency.setError("Must be in range 915-920Mhz and less than reference resonator frequency.");
+//                }
+//
+//                if(Double.parseDouble(referenceResonatorFrequencyText) > 920.0 ||
+//                        Double.parseDouble(referenceResonatorFrequencyText) < 915.0) {
+//
+//                    isThereAnErrorInParams = true;
+//
+//                    referenceResonatorFrequency.setError("Must be in range 915-920Mhz.");
+//                }
+//
+//                if(Double.parseDouble(activeResonatorSamplingRateText) > 100 ||
+//                        Double.parseDouble(activeResonatorSamplingRateText) < 5) {
+//
+//                    isThereAnErrorInParams = true;
+//
+//                    activeResonatorSamplingRate.setError("Must be in range 5-100ms.");
+//                }
+//
+//                if(Double.parseDouble(referenceResonatorSamplingRateText) > 7 ||
+//                        Double.parseDouble(referenceResonatorSamplingRateText) < 1) {
+//
+//                    isThereAnErrorInParams = true;
+//
+//                    referenceResonatorSamplingRate.setError("Must be in range 1-7s.");
+//                }
+//
+//                if(Double.parseDouble(sweepsText) > 2047 ||
+//                        Double.parseDouble(sweepsText) < 1) {
+//
+//                    isThereAnErrorInParams = true;
+//
+//                    sweeps.setError("Must be in range 1-2047.");
+//                }
+//
+//                if(Double.parseDouble(samplesText) > 1000 ||
+//                        Double.parseDouble(samplesText) < 64) {
+//
+//                    isThereAnErrorInParams = true;
+//
+//                    samples.setError("Must be in range 64-1000.");
+//                }
+//
+//                if(Double.parseDouble(averagesText) > 999 ||
+//                        Double.parseDouble(averagesText) < 63 ||
+//                        Double.parseDouble(averagesText) > Double.parseDouble(samplesText)) {
+//
+//                    isThereAnErrorInParams = true;
+//
+//                    averages.setError("Must be in range 63-999 and less than samples.");
+//                }
+//
+//                if(Double.parseDouble(txPowerText) > 1023 ||
+//                        Double.parseDouble(txPowerText) < 0) {
+//
+//                    isThereAnErrorInParams = true;
+//
+//                    txPower.setError("Must be in range 0-1023.");
+//                }
+//
+//                if(Double.parseDouble(txTimeText) > 1023 ||
+//                        Double.parseDouble(txTimeText) < 0) {
+//
+//                    isThereAnErrorInParams = true;
+//
+//                    txTime.setError("Must be in range 0-1023.");
+//                }
+//
+//                if(Double.parseDouble(rxDelayText) > 1023 ||
+//                        Double.parseDouble(rxDelayText) < 0) {
+//
+//                    isThereAnErrorInParams = true;
+//
+//                    rxDelay.setError("Must be in range 0-1023.");
+//                }
+//
+//                if(isThereAnErrorInParams) {
+//                    Toast.makeText(getActivity(), "Please recheck parameter values.",
+//                            Toast.LENGTH_LONG).show();
+//
+//                    return;
+//                }
+//
+//                if(!isThereAnErrorInParams && !isThereAnythingToSend) {
+//                    activeResonatorFrequency.setError(null);
+//                    referenceResonatorFrequency.setError(null);
+//                    activeResonatorSamplingRate.setError(null);
+//                    referenceResonatorSamplingRate.setError(null);
+//                    sweeps.setError(null);
+//                    samples.setError(null);
+//                    averages.setError(null);
+//                    txPower.setError(null);
+//                    txTime.setError(null);
+//                    rxDelay.setError(null);
+//
+//                    Toast.makeText(getActivity(), "Nothing to send.",
+//                            Toast.LENGTH_LONG).show();
+//
+//                    return;
+//                }
+//
+//                if(!isThereAnErrorInParams && isThereAnythingToSend) {
+//                    activeResonatorFrequency.setError(null);
+//                    referenceResonatorFrequency.setError(null);
+//                    activeResonatorSamplingRate.setError(null);
+//                    referenceResonatorSamplingRate.setError(null);
+//                    sweeps.setError(null);
+//                    samples.setError(null);
+//                    averages.setError(null);
+//                    txPower.setError(null);
+//                    txTime.setError(null);
+//                    rxDelay.setError(null);
+//
+//                    fragment.sendMessage("arf" + activeResonatorFrequencyText +
+//                            "rrf" + referenceResonatorFrequencyText +
+//                            "ars" + activeResonatorSamplingRateText +
+//                            "rrs" + referenceResonatorSamplingRateText +
+//                            "swe" + sweepsText +
+//                            "sam" + samplesText +
+//                            "ave" + averagesText +
+//                            "txp" + txPowerText +
+//                            "txt" + txTimeText +
+//                            "rxd" + rxDelayText);
+//
+//                    Toast.makeText(getActivity(), "Parameters sent to reader.",
+//                            Toast.LENGTH_LONG).show();
+//                }
+//            }
+//        });
 
         databaseHandler = new DatabaseHandler(getActivity());
 
