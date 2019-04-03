@@ -115,7 +115,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
     }
 
     PopupWindow pop;
-    //Button save;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -123,36 +123,40 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
         readerParams.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                System.out.println("Clicked");
 
-                //LayoutInflater inflater = (LayoutInflater) getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                //View popupView = inflater.inflate(R.layout.popup_readerparams, null);
                 View popupView = getLayoutInflater().inflate(R.layout.popup_readerparams, null);
 
-                //int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-                //int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                //final PopupWindow pw = new PopupWindow(popupView, width, height, true);
-
-//                pop.setContentView(popupView);
-//                DisplayMetrics dm = getActivity().getResources().getDisplayMetrics();
-//                pop.setWidth(dm.widthPixels);
-//                pop.setHeight(dm.heightPixels);
-//                pop.setFocusable(true);
-//                pop.setBackgroundDrawable(null);
-//                pop.showAtLocation(popupView, Gravity.CENTER, 1, 1);
-                pop = new PopupWindow(popupView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, false);
+                pop = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, false);
                 pop.setAnimationStyle(android.R.style.Animation_Dialog);
 
-                pop.showAtLocation(view, Gravity.CENTER, 0, 0);
+                pop.showAtLocation(popupView, Gravity.CENTER, 0, 0);
+
+                TextView save = (TextView) popupView.findViewById(R.id.popup_save);
+                TextView cancel = (TextView) popupView.findViewById(R.id.popup_cancel);
+
+                save.setOnClickListener(saveHandler);
+                cancel.setOnClickListener(cancelHandler);
 
             }
         });
 
 
-
-
         getActivity().setTitle("Graph");
     }
+
+    View.OnClickListener saveHandler = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            System.out.println("Save");
+        }
+    };
+
+    View.OnClickListener cancelHandler = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            pop.dismiss();
+        }
+    };
 
     @Override
     public void onStart() {
