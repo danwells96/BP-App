@@ -1,22 +1,220 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:background="@color/black"
-    android:orientation="horizontal">
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/popup_save"
-        android:text="Save" />
+    android:layout_height="wrap_content"
+    android:background="@color/black">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tv"
+        android:id="@+id/active_frequency"
         android:textColor="@color/black"
-        android:textSize="40dp"
-        android:text="sdjhfjashd"
+        android:textSize="18dp"
+        android:text="Active Resonator Frequency (MHz)"
+        android:background="@color/white"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_active_frequency"
+        android:layout_toRightOf="@+id/active_frequency"
         android:background="@color/white"
-        android:layout_gravity="center"/>
-</LinearLayout>
+        android:hint="888"
+        android:layout_marginLeft="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/reference_frequency"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:text="Reference Resonator Frequency (MHz)"
+        android:layout_below="@+id/active_frequency"
+        android:background="@color/white"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_reference_frequency"
+        android:layout_toRightOf="@+id/reference_frequency"
+        android:layout_below="@+id/edit_active_frequency"
+        android:background="@color/white"
+        android:hint="888"
+        android:layout_marginLeft="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/active_sample"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:text="Active Resonator Sampling Rate (ms)"
+        android:layout_below="@+id/reference_frequency"
+        android:background="@color/white"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_active_sample"
+        android:layout_toRightOf="@+id/active_sample"
+        android:layout_below="@+id/edit_reference_frequency"
+        android:background="@color/white"
+        android:hint="888"
+        android:layout_marginLeft="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/reference_sample"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:text="Reference Resonator Sampling Rate (s)"
+        android:layout_below="@+id/active_sample"
+        android:background="@color/white"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_reference_sample"
+        android:layout_toRightOf="@+id/reference_sample"
+        android:layout_below="@+id/edit_active_sample"
+        android:background="@color/white"
+        android:hint="888"
+        android:layout_marginLeft="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sweeps"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:text="Sweeps"
+        android:layout_below="@+id/reference_sample"
+        android:background="@color/white"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_sweeps"
+        android:layout_toRightOf="@+id/sweeps"
+        android:layout_below="@+id/edit_reference_sample"
+        android:background="@color/white"
+        android:hint="888"
+        android:layout_marginLeft="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/samples"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:text="Samples"
+        android:layout_below="@+id/sweeps"
+        android:background="@color/white"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_samples"
+        android:layout_toRightOf="@+id/samples"
+        android:layout_below="@+id/edit_sweeps"
+        android:background="@color/white"
+        android:hint="888"
+        android:layout_marginLeft="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/averages"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:text="Averages"
+        android:layout_below="@+id/samples"
+        android:background="@color/white"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_averages"
+        android:layout_toRightOf="@+id/averages"
+        android:layout_below="@+id/edit_samples"
+        android:background="@color/white"
+        android:hint="888"
+        android:layout_marginLeft="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tx_pwr"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:text="Tx Power"
+        android:layout_below="@+id/averages"
+        android:background="@color/white"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_tx_pwr"
+        android:layout_toRightOf="@+id/tx_pwr"
+        android:layout_below="@+id/edit_averages"
+        android:background="@color/white"
+        android:hint="888"
+        android:layout_marginLeft="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tx_t"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:text="Tx Time"
+        android:layout_below="@+id/tx_pwr"
+        android:background="@color/white"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_tx_t"
+        android:layout_toRightOf="@+id/tx_t"
+        android:layout_below="@+id/edit_tx_pwr"
+        android:background="@color/white"
+        android:hint="888"
+        android:layout_marginLeft="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/rx_delay"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:text="Rx Delay"
+        android:layout_below="@+id/tx_t"
+        android:background="@color/white"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_rx_delay"
+        android:layout_toRightOf="@id/rx_delay"
+        android:layout_below="@id/edit_tx_t"
+        android:background="@color/white"
+        android:hint="888"
+        android:layout_marginLeft="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/popup_cancel"
+        android:text="Cancel"
+        android:textSize="22dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginBottom="20dp"
+        android:background="@color/colorAccent"
+        android:layout_below="@id/rx_delay"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/popup_save"
+        android:text="Save Values"
+        android:textSize="22dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="0dp"
+        android:layout_toRightOf="@id/popup_cancel"
+        android:layout_alignTop="@+id/popup_cancel"
+        android:background="@color/colorAccent"/>
+
+</RelativeLayout>

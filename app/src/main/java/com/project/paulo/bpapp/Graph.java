@@ -145,35 +145,6 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
 
                 pop.showAtLocation(view, Gravity.CENTER, 0, 0);
 
-
-                Button save = (Button)popupView.findViewById(R.id.save_button);
-
-                TextView tv = (TextView) popupView.findViewById(R.id.tv);
-
-                tv.setText("Hi");
-                if(tv == null){
-                    System.out.println("TV null");
-                }else{
-                    tv.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            System.out.println("TV Clicked");
-                            pop.dismiss();
-                        }
-                    });
-                }
-
-                if(save != null) {
-                    save.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            System.out.println("Clicked SAVE");
-                        }
-                    });
-                }else{
-                    System.out.println("NULL POINTER");
-                }
-
             }
         });
 
