@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -127,8 +128,9 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
 
                 View popupView = getLayoutInflater().inflate(R.layout.popup_readerparams, null);
 
-                pop = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, false);
+                pop = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
                 pop.setAnimationStyle(android.R.style.Animation_Dialog);
+                pop.setOutsideTouchable(false);
 
                 pop.showAtLocation(popupView, Gravity.CENTER, 0, 0);
 
@@ -145,6 +147,8 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
         getActivity().setTitle("Graph");
     }
 
+
+
     View.OnClickListener saveHandler = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -159,7 +163,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
                 System.out.println("NOT EMPTY");
                 System.out.println(activeFrequency.getText().toString());
             }
-
+            pop.dismiss();
         }
     };
 
@@ -169,6 +173,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
             pop.dismiss();
         }
     };
+
 
     @Override
     public void onStart() {

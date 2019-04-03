@@ -19,6 +19,8 @@
         android:layout_toRightOf="@+id/active_frequency"
         android:background="@color/white"
         android:hint="888"
+        android:focusable="true"
+        android:inputType="number"
         android:layout_marginLeft="10dp"/>
 
     <TextView
@@ -38,6 +40,7 @@
         android:layout_below="@+id/edit_active_frequency"
         android:background="@color/white"
         android:hint="888"
+        android:inputType="number"
         android:layout_marginLeft="10dp"/>
 
     <TextView
@@ -57,6 +60,7 @@
         android:layout_below="@+id/edit_reference_frequency"
         android:background="@color/white"
         android:hint="888"
+        android:inputType="number"
         android:layout_marginLeft="10dp"/>
 
     <TextView
@@ -76,6 +80,7 @@
         android:layout_below="@+id/edit_active_sample"
         android:background="@color/white"
         android:hint="888"
+        android:inputType="number"
         android:layout_marginLeft="10dp"/>
 
     <TextView
@@ -95,6 +100,7 @@
         android:layout_below="@+id/edit_reference_sample"
         android:background="@color/white"
         android:hint="888"
+        android:inputType="number"
         android:layout_marginLeft="10dp"/>
 
     <TextView
@@ -114,6 +120,7 @@
         android:layout_below="@+id/edit_sweeps"
         android:background="@color/white"
         android:hint="888"
+        android:inputType="number"
         android:layout_marginLeft="10dp"/>
 
     <TextView
@@ -133,6 +140,7 @@
         android:layout_below="@+id/edit_samples"
         android:background="@color/white"
         android:hint="888"
+        android:inputType="number"
         android:layout_marginLeft="10dp"/>
 
     <TextView
@@ -152,6 +160,7 @@
         android:layout_below="@+id/edit_averages"
         android:background="@color/white"
         android:hint="888"
+        android:inputType="number"
         android:layout_marginLeft="10dp"/>
 
     <TextView
@@ -171,6 +180,7 @@
         android:layout_below="@+id/edit_tx_pwr"
         android:background="@color/white"
         android:hint="888"
+        android:inputType="number"
         android:layout_marginLeft="10dp"/>
 
     <TextView
@@ -190,6 +200,7 @@
         android:layout_below="@id/edit_tx_t"
         android:background="@color/white"
         android:hint="888"
+        android:inputType="number"
         android:layout_marginLeft="10dp"/>
 
     <TextView
