@@ -203,29 +203,5 @@
         android:inputType="number"
         android:layout_marginLeft="10dp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/popup_cancel"
-        android:text="Cancel"
-        android:textSize="22dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:layout_marginBottom="20dp"
-        android:background="@color/colorAccent"
-        android:layout_below="@id/rx_delay"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/popup_save"
-        android:text="Save Values"
-        android:textSize="22dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="0dp"
-        android:layout_toRightOf="@id/popup_cancel"
-        android:layout_alignTop="@+id/popup_cancel"
-        android:background="@color/colorAccent"/>
 
 </RelativeLayout>

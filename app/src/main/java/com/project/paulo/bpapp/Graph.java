@@ -126,24 +126,10 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
             @Override
             public void onClick(View view) {
 
-//                View popupView = getLayoutInflater().inflate(R.layout.popup_readerparams, null);
-//
-//                pop = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
-//                pop.setAnimationStyle(android.R.style.Animation_Dialog);
-//                pop.setOutsideTouchable(false);
-//
-//                pop.showAtLocation(popupView, Gravity.CENTER, 0, 0);
-
                 ReaderDialog rd = new ReaderDialog();
 
                 rd.show(getActivity().getSupportFragmentManager(), "ReaderDialog");
 
-
-//                TextView save = (TextView) popupView.findViewById(R.id.popup_save);
-//                TextView cancel = (TextView) popupView.findViewById(R.id.popup_cancel);
-//
-//                save.setOnClickListener(saveHandler);
-//                cancel.setOnClickListener(cancelHandler);
 
             }
         });
