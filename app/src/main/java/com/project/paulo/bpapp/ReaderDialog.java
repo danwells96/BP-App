@@ -81,13 +81,24 @@ public class ReaderDialog extends DialogFragment {
                 if(!empty){
                     ad.dismiss();
                     //Put function storing values into graph fragment here
-
-                    TextView tv = view.getRootView().findViewById(R.id.readerParams);
-                    tv.setText("Saved changes shown here");
+                    ParameterListener p = (ParameterListener) getTargetFragment();
+                    p.onFinishDialog(etList);
+                    //TextView tv = view.getRootView().findViewById(R.id.readerParams);
+                    //tv.setText("Saved changes shown here");
                 }else{
                     Toast.makeText(getContext(), "Empty fields must be completed before saving", Toast.LENGTH_LONG).show();
                 }
             }
         });
+    }
+
+    public interface ParameterListener{
+        void onFinishDialog(List<EditText> etList);
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+
     }
 }

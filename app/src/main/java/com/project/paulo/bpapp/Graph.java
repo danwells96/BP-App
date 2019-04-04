@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,10 +58,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Graph extends Fragment implements OnChartValueSelectedListener {
+public class Graph extends Fragment implements OnChartValueSelectedListener, ReaderDialog.ParameterListener {
 
     public static final String TAG = "GraphFragment";
 
@@ -115,16 +117,23 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
 
                 rd.setCancelable(false);
 
-                rd.show(getActivity().getSupportFragmentManager(), "ReaderDialog");
+                rd.show(getFragmentManager(), "ReaderDialog");
 
-
-
+                rd.setTargetFragment(Graph.this, 1);
             }
         });
 
         getActivity().setTitle("Graph");
     }
 
+    @Override
+    public void onFinishDialog(List<EditText> etList) {
+        TextView tv = getActivity().findViewById(R.id.readerParams);
+        tv.setText("Changed params");
+        for(EditText e : etList){
+            System.out.println("Element");
+        }
+    }
 
     @Override
     public void onStart() {
