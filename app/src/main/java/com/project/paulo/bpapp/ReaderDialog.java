@@ -74,13 +74,14 @@ public class ReaderDialog extends DialogFragment {
                 boolean empty = false;
                 for(EditText e : etList){
                     if(e.getText().toString().isEmpty()){
-                        System.out.println("Empty String");
-                        Toast.makeText(getContext(), "Empty fields must be completed before saving", Toast.LENGTH_LONG).show();
                         empty = true;
                     }
                 }
                 if(!empty){
                     ad.dismiss();
+                    //Put function storing values into graph fragment here
+                }else{
+                    Toast.makeText(getContext(), "Empty fields must be completed before saving", Toast.LENGTH_LONG).show();
                 }
             }
         });

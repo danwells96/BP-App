@@ -1,13 +1,10 @@
 package com.project.paulo.bpapp;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -15,19 +12,11 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.text.Html;
-import android.util.DisplayMetrics;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,8 +50,6 @@ import com.project.paulo.bpapp.mathematics.ArrayIndex;
 import com.project.paulo.bpapp.mathematics.ArrayMean;
 import com.project.paulo.bpapp.mathematics.Filter;
 
-import org.w3c.dom.Text;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -72,8 +59,6 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 public class Graph extends Fragment implements OnChartValueSelectedListener {
 
@@ -115,11 +100,11 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
         return inflater.inflate(R.layout.graph, container, false);
     }
 
-    PopupWindow pop;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         //Need to get these values from memory to fill out
         TextView readerParams = (TextView) getActivity().findViewById(R.id.readerParams);
         readerParams.setOnClickListener(new View.OnClickListener(){
@@ -137,33 +122,6 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
 
         getActivity().setTitle("Graph");
     }
-
-
-
-    View.OnClickListener saveHandler = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            System.out.println("Save");
-            EditText activeFrequency = pop.getContentView().findViewById(R.id.edit_active_frequency);
-            pop.setFocusable(true);
-            pop.update();
-            if(activeFrequency.getText().toString()==""){
-                System.out.println("EMPTY");
-                Toast.makeText(getActivity().getParent().getBaseContext(), "You must enter a value for active frequency in order to save", Toast.LENGTH_LONG).show();
-            }else {
-                System.out.println("NOT EMPTY");
-                System.out.println(activeFrequency.getText().toString());
-            }
-            pop.dismiss();
-        }
-    };
-
-    View.OnClickListener cancelHandler = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            pop.dismiss();
-        }
-    };
 
 
     @Override
