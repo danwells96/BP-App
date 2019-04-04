@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -80,6 +81,9 @@ public class ReaderDialog extends DialogFragment {
                 if(!empty){
                     ad.dismiss();
                     //Put function storing values into graph fragment here
+
+                    TextView tv = view.getRootView().findViewById(R.id.readerParams);
+                    tv.setText("Saved changes shown here");
                 }else{
                     Toast.makeText(getContext(), "Empty fields must be completed before saving", Toast.LENGTH_LONG).show();
                 }

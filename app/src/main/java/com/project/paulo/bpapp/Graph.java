@@ -113,12 +113,14 @@ public class Graph extends Fragment implements OnChartValueSelectedListener {
 
                 ReaderDialog rd = new ReaderDialog();
 
+                rd.setCancelable(false);
+
                 rd.show(getActivity().getSupportFragmentManager(), "ReaderDialog");
+
 
 
             }
         });
-
 
         getActivity().setTitle("Graph");
     }
