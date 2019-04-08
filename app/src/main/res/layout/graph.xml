@@ -87,16 +87,193 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:id="@+id/readerParams"
             android:background="@color/colorAccent"
+            android:clickable="true"
             android:layout_gravity="center">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/readerParams"
-                android:gravity="center"
-                android:clickable="true"
-                android:text="CXN Details go in this sublayout"
-                android:textSize="40dp"/>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:padding="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_activeFrequency"
+                    android:gravity="center"
+                    android:text="Active Frequency:"
+                    android:textSize="16dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_activeFrequencyValue"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/textView_activeFrequency"
+                    android:textSize="16dp"
+                    android:text="- MHz"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_referenceFrequency"
+                    android:layout_below="@id/textView_activeFrequency"
+                    android:gravity="center"
+                    android:text="Reference Frequency:"
+                    android:textSize="16dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_referenceFrequencyValue"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/textView_referenceFrequency"
+                    android:layout_below="@id/textView_activeFrequency"
+                    android:textSize="16dp"
+                    android:text="- MHz"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_activeSample"
+                    android:layout_below="@id/textView_referenceFrequency"
+                    android:gravity="center"
+                    android:text="Active Sampling Rate:"
+                    android:textSize="16dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_activeSampleValue"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/textView_activeSample"
+                    android:layout_below="@id/textView_referenceFrequency"
+                    android:textSize="16dp"
+                    android:text="- ms"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_referenceSample"
+                    android:layout_below="@id/textView_activeSample"
+                    android:gravity="center"
+                    android:text="Reference Sampling Rate:"
+                    android:textSize="16dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_referenceSampleValue"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/textView_referenceSample"
+                    android:layout_below="@id/textView_activeSample"
+                    android:textSize="16dp"
+                    android:text="- s"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_sweeps"
+                    android:layout_below="@id/textView_referenceSample"
+                    android:gravity="center"
+                    android:text="Sweeps:"
+                    android:textSize="16dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_sweepsValue"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/textView_sweeps"
+                    android:layout_below="@id/textView_referenceSample"
+                    android:textSize="16dp"
+                    android:text="-"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_samples"
+                    android:layout_below="@id/textView_sweeps"
+                    android:gravity="center"
+                    android:text="Sweeps:"
+                    android:textSize="16dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_samplesValue"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/textView_samples"
+                    android:layout_below="@id/textView_sweeps"
+                    android:textSize="16dp"
+                    android:text="-"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_average"
+                    android:layout_below="@id/textView_samples"
+                    android:gravity="center"
+                    android:text="Average:"
+                    android:textSize="16dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_averageValue"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/textView_average"
+                    android:layout_below="@id/textView_samples"
+                    android:textSize="16dp"
+                    android:text="-"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_txPower"
+                    android:layout_below="@id/textView_average"
+                    android:gravity="center"
+                    android:text="Tx Power:"
+                    android:textSize="16dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_txPowerValue"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/textView_txPower"
+                    android:layout_below="@id/textView_average"
+                    android:textSize="16dp"
+                    android:text="-"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_txTime"
+                    android:layout_below="@id/textView_txPower"
+                    android:gravity="center"
+                    android:text="Tx Time:"
+                    android:textSize="16dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_txTimeValue"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/textView_txTime"
+                    android:layout_below="@id/textView_txPower"
+                    android:textSize="16dp"
+                    android:text="-"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_rxDelay"
+                    android:layout_below="@id/textView_txTime"
+                    android:gravity="center"
+                    android:text="Rx Delay:"
+                    android:textSize="16dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView_rxDelayValue"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/textView_rxDelay"
+                    android:layout_below="@id/textView_txTime"
+                    android:textSize="16dp"
+                    android:text="-"/>
+            </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
 

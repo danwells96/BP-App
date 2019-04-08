@@ -108,7 +108,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
         super.onViewCreated(view, savedInstanceState);
 
         //Need to get these values from memory to fill out
-        TextView readerParams = (TextView) getActivity().findViewById(R.id.readerParams);
+        View readerParams = getActivity().findViewById(R.id.readerParams);
         readerParams.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -126,10 +126,14 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
         getActivity().setTitle("Graph");
     }
 
+    //Interface method to get reader parameters from ReaderDialog.class
     @Override
     public void onFinishDialog(List<EditText> etList) {
-        TextView tv = getActivity().findViewById(R.id.readerParams);
-        tv.setText("Changed params");
+        View v = getActivity().findViewById(R.id.readerParams);
+        TextView refFrequency = v.findViewById(R.id.textView_activeFrequencyValue);
+        refFrequency.setText("{} MHz".format(etList.get(0).getText().toString()));
+        //tv.setText("Changed params");
+        //Set parameters to text view here
         for(EditText e : etList){
             System.out.println("Element");
         }
