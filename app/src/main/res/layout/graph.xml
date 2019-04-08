@@ -190,7 +190,7 @@
                     android:id="@+id/textView_samples"
                     android:layout_below="@id/textView_sweeps"
                     android:gravity="center"
-                    android:text="Sweeps:"
+                    android:text="Samples:"
                     android:textSize="16dp"/>
                 <TextView
                     android:layout_width="wrap_content"

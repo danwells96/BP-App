@@ -1,6 +1,7 @@
 package com.project.paulo.bpapp;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -17,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -108,12 +110,21 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
         super.onViewCreated(view, savedInstanceState);
 
         //Need to get these values from memory to fill out
-        View readerParams = getActivity().findViewById(R.id.readerParams);
+        final View readerParams = getActivity().findViewById(R.id.readerParams);
+        final ArrayList<String> tvList = new ArrayList<>();
+
+        //Need to add rest of strings into list
+        tvList.add(((TextView)readerParams.findViewById(R.id.textView_activeFrequencyValue)).getText().toString());
+        
         readerParams.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+                Bundle b = new Bundle();
+                b.putStringArrayList("values", tvList);
 
                 ReaderDialog rd = new ReaderDialog();
+                rd.setArguments(b);
+                //rd.setHintValues(tvList, rd.etList);
 
                 rd.setCancelable(false);
 
@@ -130,13 +141,19 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
     @Override
     public void onFinishDialog(List<EditText> etList) {
         View v = getActivity().findViewById(R.id.readerParams);
-        TextView refFrequency = v.findViewById(R.id.textView_activeFrequencyValue);
-        refFrequency.setText("{} MHz".format(etList.get(0).getText().toString()));
-        //tv.setText("Changed params");
-        //Set parameters to text view here
-        for(EditText e : etList){
-            System.out.println("Element");
-        }
+
+        ((TextView)v.findViewById(R.id.textView_activeFrequencyValue)).setText(etList.get(0).getText()+" MHz");
+        ((TextView)v.findViewById(R.id.textView_referenceFrequencyValue)).setText(etList.get(1).getText()+" MHz");
+        ((TextView)v.findViewById(R.id.textView_activeSampleValue)).setText(etList.get(2).getText()+" ms");
+        ((TextView)v.findViewById(R.id.textView_referenceSampleValue)).setText(etList.get(3).getText()+" s");
+        ((TextView)v.findViewById(R.id.textView_sweepsValue)).setText(etList.get(4).getText());
+        ((TextView)v.findViewById(R.id.textView_samplesValue)).setText(etList.get(5).getText());
+        ((TextView)v.findViewById(R.id.textView_averageValue)).setText(etList.get(6).getText());
+        ((TextView)v.findViewById(R.id.textView_txPowerValue)).setText(etList.get(7).getText());
+        ((TextView)v.findViewById(R.id.textView_txTimeValue)).setText(etList.get(8).getText());
+        ((TextView)v.findViewById(R.id.textView_rxDelayValue)).setText(etList.get(9).getText());
+
+
     }
 
     @Override

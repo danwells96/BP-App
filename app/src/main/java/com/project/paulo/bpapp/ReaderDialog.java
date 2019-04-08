@@ -18,11 +18,12 @@ import java.util.List;
 
 
 public class ReaderDialog extends DialogFragment {
-    private List<EditText> etList = new ArrayList<>();
+    public List<EditText> etList = new ArrayList<>();
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View layout = inflater.inflate(R.layout.popup_readerparams, null);
@@ -50,6 +51,12 @@ public class ReaderDialog extends DialogFragment {
         etList.add(txTime);
         etList.add(rxDelay);
 
+        //Get stringlist from bundle savedinstancestate
+        List<String> stringList = new ArrayList<>();
+        Bundle b = getArguments();
+        stringList = b.getStringArrayList("values");
+        this.setHintValues(stringList, etList);
+
 
         builder.setView(layout);
         builder.setPositiveButton("Save Values", null);
@@ -57,7 +64,7 @@ public class ReaderDialog extends DialogFragment {
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-
+                dismiss();
             }
         });
 
@@ -83,13 +90,36 @@ public class ReaderDialog extends DialogFragment {
                     //Put function storing values into graph fragment here
                     ParameterListener p = (ParameterListener) getTargetFragment();
                     p.onFinishDialog(etList);
-                    //TextView tv = view.getRootView().findViewById(R.id.readerParams);
-                    //tv.setText("Saved changes shown here");
                 }else{
                     Toast.makeText(getContext(), "Empty fields must be completed before saving", Toast.LENGTH_LONG).show();
                 }
             }
         });
+    }
+
+    //Need to get view (from graph fragment) into constructor
+    public void setHintValues(List<String> valueList, List<EditText> list){
+
+        for(String s : valueList){
+            s.replaceAll("[^0-9.]", "");
+        }
+
+        int index = 0;
+
+        System.out.println(list.size());
+        System.out.println(valueList.size());
+        for(EditText e : list){
+            if(valueList.get(index).isEmpty()){
+                e.setText("000");
+                System.out.println("In here");
+            }else {
+                e.setText(valueList.get(index));
+                System.out.println("Actually here");
+            }
+            index++;
+        }
+
+
     }
 
     public interface ParameterListener{
