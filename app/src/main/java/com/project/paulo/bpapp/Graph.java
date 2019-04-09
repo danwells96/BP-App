@@ -105,13 +105,15 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
     }
 
 
+    ArrayList<String> tvList = new ArrayList<>();
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         //Need to get these values from memory to fill out
         final View readerParams = getActivity().findViewById(R.id.readerParams);
-        final ArrayList<String> tvList = new ArrayList<>();
+        //ArrayList<String> tvList = new ArrayList<>();
+        System.out.println("Here");
 
         //Need to add rest of strings into list
         tvList.add(((TextView)readerParams.findViewById(R.id.textView_activeFrequencyValue)).getText().toString());
@@ -133,7 +135,6 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
 
                 ReaderDialog rd = new ReaderDialog();
                 rd.setArguments(b);
-                //rd.setHintValues(tvList, rd.etList);
 
                 rd.setCancelable(false);
 
@@ -162,6 +163,17 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
         ((TextView)v.findViewById(R.id.textView_txTimeValue)).setText(etList.get(8).getText());
         ((TextView)v.findViewById(R.id.textView_rxDelayValue)).setText(etList.get(9).getText());
 
+        tvList.clear();
+        tvList.add(((TextView)v.findViewById(R.id.textView_activeFrequencyValue)).getText().toString());
+        tvList.add(((TextView)v.findViewById(R.id.textView_referenceFrequencyValue)).getText().toString());
+        tvList.add(((TextView)v.findViewById(R.id.textView_activeSampleValue)).getText().toString());
+        tvList.add(((TextView)v.findViewById(R.id.textView_referenceSampleValue)).getText().toString());
+        tvList.add(((TextView)v.findViewById(R.id.textView_sweepsValue)).getText().toString());
+        tvList.add(((TextView)v.findViewById(R.id.textView_samplesValue)).getText().toString());
+        tvList.add(((TextView)v.findViewById(R.id.textView_averageValue)).getText().toString());
+        tvList.add(((TextView)v.findViewById(R.id.textView_txPowerValue)).getText().toString());
+        tvList.add(((TextView)v.findViewById(R.id.textView_txTimeValue)).getText().toString());
+        tvList.add(((TextView)v.findViewById(R.id.textView_rxDelayValue)).getText().toString());
 
     }
 

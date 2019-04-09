@@ -29,16 +29,16 @@ public class ReaderDialog extends DialogFragment {
         View layout = inflater.inflate(R.layout.popup_readerparams, null);
 
         //EditText objects from alert dialog so updated values can be saved
-        final EditText activeFrequency = layout.findViewById(R.id.edit_active_frequency);
-        final EditText referenceFrequency = layout.findViewById(R.id.edit_reference_frequency);
-        final EditText activeSampling = layout.findViewById(R.id.edit_active_sample);
-        final EditText referenceSampling = layout.findViewById(R.id.edit_reference_sample);
-        final EditText sweeps = layout.findViewById(R.id.edit_sweeps);
-        final EditText samples = layout.findViewById(R.id.edit_samples);
-        final EditText averages = layout.findViewById(R.id.edit_averages);
-        final EditText txPower = layout.findViewById(R.id.edit_tx_pwr);
-        final EditText txTime = layout.findViewById(R.id.edit_tx_t);
-        final EditText rxDelay = layout.findViewById(R.id.edit_rx_delay);
+        EditText activeFrequency = layout.findViewById(R.id.edit_active_frequency);
+        EditText referenceFrequency = layout.findViewById(R.id.edit_reference_frequency);
+        EditText activeSampling = layout.findViewById(R.id.edit_active_sample);
+        EditText referenceSampling = layout.findViewById(R.id.edit_reference_sample);
+        EditText sweeps = layout.findViewById(R.id.edit_sweeps);
+        EditText samples = layout.findViewById(R.id.edit_samples);
+        EditText averages = layout.findViewById(R.id.edit_averages);
+        EditText txPower = layout.findViewById(R.id.edit_tx_pwr);
+        EditText txTime = layout.findViewById(R.id.edit_tx_t);
+        EditText rxDelay = layout.findViewById(R.id.edit_rx_delay);
 
         etList.add(activeFrequency);
         etList.add(referenceFrequency);
@@ -52,10 +52,11 @@ public class ReaderDialog extends DialogFragment {
         etList.add(rxDelay);
 
         //Get stringlist from bundle savedinstancestate
-        List<String> stringList = new ArrayList<>();
+        List<String> stringList;
         Bundle b = getArguments();
         stringList = b.getStringArrayList("values");
         this.setHintValues(stringList, etList);
+        System.out.println("ONCREATE");
 
 
         builder.setView(layout);
@@ -98,25 +99,29 @@ public class ReaderDialog extends DialogFragment {
     }
 
     //Need to get view (from graph fragment) into constructor
-    public void setHintValues(List<String> valueList, List<EditText> list){
+    public void setHintValues(List<String> valueList, List<EditText> etList){
+        List<String> tmpList = new ArrayList<>();
 
         for(String s : valueList){
-            s.replaceAll("[^0-9.]", "");
+           // System.out.println(s);
+            String tmp = s.replaceAll("[^0-9.]", "");
+            tmpList.add(tmp);
+           // System.out.println(":"+tmp);
         }
+//        for(String s : tmpList){
+//            System.out.println(s);
+//        }
+//
 
         int index = 0;
 
         //Put in check to see if lists are of equal lengths so index errors can be caught
-        System.out.println(list.size());
-        System.out.println(valueList.size());
-        if(valueList.size()==list.size()) {
-            for (EditText e : list) {
-                if (valueList.get(index).isEmpty()) {
-                    e.setText("000");
-                    System.out.println("In here");
+        if(tmpList.size()==etList.size()) {
+            for (EditText e : etList) {
+                if (tmpList.get(index).isEmpty()) {
+                    e.setText("");
                 } else {
-                    e.setText(valueList.get(index));
-                    System.out.println("Actually here");
+                    e.setText(tmpList.get(index));
                 }
                 index++;
             }
