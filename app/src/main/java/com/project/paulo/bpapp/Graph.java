@@ -218,17 +218,6 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                EditText activeResonatorFrequency = getActivity().findViewById(R.id.active_resonator_frequency);
-//                EditText referenceResonatorFrequency = getActivity().findViewById(R.id.reference_resonator_frequency);
-//                EditText activeResonatorSamplingRate = getActivity().findViewById(R.id.active_resonator_sampling_rate);
-//                EditText referenceResonatorSamplingRate = getActivity().findViewById(R.id.reference_resonator_sampling_rate);
-//                EditText sweeps = getActivity().findViewById(R.id.sweeps);
-//                EditText samples = getActivity().findViewById(R.id.samples);
-//                EditText averages = getActivity().findViewById(R.id.averages);
-//                EditText txPower = getActivity().findViewById(R.id.tx_power);
-//                EditText txTime = getActivity().findViewById(R.id.tx_time);
-//                EditText rxDelay = getActivity().findViewById(R.id.rx_delay);
-
                 String activeResonatorFrequencyText = ((TextView)getActivity().findViewById(R.id.textView_activeFrequencyValue)).getText().toString().replaceAll("[^0-9.]", "");
                 String referenceResonatorFrequencyText = ((TextView)getActivity().findViewById(R.id.textView_referenceFrequencyValue)).getText().toString().replaceAll("[^0-9.]", "");
                 String activeResonatorSamplingRateText = ((TextView)getActivity().findViewById(R.id.textView_activeSampleValue)).getText().toString().replaceAll("[^0-9.]", "");
@@ -240,64 +229,20 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
                 String txTimeText = ((TextView)getActivity().findViewById(R.id.textView_txTimeValue)).getText().toString().replaceAll("[^0-9.]", "");
                 String rxDelayText = ((TextView)getActivity().findViewById(R.id.textView_rxDelayValue)).getText().toString().replaceAll("[^0-9.]", "");
 
-                Boolean isThereAnythingToSend = false;
 
-                //Need to move this to readerdialog so errors can be seen
+                fragment.sendMessage("arf" + activeResonatorFrequencyText +
+                        "rrf" + referenceResonatorFrequencyText +
+                        "ars" + activeResonatorSamplingRateText +
+                        "rrs" + referenceResonatorSamplingRateText +
+                        "swe" + sweepsText +
+                        "sam" + samplesText +
+                        "ave" + averagesText +
+                        "txp" + txPowerText +
+                        "txt" + txTimeText +
+                        "rxd" + rxDelayText);
 
-                Boolean isThereAnErrorInParams = false;
-
-
-                if(isThereAnErrorInParams) {
-                    Toast.makeText(getActivity(), "Please recheck parameter values.",
-                            Toast.LENGTH_LONG).show();
-
-                    return;
-                }
-//
-//                if(!isThereAnErrorInParams && !isThereAnythingToSend) {
-//                    activeResonatorFrequency.setError(null);
-//                    referenceResonatorFrequency.setError(null);
-//                    activeResonatorSamplingRate.setError(null);
-//                    referenceResonatorSamplingRate.setError(null);
-//                    sweeps.setError(null);
-//                    samples.setError(null);
-//                    averages.setError(null);
-//                    txPower.setError(null);
-//                    txTime.setError(null);
-//                    rxDelay.setError(null);
-//
-//                    Toast.makeText(getActivity(), "Nothing to send.",
-//                            Toast.LENGTH_LONG).show();
-//
-//                    return;
-//                }
-//
-//                if(!isThereAnErrorInParams && isThereAnythingToSend) {
-//                    activeResonatorFrequency.setError(null);
-//                    referenceResonatorFrequency.setError(null);
-//                    activeResonatorSamplingRate.setError(null);
-//                    referenceResonatorSamplingRate.setError(null);
-//                    sweeps.setError(null);
-//                    samples.setError(null);
-//                    averages.setError(null);
-//                    txPower.setError(null);
-//                    txTime.setError(null);
-//                    rxDelay.setError(null);
-//
-//                    fragment.sendMessage("arf" + activeResonatorFrequencyText +
-//                            "rrf" + referenceResonatorFrequencyText +
-//                            "ars" + activeResonatorSamplingRateText +
-//                            "rrs" + referenceResonatorSamplingRateText +
-//                            "swe" + sweepsText +
-//                            "sam" + samplesText +
-//                            "ave" + averagesText +
-//                            "txp" + txPowerText +
-//                            "txt" + txTimeText +
-//                            "rxd" + rxDelayText);
-//
-//                    Toast.makeText(getActivity(), "Parameters sent to reader.",
-//                            Toast.LENGTH_LONG).show();
-//                }
+                Toast.makeText(getActivity(), "Parameters sent to reader.",
+                        Toast.LENGTH_LONG).show();
             }
         });
 
