@@ -83,6 +83,9 @@ public class ReaderDialog extends DialogFragment {
                 for(EditText e : etList){
                     if(e.getText().toString().isEmpty()){
                         empty = true;
+                        e.setError("This field can not be blank");
+                    }else{
+                        e.setError(null);
                     }
                 }
                 if(!empty){

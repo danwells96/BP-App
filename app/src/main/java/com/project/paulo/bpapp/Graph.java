@@ -215,9 +215,9 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
 
 
         FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 //                EditText activeResonatorFrequency = getActivity().findViewById(R.id.active_resonator_frequency);
 //                EditText referenceResonatorFrequency = getActivity().findViewById(R.id.reference_resonator_frequency);
 //                EditText activeResonatorSamplingRate = getActivity().findViewById(R.id.active_resonator_sampling_rate);
@@ -228,99 +228,24 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
 //                EditText txPower = getActivity().findViewById(R.id.tx_power);
 //                EditText txTime = getActivity().findViewById(R.id.tx_time);
 //                EditText rxDelay = getActivity().findViewById(R.id.rx_delay);
-//
-//                String activeResonatorFrequencyText;
-//                String referenceResonatorFrequencyText;
-//                String activeResonatorSamplingRateText;
-//                String referenceResonatorSamplingRateText;
-//                String sweepsText;
-//                String samplesText;
-//                String averagesText;
-//                String txPowerText;
-//                String txTimeText;
-//                String rxDelayText;
-//
-//                Boolean isThereAnythingToSend = false;
-//
-//                //New Code between here
-//
-//
-//
-//
-//                // and here
-//
-//                if(!activeResonatorFrequency.getText().toString().isEmpty()){
-//                    activeResonatorFrequencyText = activeResonatorFrequency.getText().toString();
-//                    isThereAnythingToSend = true;
-//                } else {
-//                    activeResonatorFrequencyText = activeResonatorFrequency.getHint().toString();
-//                }
-//
-//                if(!referenceResonatorFrequency.getText().toString().isEmpty()){
-//                    referenceResonatorFrequencyText = referenceResonatorFrequency.getText().toString();
-//                    isThereAnythingToSend = true;
-//                } else {
-//                    referenceResonatorFrequencyText = referenceResonatorFrequency.getHint().toString();
-//                }
-//
-//                if(!activeResonatorSamplingRate.getText().toString().isEmpty()){
-//                    activeResonatorSamplingRateText = activeResonatorSamplingRate.getText().toString();
-//                    isThereAnythingToSend = true;
-//                } else {
-//                    activeResonatorSamplingRateText = activeResonatorSamplingRate.getHint().toString();
-//                }
-//
-//                if(!referenceResonatorSamplingRate.getText().toString().isEmpty()){
-//                    referenceResonatorSamplingRateText = referenceResonatorSamplingRate.getText().toString();
-//                    isThereAnythingToSend = true;
-//                } else {
-//                    referenceResonatorSamplingRateText = referenceResonatorSamplingRate.getHint().toString();
-//                }
-//
-//                if(!sweeps.getText().toString().isEmpty()){
-//                    sweepsText = sweeps.getText().toString();
-//                    isThereAnythingToSend = true;
-//                } else {
-//                    sweepsText = sweeps.getHint().toString();
-//                }
-//
-//                if(!samples.getText().toString().isEmpty()){
-//                    samplesText = samples.getText().toString();
-//                    isThereAnythingToSend = true;
-//                } else {
-//                    samplesText = samples.getHint().toString();
-//                }
-//
-//                if(!averages.getText().toString().isEmpty()){
-//                    averagesText = averages.getText().toString();
-//                    isThereAnythingToSend = true;
-//                } else {
-//                    averagesText = averages.getHint().toString();
-//                }
-//
-//                if(!txPower.getText().toString().isEmpty()){
-//                    txPowerText = txPower.getText().toString();
-//                    isThereAnythingToSend = true;
-//                } else {
-//                    txPowerText = txPower.getHint().toString();
-//                }
-//
-//                if(!txTime.getText().toString().isEmpty()){
-//                    txTimeText = txTime.getText().toString();
-//                    isThereAnythingToSend = true;
-//                } else {
-//                    txTimeText = txTime.getHint().toString();
-//                }
-//
-//                if(!rxDelay.getText().toString().isEmpty()){
-//                    rxDelayText = rxDelay.getText().toString();
-//                    isThereAnythingToSend = true;
-//                } else {
-//                    rxDelayText = rxDelay.getHint().toString();
-//                }
-//
-//                Boolean isThereAnErrorInParams = false;
-//
+
+                String activeResonatorFrequencyText = ((TextView)getActivity().findViewById(R.id.textView_activeFrequencyValue)).getText().toString().replaceAll("[^0-9.]", "");
+                String referenceResonatorFrequencyText = ((TextView)getActivity().findViewById(R.id.textView_referenceFrequencyValue)).getText().toString().replaceAll("[^0-9.]", "");
+                String activeResonatorSamplingRateText = ((TextView)getActivity().findViewById(R.id.textView_activeSampleValue)).getText().toString().replaceAll("[^0-9.]", "");
+                String referenceResonatorSamplingRateText = ((TextView)getActivity().findViewById(R.id.textView_referenceSampleValue)).getText().toString().replaceAll("[^0-9.]", "");
+                String sweepsText = ((TextView)getActivity().findViewById(R.id.textView_sweepsValue)).getText().toString().replaceAll("[^0-9.]", "");
+                String samplesText = ((TextView)getActivity().findViewById(R.id.textView_samplesValue)).getText().toString().replaceAll("[^0-9.]", "");
+                String averagesText = ((TextView)getActivity().findViewById(R.id.textView_averageValue)).getText().toString().replaceAll("[^0-9.]", "");
+                String txPowerText = ((TextView)getActivity().findViewById(R.id.textView_txPowerValue)).getText().toString().replaceAll("[^0-9.]", "");
+                String txTimeText = ((TextView)getActivity().findViewById(R.id.textView_txTimeValue)).getText().toString().replaceAll("[^0-9.]", "");
+                String rxDelayText = ((TextView)getActivity().findViewById(R.id.textView_rxDelayValue)).getText().toString().replaceAll("[^0-9.]", "");
+
+                Boolean isThereAnythingToSend = false;
+
+                //Need to move this to readerdialog so errors can be seen
+
+                Boolean isThereAnErrorInParams = false;
+
 //                if(Double.parseDouble(activeResonatorFrequencyText) > 920.0 ||
 //                        Double.parseDouble(activeResonatorFrequencyText) < 915.0 ||
 //                        Double.parseDouble(activeResonatorFrequencyText) > Double.parseDouble(referenceResonatorFrequencyText)) {
@@ -402,13 +327,13 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
 //
 //                    rxDelay.setError("Must be in range 0-1023.");
 //                }
-//
-//                if(isThereAnErrorInParams) {
-//                    Toast.makeText(getActivity(), "Please recheck parameter values.",
-//                            Toast.LENGTH_LONG).show();
-//
-//                    return;
-//                }
+
+                if(isThereAnErrorInParams) {
+                    Toast.makeText(getActivity(), "Please recheck parameter values.",
+                            Toast.LENGTH_LONG).show();
+
+                    return;
+                }
 //
 //                if(!isThereAnErrorInParams && !isThereAnythingToSend) {
 //                    activeResonatorFrequency.setError(null);
@@ -454,8 +379,8 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
 //                    Toast.makeText(getActivity(), "Parameters sent to reader.",
 //                            Toast.LENGTH_LONG).show();
 //                }
-//            }
-//        });
+            }
+        });
 
         databaseHandler = new DatabaseHandler(getActivity());
 
