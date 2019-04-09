@@ -20,7 +20,7 @@
         android:layout_toRightOf="@+id/active_frequency"
         android:background="@color/white"
         android:focusable="true"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:layout_marginLeft="10dp"/>
 
     <TextView
@@ -40,7 +40,7 @@
         android:layout_toRightOf="@+id/reference_frequency"
         android:layout_below="@+id/edit_active_frequency"
         android:background="@color/white"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:layout_marginLeft="10dp"/>
 
     <TextView

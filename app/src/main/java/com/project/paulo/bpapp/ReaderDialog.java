@@ -56,7 +56,6 @@ public class ReaderDialog extends DialogFragment {
         Bundle b = getArguments();
         stringList = b.getStringArrayList("values");
         this.setHintValues(stringList, etList);
-        System.out.println("ONCREATE");
 
 
         builder.setView(layout);
@@ -103,15 +102,9 @@ public class ReaderDialog extends DialogFragment {
         List<String> tmpList = new ArrayList<>();
 
         for(String s : valueList){
-           // System.out.println(s);
             String tmp = s.replaceAll("[^0-9.]", "");
             tmpList.add(tmp);
-           // System.out.println(":"+tmp);
         }
-//        for(String s : tmpList){
-//            System.out.println(s);
-//        }
-//
 
         int index = 0;
 
