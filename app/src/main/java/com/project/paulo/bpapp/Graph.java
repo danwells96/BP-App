@@ -115,7 +115,16 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
 
         //Need to add rest of strings into list
         tvList.add(((TextView)readerParams.findViewById(R.id.textView_activeFrequencyValue)).getText().toString());
-        
+        tvList.add(((TextView)readerParams.findViewById(R.id.textView_referenceFrequencyValue)).getText().toString());
+        tvList.add(((TextView)readerParams.findViewById(R.id.textView_activeSampleValue)).getText().toString());
+        tvList.add(((TextView)readerParams.findViewById(R.id.textView_referenceSampleValue)).getText().toString());
+        tvList.add(((TextView)readerParams.findViewById(R.id.textView_sweepsValue)).getText().toString());
+        tvList.add(((TextView)readerParams.findViewById(R.id.textView_samplesValue)).getText().toString());
+        tvList.add(((TextView)readerParams.findViewById(R.id.textView_averageValue)).getText().toString());
+        tvList.add(((TextView)readerParams.findViewById(R.id.textView_txPowerValue)).getText().toString());
+        tvList.add(((TextView)readerParams.findViewById(R.id.textView_txTimeValue)).getText().toString());
+        tvList.add(((TextView)readerParams.findViewById(R.id.textView_rxDelayValue)).getText().toString());
+
         readerParams.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {

@@ -106,17 +106,22 @@ public class ReaderDialog extends DialogFragment {
 
         int index = 0;
 
+        //Put in check to see if lists are of equal lengths so index errors can be caught
         System.out.println(list.size());
         System.out.println(valueList.size());
-        for(EditText e : list){
-            if(valueList.get(index).isEmpty()){
-                e.setText("000");
-                System.out.println("In here");
-            }else {
-                e.setText(valueList.get(index));
-                System.out.println("Actually here");
+        if(valueList.size()==list.size()) {
+            for (EditText e : list) {
+                if (valueList.get(index).isEmpty()) {
+                    e.setText("000");
+                    System.out.println("In here");
+                } else {
+                    e.setText(valueList.get(index));
+                    System.out.println("Actually here");
+                }
+                index++;
             }
-            index++;
+        }else{
+            //Catch index out of bounds exception
         }
 
 
