@@ -94,8 +94,10 @@ public class ReaderDialog extends DialogFragment {
                     //Put function storing values into graph fragment here
                     ParameterListener p = (ParameterListener) getTargetFragment();
                     p.onFinishDialog(etList);
-                }else{
+                }else if(empty){
                     Toast.makeText(getContext(), "Empty fields must be completed before saving", Toast.LENGTH_LONG).show();
+                }else if(checkParameterValues()){
+                    Toast.makeText(getContext(), "Please recheck parameter values", Toast.LENGTH_LONG).show();
                 }
             }
         });
