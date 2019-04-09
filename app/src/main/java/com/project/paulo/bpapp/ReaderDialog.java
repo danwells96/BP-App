@@ -88,7 +88,8 @@ public class ReaderDialog extends DialogFragment {
                         e.setError(null);
                     }
                 }
-                if(!empty){
+                //checkParameterValues();
+                if(!empty && !checkParameterValues()){
                     ad.dismiss();
                     //Put function storing values into graph fragment here
                     ParameterListener p = (ParameterListener) getTargetFragment();
@@ -99,6 +100,108 @@ public class ReaderDialog extends DialogFragment {
             }
         });
     }
+
+    public boolean checkParameterValues(){
+
+        Boolean isThereAnErrorInParams = false;
+
+        String activeResonatorFrequencyText = etList.get(0).getText().toString().replaceAll("[^0-9.]", "");
+        String referenceResonatorFrequencyText = etList.get(1).getText().toString().replaceAll("[^0-9.]", "");
+        String activeResonatorSamplingRateText = etList.get(2).getText().toString().replaceAll("[^0-9.]", "");
+        String referenceResonatorSamplingRateText = etList.get(3).getText().toString().replaceAll("[^0-9.]", "");
+        String sweepsText = etList.get(4).getText().toString().replaceAll("[^0-9.]", "");
+        String samplesText = etList.get(5).getText().toString().replaceAll("[^0-9.]", "");
+        String averagesText = etList.get(6).getText().toString().replaceAll("[^0-9.]", "");
+        String txPowerText = etList.get(7).getText().toString().replaceAll("[^0-9.]", "");
+        String txTimeText = etList.get(8).getText().toString().replaceAll("[^0-9.]", "");
+        String rxDelayText = etList.get(9).getText().toString().replaceAll("[^0-9.]", "");
+
+
+
+        if(Double.parseDouble(activeResonatorFrequencyText) > 920.0 ||
+                Double.parseDouble(activeResonatorFrequencyText) < 915.0 ||
+                Double.parseDouble(activeResonatorFrequencyText) > Double.parseDouble(referenceResonatorFrequencyText)) {
+
+            isThereAnErrorInParams = true;
+
+            etList.get(0).setError("Must be in range 915-920Mhz and less than reference resonator frequency.");
+        }
+
+        if(Double.parseDouble(referenceResonatorFrequencyText) > 920.0 ||
+                Double.parseDouble(referenceResonatorFrequencyText) < 915.0) {
+
+            isThereAnErrorInParams = true;
+
+            etList.get(1).setError("Must be in range 915-920Mhz.");
+        }
+
+        if(Double.parseDouble(activeResonatorSamplingRateText) > 100 ||
+                Double.parseDouble(activeResonatorSamplingRateText) < 5) {
+
+            isThereAnErrorInParams = true;
+
+            etList.get(2).setError("Must be in range 5-100ms.");
+        }
+
+        if(Double.parseDouble(referenceResonatorSamplingRateText) > 7 ||
+                Double.parseDouble(referenceResonatorSamplingRateText) < 1) {
+
+            isThereAnErrorInParams = true;
+
+            etList.get(3).setError("Must be in range 1-7s.");
+        }
+
+        if(Double.parseDouble(sweepsText) > 2047 ||
+                Double.parseDouble(sweepsText) < 1) {
+
+            isThereAnErrorInParams = true;
+
+            etList.get(4).setError("Must be in range 1-2047.");
+        }
+
+        if(Double.parseDouble(samplesText) > 1000 ||
+                Double.parseDouble(samplesText) < 64) {
+
+            isThereAnErrorInParams = true;
+
+            etList.get(5).setError("Must be in range 64-1000.");
+        }
+
+        if(Double.parseDouble(averagesText) > 999 ||
+                Double.parseDouble(averagesText) < 63 ||
+                Double.parseDouble(averagesText) > Double.parseDouble(samplesText)) {
+
+            isThereAnErrorInParams = true;
+
+            etList.get(6).setError("Must be in range 63-999 and less than samples.");
+        }
+
+        if(Double.parseDouble(txPowerText) > 1023 ||
+                Double.parseDouble(txPowerText) < 0) {
+
+            isThereAnErrorInParams = true;
+
+            etList.get(7).setError("Must be in range 0-1023.");
+        }
+
+        if(Double.parseDouble(txTimeText) > 1023 ||
+                Double.parseDouble(txTimeText) < 0) {
+
+            isThereAnErrorInParams = true;
+
+            etList.get(8).setError("Must be in range 0-1023.");
+        }
+
+        if(Double.parseDouble(rxDelayText) > 1023 ||
+                Double.parseDouble(rxDelayText) < 0) {
+
+            isThereAnErrorInParams = true;
+
+            etList.get(9).setError("Must be in range 0-1023.");
+        }
+        return isThereAnErrorInParams;
+    }
+
 
     //Need to get view (from graph fragment) into constructor
     public void setHintValues(List<String> valueList, List<EditText> etList){
