@@ -20,13 +20,14 @@ public class Features extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        listView = (ListView)getActivity().findViewById(R.id.feature_listView);
+        View rootView = inflater.inflate(R.layout.features, container, false);
+        listView = (ListView)rootView.findViewById(R.id.feature_listView);
         featureModels = new ArrayList<>();
         featureModels.add(new FeatureModel("1/1/19", "Systolic Pressure High", 150.4));
 
         adapter = new FeatureAdapter(featureModels, getContext());
         listView.setAdapter(adapter);
 
-        return inflater.inflate(R.layout.features, container, false);
+        return rootView;
     }
 }

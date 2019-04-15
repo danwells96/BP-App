@@ -21,6 +21,7 @@
         android:orientation="vertical"
         android:layout_weight="2">
         <TextView
+            android:id="@+id/textView_feature"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Feature"
@@ -31,6 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1">
         <TextView
+            android:id="@+id/textView_featureValue"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Value"
