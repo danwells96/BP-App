@@ -348,7 +348,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
         description.setText("Time (s)");
         mChart.setDescription(description);
         TextView yAxisTitle = getActivity().findViewById(R.id.y_axis_title);
-        yAxisTitle.setTextColor(Color.BLACK);
+        yAxisTitle.setTextColor(Color.WHITE);
 
         // enable touch gestures
         mChart.setTouchEnabled(true);
@@ -364,10 +364,10 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
         // set an alternative background color
         mChart.setBackgroundColor(Color.BLACK);
         mChart.setDrawGridBackground(true);
-        mChart.setGridBackgroundColor(Color.BLACK);
+        mChart.setGridBackgroundColor(R.color.medicalGreen);
 
         LineData data = new LineData();
-        data.setValueTextColor(Color.GREEN);
+        data.setValueTextColor(R.color.medicalGreen);
 
         // add empty data
         mChart.setData(data);

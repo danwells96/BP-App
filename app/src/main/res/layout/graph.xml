@@ -54,7 +54,7 @@
                 android:layout_alignLeft="@+id/diagonal"
                 android:layout_alignTop="@+id/diagonal"
                 android:layout_marginLeft="40dp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/medicalGreen"/>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
@@ -70,7 +70,7 @@
                 android:textAlignment="textEnd"
                 android:layout_alignRight="@+id/diagonal"
                 android:layout_alignBottom="@+id/diagonal"
-                android:textColor="@color/black"/>
+                android:textColor="@color/medicalGreen"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
