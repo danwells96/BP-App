@@ -23,6 +23,8 @@ public class Features extends Fragment {
         View rootView = inflater.inflate(R.layout.features, container, false);
         listView = (ListView)rootView.findViewById(R.id.feature_listView);
         featureModels = new ArrayList<>();
+        //Get actual data from database here
+        featureModels.add(new FeatureModel("1/1/19", "Systolic Pressure High", 150.4));
         featureModels.add(new FeatureModel("1/1/19", "Systolic Pressure High", 150.4));
 
         adapter = new FeatureAdapter(featureModels, getContext());

@@ -57,6 +57,6 @@ public class FeatureAdapter extends ArrayAdapter<FeatureModel> {
         holder.tvFeature.setText(featureModel.getFeature());
         holder.tvValue.setText(featureModel.getValue().toString());
 
-        return super.getView(position, convertView, parent);
+        return convertView;
     }
 }
