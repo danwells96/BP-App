@@ -3,41 +3,46 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
+    android:gravity="center"
     android:padding="10dp">
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="@color/colorPrimaryDark">
         <TextView
             android:id="@+id/textView_date"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="Date"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_weight="2">
+        android:layout_weight="2"
+        android:background="@color/colorAccent">
         <TextView
             android:id="@+id/textView_feature"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Feature"
-            android:gravity="center_horizontal"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Feature"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:background="@color/colorPrimary">
         <TextView
             android:id="@+id/textView_featureValue"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Value"
-            android:gravity="center_horizontal"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Value"/>
     </LinearLayout>
 
 </LinearLayout>
