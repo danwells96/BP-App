@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -112,8 +113,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
 
         //Need to get these values from memory to fill out
         final View readerParams = getActivity().findViewById(R.id.readerParams);
-        //ArrayList<String> tvList = new ArrayList<>();
-        System.out.println("Here");
+
 
         //Need to add rest of strings into list
         tvList.add(((TextView)readerParams.findViewById(R.id.textView_activeFrequencyValue)).getText().toString());
@@ -364,10 +364,11 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
         // set an alternative background color
         mChart.setBackgroundColor(Color.BLACK);
         mChart.setDrawGridBackground(true);
-        mChart.setGridBackgroundColor(R.color.medicalGreen);
+       // mChart.setGridBackgroundColor(getResources().getColor(R.color.medicalGreen));
+        mChart.setGridBackgroundColor(Color.BLACK);
 
         LineData data = new LineData();
-        data.setValueTextColor(R.color.medicalGreen);
+        data.setValueTextColor(getResources().getColor(R.color.medicalGreen));
 
         // add empty data
         mChart.setData(data);
@@ -385,7 +386,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
         xl.setTypeface(mTfLight);
         xl.setTextColor(Color.WHITE);
         xl.setDrawGridLines(true);
-        xl.setGridColor(Color.GREEN);
+        xl.setGridColor(getResources().getColor(R.color.medicalGreen));
         xl.setAvoidFirstLastClipping(true);
         xl.setEnabled(true);
         xl.setTextColor(getResources().getColor(R.color.black));
@@ -396,7 +397,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
         leftAxis.setAxisMaximum(60f);
         leftAxis.setAxisMinimum(0f);
         leftAxis.setDrawGridLines(true);
-        leftAxis.setGridColor(Color.GREEN);
+        leftAxis.setGridColor(getResources().getColor(R.color.medicalGreen));
         leftAxis.setTextColor(getResources().getColor(R.color.black));
 
         YAxis rightAxis = mChart.getAxisRight();
