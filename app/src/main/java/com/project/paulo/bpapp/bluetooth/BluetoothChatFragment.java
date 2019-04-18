@@ -352,30 +352,30 @@ public class BluetoothChatFragment extends Fragment {
 //                        Log.e(TAG, chartValue.getChartValue());
                     }
 
-                    if(readMessage.contains("arf")) {
-                        EditText mActiveResonatorFrequency = getActivity().findViewById(R.id.active_resonator_frequency);
-                        EditText mReferenceResonatorFrequency = getActivity().findViewById(R.id.reference_resonator_frequency);
-                        EditText mActiveResonatorSamplingRate = getActivity().findViewById(R.id.active_resonator_sampling_rate);
-                        EditText mReferenceResonatorSamplingRate = getActivity().findViewById(R.id.reference_resonator_sampling_rate);
-                        EditText mSweeps = getActivity().findViewById(R.id.sweeps);
-                        EditText mSamples = getActivity().findViewById(R.id.samples);
-                        EditText mAverages = getActivity().findViewById(R.id.averages);
-                        EditText mTxPower = getActivity().findViewById(R.id.tx_power);
-                        EditText mTxTime = getActivity().findViewById(R.id.tx_time);
-                        EditText mRxDelay = getActivity().findViewById(R.id.rx_delay);
-
-                        mActiveResonatorFrequency.setHint(readMessage.substring(3, 6));
-                        mReferenceResonatorFrequency.setHint(readMessage.substring(9, 12));
-                        mActiveResonatorSamplingRate.setHint(readMessage.substring(15, 17));
-                        mReferenceResonatorSamplingRate.setHint(readMessage.substring(20, 21));
-                        mSweeps.setHint(readMessage.substring(24, 26));
-                        mSamples.setHint(readMessage.substring(29, 31));
-                        mAverages.setHint(readMessage.substring(34, 36));
-                        mTxPower.setHint(readMessage.substring(39, 42));
-                        mTxTime.setHint(readMessage.substring(45, 48));
-                        mRxDelay.setHint(readMessage.substring(51, 53));
-
-                    }
+//                    if(readMessage.contains("arf")) {
+//                        EditText mActiveResonatorFrequency = getActivity().findViewById(R.id.active_resonator_frequency);
+//                        EditText mReferenceResonatorFrequency = getActivity().findViewById(R.id.reference_resonator_frequency);
+//                        EditText mActiveResonatorSamplingRate = getActivity().findViewById(R.id.active_resonator_sampling_rate);
+//                        EditText mReferenceResonatorSamplingRate = getActivity().findViewById(R.id.reference_resonator_sampling_rate);
+//                        EditText mSweeps = getActivity().findViewById(R.id.sweeps);
+//                        EditText mSamples = getActivity().findViewById(R.id.samples);
+//                        EditText mAverages = getActivity().findViewById(R.id.averages);
+//                        EditText mTxPower = getActivity().findViewById(R.id.tx_power);
+//                        EditText mTxTime = getActivity().findViewById(R.id.tx_time);
+//                        EditText mRxDelay = getActivity().findViewById(R.id.rx_delay);
+//
+//                        mActiveResonatorFrequency.setHint(readMessage.substring(3, 6));
+//                        mReferenceResonatorFrequency.setHint(readMessage.substring(9, 12));
+//                        mActiveResonatorSamplingRate.setHint(readMessage.substring(15, 17));
+//                        mReferenceResonatorSamplingRate.setHint(readMessage.substring(20, 21));
+//                        mSweeps.setHint(readMessage.substring(24, 26));
+//                        mSamples.setHint(readMessage.substring(29, 31));
+//                        mAverages.setHint(readMessage.substring(34, 36));
+//                        mTxPower.setHint(readMessage.substring(39, 42));
+//                        mTxTime.setHint(readMessage.substring(45, 48));
+//                        mRxDelay.setHint(readMessage.substring(51, 53));
+//
+//                    }
                     break;
                 case Constants.MESSAGE_DEVICE_NAME:
                     // save the connected device's name

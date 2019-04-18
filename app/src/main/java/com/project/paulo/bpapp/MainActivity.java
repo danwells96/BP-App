@@ -1,6 +1,7 @@
 package com.project.paulo.bpapp;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -13,7 +14,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.Toast;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -83,7 +87,6 @@ public class MainActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
 //        if (id == R.id.action_settings) {
 //            return true;
 //        }
@@ -99,9 +102,11 @@ public class MainActivity extends AppCompatActivity
             case R.id.graph:
                 fragment = new Graph();
                 break;
-            case R.id.about:
-                fragment = new About();
+            case R.id.features:
+                fragment = new Features();
                 break;
+            case R.id.settings:
+                fragment = new SettingsFragment();
         }
 
         if (fragment != null){
