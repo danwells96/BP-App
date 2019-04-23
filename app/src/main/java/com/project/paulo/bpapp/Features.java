@@ -11,7 +11,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class Features extends Fragment {
+public class Features extends Fragment implements DateRangePickerFragment.OnDateRangeSelectedListener {
 
     ArrayList<FeatureModel> featureModels;
     ListView listView;
@@ -26,10 +26,31 @@ public class Features extends Fragment {
         //Get actual data from database here
         featureModels.add(new FeatureModel("1/1/19", "Systolic Pressure High", 150.4));
         featureModels.add(new FeatureModel("1/1/19", "Systolic Pressure High", 150.4));
+        featureModels.add(new FeatureModel("1/1/19", "Systolic Pressure High", 150.4));
+        featureModels.add(new FeatureModel("1/1/19", "Systolic Pressure High", 150.4));
+        featureModels.add(new FeatureModel("1/1/19", "Systolic Pressure High", 150.4));
+        featureModels.add(new FeatureModel("1/1/19", "Systolic Pressure High", 150.4));
+        featureModels.add(new FeatureModel("1/1/19", "Systolic Pressure High", 150.4));
 
         adapter = new FeatureAdapter(featureModels, getContext());
         listView.setAdapter(adapter);
+        View datePicker = rootView.findViewById(R.id.datePickerView);
+        datePicker.setOnClickListener(datePickerListener);
 
         return rootView;
+    }
+
+    View.OnClickListener datePickerListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            DateRangePickerFragment dateRangePickerFragment = DateRangePickerFragment.newInstance(Features.this, false);
+            dateRangePickerFragment.show(getFragmentManager(), "datePicker");
+            dateRangePickerFragment.setCancelable(false);
+        }
+    };
+
+    @Override
+    public void onDateRangeSelected(int startDay, int startMonth, int startYear, int endDay, int endMonth, int endYear) {
+        System.out.println(String.format("Start: %d/%d/%d End: %d/%d/%d", startDay, startMonth, startYear, endDay, endMonth, endYear));
     }
 }
