@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -44,6 +45,8 @@ public class Features extends Fragment implements DateRangePickerFragment.OnDate
         @Override
         public void onClick(View view) {
             DateRangePickerFragment dateRangePickerFragment = DateRangePickerFragment.newInstance(Features.this, false);
+            StringTuple st = parseDates();
+            System.out.println(st);
             dateRangePickerFragment.show(getFragmentManager(), "datePicker");
             dateRangePickerFragment.setCancelable(false);
         }
@@ -52,5 +55,32 @@ public class Features extends Fragment implements DateRangePickerFragment.OnDate
     @Override
     public void onDateRangeSelected(int startDay, int startMonth, int startYear, int endDay, int endMonth, int endYear) {
         System.out.println(String.format("Start: %d/%d/%d End: %d/%d/%d", startDay, startMonth, startYear, endDay, endMonth, endYear));
+        TextView startDateTV = getActivity().findViewById(R.id.tv_startDate);
+        TextView endDateTV = getActivity().findViewById(R.id.tv_endDate);
+        startDateTV.setText(String.format("Start of Date Range\n%d/%d/%d", startDay, startMonth, startYear));
+        endDateTV.setText(String.format("End of Date Range\n%d/%d/%d", endDay, endMonth, endYear));
     }
+
+    private class StringTuple{
+        String startDate;
+        String endDate;
+
+        public StringTuple(String s1, String s2){
+            startDate = s1;
+            endDate = s2;
+        }
+
+        @Override
+        public String toString() {
+            return startDate+" "+endDate;
+        }
+    }
+
+    public StringTuple parseDates(){
+        View v = getView().findViewById(R.id.datePickerView);
+        String s1 = ((TextView)v.findViewById(R.id.tv_startDate)).getText().toString();
+        String s2 = ((TextView)v.findViewById(R.id.tv_endDate)).getText().toString();
+        return new StringTuple(s1, s2);
+    }
+
 }

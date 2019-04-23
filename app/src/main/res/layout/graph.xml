@@ -91,7 +91,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:id="@+id/readerParams"
-                android:background="@color/colorAccent"
+                android:background="@drawable/shadow"
                 android:clickable="true"
                 android:layout_gravity="center">
                 <RelativeLayout
@@ -102,7 +102,15 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:id="@+id/textView_readerParamTitle"
+                        android:text="Reader Parameters"
+                        android:fontFamily="@android:string/dialog_alert_title"
+                        android:textSize="24dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:id="@+id/textView_activeFrequency"
+                        android:layout_below="@id/textView_readerParamTitle"
                         android:gravity="center"
                         android:text="Active Frequency:"
                         android:textSize="16dp"/>
@@ -111,6 +119,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/textView_activeFrequencyValue"
                         android:layout_marginLeft="10dp"
+                        android:layout_below="@id/textView_readerParamTitle"
                         android:layout_toRightOf="@id/textView_activeFrequency"
                         android:textSize="16dp"
                         android:text="- MHz"/>
