@@ -44,9 +44,8 @@ public class Features extends Fragment implements DateRangePickerFragment.OnDate
     View.OnClickListener datePickerListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            DateRangePickerFragment dateRangePickerFragment = DateRangePickerFragment.newInstance(Features.this, false);
             StringTuple st = parseDates();
-            System.out.println(st);
+            DateRangePickerFragment dateRangePickerFragment = DateRangePickerFragment.newInstance(Features.this, false, st);
             dateRangePickerFragment.show(getFragmentManager(), "datePicker");
             dateRangePickerFragment.setCancelable(false);
         }
@@ -61,26 +60,15 @@ public class Features extends Fragment implements DateRangePickerFragment.OnDate
         endDateTV.setText(String.format("End of Date Range\n%d/%d/%d", endDay, endMonth, endYear));
     }
 
-    private class StringTuple{
-        String startDate;
-        String endDate;
-
-        public StringTuple(String s1, String s2){
-            startDate = s1;
-            endDate = s2;
-        }
-
-        @Override
-        public String toString() {
-            return startDate+" "+endDate;
-        }
-    }
 
     public StringTuple parseDates(){
         View v = getView().findViewById(R.id.datePickerView);
         String s1 = ((TextView)v.findViewById(R.id.tv_startDate)).getText().toString();
+        String startString = s1.substring(s1.indexOf("\n")+1).trim();
         String s2 = ((TextView)v.findViewById(R.id.tv_endDate)).getText().toString();
-        return new StringTuple(s1, s2);
+        String endString = s2.substring(s2.indexOf("\n")+1).trim();
+        return new StringTuple(startString, endString);
     }
 
 }
+

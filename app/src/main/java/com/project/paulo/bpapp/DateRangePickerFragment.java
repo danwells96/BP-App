@@ -26,20 +26,24 @@ public class DateRangePickerFragment extends DialogFragment implements View.OnCl
     private DatePicker endDatePicker;
     private Button butSetDateRange;
     boolean is24HourMode;
+    String startDate;
+    String endDate;
 
     public DateRangePickerFragment() {
         // Required empty public constructor
     }
 
-    public static DateRangePickerFragment newInstance(OnDateRangeSelectedListener callback, boolean is24HourMode) {
+    public static DateRangePickerFragment newInstance(OnDateRangeSelectedListener callback, boolean is24HourMode, StringTuple stringTuple) {
         DateRangePickerFragment dateRangePickerFragment = new DateRangePickerFragment();
-        dateRangePickerFragment.initialize(callback, is24HourMode);
+        dateRangePickerFragment.initialize(callback, is24HourMode, stringTuple);
         return dateRangePickerFragment;
     }
 
     public void initialize(OnDateRangeSelectedListener callback,
-                           boolean is24HourMode) {
+                           boolean is24HourMode, StringTuple st) {
         onDateRangeSelectedListener = callback;
+        startDate = st.startDate;
+        endDate = st.endDate;
         this.is24HourMode = is24HourMode;
     }
 
@@ -52,8 +56,25 @@ public class DateRangePickerFragment extends DialogFragment implements View.OnCl
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         tabHost = (TabHost) root.findViewById(R.id.tabHost);
         butSetDateRange = (Button) root.findViewById(R.id.but_set_time_range);
+
         startDatePicker = (DatePicker) root.findViewById(R.id.start_date_picker);
+        if(!startDate.equals("-")) {
+            String startDay = startDate.substring(0, startDate.indexOf("/"));
+            String startMonthYear = startDate.substring(startDate.indexOf("/")+1);
+            String startMonth = startMonthYear.substring(0, startMonthYear.indexOf("/"));
+            String startYear = startMonthYear.substring(startMonthYear.indexOf("/")+1);
+            startDatePicker.updateDate(Integer.valueOf(startYear), Integer.valueOf(startMonth), Integer.valueOf(startDay));
+        }
+
         endDatePicker = (DatePicker) root.findViewById(R.id.end_date_picker);
+        if(!endDate.equals("-")) {
+            String endDay = endDate.substring(0, endDate.indexOf("/"));
+            String endMonthYear = endDate.substring(endDate.indexOf("/")+1);
+            String endMonth = endMonthYear.substring(0, endMonthYear.indexOf("/"));
+            String endYear = endMonthYear.substring(endMonthYear.indexOf("/")+1);
+            startDatePicker.updateDate(Integer.valueOf(endYear), Integer.valueOf(endMonth), Integer.valueOf(endDay));
+        }
+
         butSetDateRange.setOnClickListener(this);
         tabHost.findViewById(R.id.tabHost);
         tabHost.setup();
