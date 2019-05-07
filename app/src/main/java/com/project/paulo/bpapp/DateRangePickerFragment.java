@@ -57,6 +57,7 @@ public class DateRangePickerFragment extends DialogFragment implements View.OnCl
         tabHost = (TabHost) root.findViewById(R.id.tabHost);
         butSetDateRange = (Button) root.findViewById(R.id.but_set_time_range);
 
+        //Sets the start date initially to date previously selected
         startDatePicker = (DatePicker) root.findViewById(R.id.start_date_picker);
         if(!startDate.equals("-")) {
             String startDay = startDate.substring(0, startDate.indexOf("/"));
@@ -66,6 +67,7 @@ public class DateRangePickerFragment extends DialogFragment implements View.OnCl
             startDatePicker.updateDate(Integer.valueOf(startYear), Integer.valueOf(startMonth), Integer.valueOf(startDay));
         }
 
+        //Sets the end date initially to date previously selected
         endDatePicker = (DatePicker) root.findViewById(R.id.end_date_picker);
         if(!endDate.equals("-")) {
             String endDay = endDate.substring(0, endDate.indexOf("/"));
