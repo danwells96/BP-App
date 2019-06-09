@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -59,11 +60,25 @@ public class Features extends Fragment implements DateRangePickerFragment.OnDate
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, patientNames);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         patientSpinner.setAdapter(spinnerAdapter);
+        patientSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
+                //Gets newly selected patient
+                String item = adapterView.getItemAtPosition(pos).toString();
+                //Applies filter to listview and updates data displayed
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
 
         return rootView;
     }
 
+    //When date filter is clicked, creates new instance of date range picker
     View.OnClickListener datePickerListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
