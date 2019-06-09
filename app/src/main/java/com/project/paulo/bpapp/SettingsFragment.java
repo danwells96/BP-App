@@ -26,18 +26,33 @@ public class SettingsFragment extends Fragment {
     View.OnClickListener loginListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            ImageView imgView = (ImageView)(getActivity().findViewById(R.id.imageView_profile));
+            ImageView imgView = getActivity().findViewById(R.id.imageView_profile);
             TextView nameView = getActivity().findViewById(R.id.navigation_name);
             TextView emailView = getActivity().findViewById(R.id.navigation_email);
-            imgView.setVisibility(View.VISIBLE);
 
             EditText emailText = view.getRootView().findViewById(R.id.et_email);
             EditText passwordText = view.getRootView().findViewById(R.id.et_password);
+            Button login = (Button)view;
+            if(login.getText().toString().equals("Log In")) {
 
-            //Perform database check for email/password combination here and if successful, load in data to navigation menu
+                //Perform database check for email/password combination here and if successful, load in data to navigation menu
 
-            emailView.setText(emailText.getText());
-            emailView.setVisibility(View.VISIBLE);
+                //Log in process
+                emailView.setText(emailText.getText());
+                emailView.setVisibility(View.VISIBLE);
+                imgView.setVisibility(View.VISIBLE);
+                emailText.setVisibility(View.INVISIBLE);
+                passwordText.setVisibility(View.INVISIBLE);
+                login.setText("Log Out");
+
+            }else{
+                //Log out process
+                emailView.setVisibility(View.INVISIBLE);
+                imgView.setVisibility(View.INVISIBLE);
+                emailText.setVisibility(View.VISIBLE);
+                passwordText.setVisibility(View.VISIBLE);
+                login.setText("Log In");
+            }
         }
     };
 }

@@ -30,13 +30,13 @@ public class Features extends Fragment implements DateRangePickerFragment.OnDate
         listView = (ListView)rootView.findViewById(R.id.feature_listView);
         featureModels = new ArrayList<>();
         //Get actual data from database here once implemented
-        featureModels.add(new FeatureModel("1/1/19", "Systolic Pressure High", 150.4));
-        featureModels.add(new FeatureModel("1/1/19", "Systolic Pressure High", 150.4));
-        featureModels.add(new FeatureModel("1/1/19", "Systolic Pressure High", 150.4));
-        featureModels.add(new FeatureModel("1/1/19", "Systolic Pressure High", 150.4));
-        featureModels.add(new FeatureModel("1/1/19", "Systolic Pressure High", 150.4));
-        featureModels.add(new FeatureModel("1/1/19", "Systolic Pressure High", 150.4));
-        featureModels.add(new FeatureModel("1/1/19", "Systolic Pressure High", 150.4));
+        featureModels.add(new FeatureModel("1/1/19 22:55", "Systolic Pressure High", 150.4));
+        featureModels.add(new FeatureModel("1/1/19 21:12", "Systolic Pressure High", 150.4));
+        featureModels.add(new FeatureModel("1/1/19 15:55", "Systolic Pressure High", 150.4));
+        featureModels.add(new FeatureModel("1/1/19 15:54", "Systolic Pressure High", 150.4));
+        featureModels.add(new FeatureModel("1/1/19 14:30", "Systolic Pressure High", 150.4));
+        featureModels.add(new FeatureModel("1/1/19 12:04", "Systolic Pressure High", 150.4));
+        featureModels.add(new FeatureModel("1/1/19 11:17", "Systolic Pressure High", 150.4));
 
         //Sets adapters and data to date range pickers
         adapter = new FeatureAdapter(featureModels, getContext());
