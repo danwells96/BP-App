@@ -7,10 +7,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Features extends Fragment implements DateRangePickerFragment.OnDateRangeSelectedListener {
 
@@ -21,10 +24,11 @@ public class Features extends Fragment implements DateRangePickerFragment.OnDate
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        //Creating listview and populating it with flagged features
         View rootView = inflater.inflate(R.layout.features, container, false);
         listView = (ListView)rootView.findViewById(R.id.feature_listView);
         featureModels = new ArrayList<>();
-        //Get actual data from database here
+        //Get actual data from database here once implemented
         featureModels.add(new FeatureModel("1/1/19", "Systolic Pressure High", 150.4));
         featureModels.add(new FeatureModel("1/1/19", "Systolic Pressure High", 150.4));
         featureModels.add(new FeatureModel("1/1/19", "Systolic Pressure High", 150.4));
@@ -33,10 +37,29 @@ public class Features extends Fragment implements DateRangePickerFragment.OnDate
         featureModels.add(new FeatureModel("1/1/19", "Systolic Pressure High", 150.4));
         featureModels.add(new FeatureModel("1/1/19", "Systolic Pressure High", 150.4));
 
+        //Sets adapters and data to date range pickers
         adapter = new FeatureAdapter(featureModels, getContext());
         listView.setAdapter(adapter);
         View datePicker = rootView.findViewById(R.id.datePickerView);
         datePicker.setOnClickListener(datePickerListener);
+
+
+        //Populate with patient names from database here (once implemented) that doctor is allowed access to
+        List<String> patientNames = new ArrayList<String>();
+        patientNames.add("Patient A - 001");
+        patientNames.add("Patient B - 002");
+        patientNames.add("Patient C - 003");
+        patientNames.add("Patient D - 004");
+        patientNames.add("Patient E - 005");
+        patientNames.add("Patient F - 006");
+        patientNames.add("Patient G - 007");
+        patientNames.add("Patient H - 008");
+        //Sets adapter and data for spinner
+        Spinner patientSpinner = rootView.findViewById(R.id.patientSpinner);
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, patientNames);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        patientSpinner.setAdapter(spinnerAdapter);
+
 
         return rootView;
     }
@@ -53,11 +76,14 @@ public class Features extends Fragment implements DateRangePickerFragment.OnDate
 
     @Override
     public void onDateRangeSelected(int startDay, int startMonth, int startYear, int endDay, int endMonth, int endYear) {
+        //Updates date range text views with chosen start/end dates
         System.out.println(String.format("Start: %d/%d/%d End: %d/%d/%d", startDay, startMonth, startYear, endDay, endMonth, endYear));
         TextView startDateTV = getActivity().findViewById(R.id.tv_startDate);
         TextView endDateTV = getActivity().findViewById(R.id.tv_endDate);
         startDateTV.setText(String.format("Start of Date Range\n%d/%d/%d", startDay, startMonth, startYear));
         endDateTV.setText(String.format("End of Date Range\n%d/%d/%d", endDay, endMonth, endYear));
+
+        //Apply filter to dataset displayed in listview and update listview adapter with updated data to refresh view
     }
 
 
