@@ -16,6 +16,7 @@ import android.widget.TextView;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -28,6 +29,10 @@ public class Features extends Fragment implements DateRangePickerFragment.OnDate
     private boolean init = true;
     TextView noPatientTV;
     TextView emptyListTV;
+    String patientFilter = "";
+    Date start = null;
+    Date end = null;
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -94,13 +99,27 @@ public class Features extends Fragment implements DateRangePickerFragment.OnDate
 
                     if(!item.equals("No patient selected")) {
                         String pId = item.substring(item.lastIndexOf(" ") + 1);
+                        patientFilter = pId;
                         for (int i = 0; i < featureModels.size(); i++) {
-                            if (featureModels.get(i).patientId.equals(pId)) {
-                                dataList.add(featureModels.get(i));
+                            if (start != null && end != null) {
+                                try {
+                                    String featureDateString = featureModels.get(i).getDate().substring(0, 10);
+                                    Date featureDate = format.parse(featureDateString);
+                                    if (featureModels.get(i).patientId.equals(pId) && featureDate.before(end) && featureDate.after(start)) {
+                                        dataList.add(featureModels.get(i));
+                                    }
+                                }catch (ParseException e){
+                                    System.out.println(e.getStackTrace());
+                                }
+                            }else{
+                                if (featureModels.get(i).patientId.equals(pId)) {
+                                    dataList.add(featureModels.get(i));
+                                }
                             }
                         }
                         //If data to display
                         if(dataList.size()>0){
+                            Collections.sort(dataList);
                             listView.setVisibility(View.VISIBLE);
                             emptyListTV.setVisibility(View.INVISIBLE);
                             noPatientTV.setVisibility(View.INVISIBLE);
@@ -114,6 +133,7 @@ public class Features extends Fragment implements DateRangePickerFragment.OnDate
                         noPatientTV.setVisibility(View.VISIBLE);
                         emptyListTV.setVisibility(View.INVISIBLE);
                         listView.setVisibility(View.INVISIBLE);
+                        patientFilter = "";
                     }
                     adapter.notifyDataSetChanged();
                 }
@@ -143,7 +163,7 @@ public class Features extends Fragment implements DateRangePickerFragment.OnDate
     @Override
     public void onDateRangeSelected(int startDay, int startMonth, int startYear, int endDay, int endMonth, int endYear) {
         //Updates date range text views with chosen start/end dates
-        System.out.println(String.format("Start: %d/%d/%d End: %d/%d/%d", startDay, startMonth, startYear, endDay, endMonth, endYear));
+        System.out.println(String.format("Start: %d-%d-%d End: %d-%d-%d", startYear, startMonth, startDay, endYear, endMonth, endDay));
         TextView startDateTV = getActivity().findViewById(R.id.tv_startDate);
         TextView endDateTV = getActivity().findViewById(R.id.tv_endDate);
         String startDateString = String.format("%d-%d-%d",startYear, startMonth, startDay);
@@ -152,21 +172,35 @@ public class Features extends Fragment implements DateRangePickerFragment.OnDate
         endDateTV.setText(String.format("End of Date Range\n%d-%d-%d", endDay, endMonth, endYear));
 
         try {
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
             Date startDate = format.parse(startDateString);
             Date endDate = format.parse(endDateString);
-
-            //Apply filter to dataset displayed in listview and update listview adapter with updated data to refresh view
-
+            start = startDate;
+            end = endDate;
             dataList.clear();
-            for (int i = 0; i < featureModels.size(); i++) {
-                String featureDateString = featureModels.get(i).date.substring(0, 10);
-                Date featureDate = format.parse(featureDateString);
-                if (featureDate.before(endDate) && featureDate.after(startDate)) {
-                    dataList.add(featureModels.get(i));
+            //Apply filter to dataset displayed in listview and update listview adapter with updated data to refresh view
+            if(noPatientTV.getVisibility()!=View.VISIBLE) {
+
+                for (int i = 0; i < featureModels.size(); i++) {
+                    String featureDateString = featureModels.get(i).getDate().substring(0, 10);
+                    String featurePId = featureModels.get(i).getPatientId();
+                    Date featureDate = format.parse(featureDateString);
+                    if (featureDate.before(endDate) && featureDate.after(startDate) && featurePId.equals(patientFilter)) {
+                        dataList.add(featureModels.get(i));
+                    }
                 }
+                if (dataList.size() > 0) {
+                    Collections.sort(dataList);
+                    listView.setVisibility(View.VISIBLE);
+                    emptyListTV.setVisibility(View.INVISIBLE);
+                    noPatientTV.setVisibility(View.INVISIBLE);
+                } else {
+                    listView.setVisibility(View.INVISIBLE);
+                    emptyListTV.setVisibility(View.VISIBLE);
+                    noPatientTV.setVisibility(View.GONE);
+                }
+                adapter.notifyDataSetChanged();
             }
-            adapter.notifyDataSetChanged();
         }catch (ParseException e){
             System.out.println("Dates failed to parse");
         }

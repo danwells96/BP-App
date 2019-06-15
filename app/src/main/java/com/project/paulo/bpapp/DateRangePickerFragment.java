@@ -64,7 +64,7 @@ public class DateRangePickerFragment extends DialogFragment implements View.OnCl
             String startMonthYear = startDate.substring(startDate.indexOf("-")+1);
             String startMonth = startMonthYear.substring(0, startMonthYear.indexOf("-"));
             String startYear = startMonthYear.substring(startMonthYear.indexOf("-")+1);
-            startDatePicker.updateDate(Integer.valueOf(startYear), Integer.valueOf(startMonth), Integer.valueOf(startDay));
+            startDatePicker.updateDate(Integer.valueOf(startYear), Integer.valueOf(startMonth)-1, Integer.valueOf(startDay));
         }
 
         //Sets the end date initially to date previously selected
@@ -74,7 +74,7 @@ public class DateRangePickerFragment extends DialogFragment implements View.OnCl
             String endMonthYear = endDate.substring(endDate.indexOf("-")+1);
             String endMonth = endMonthYear.substring(0, endMonthYear.indexOf("-"));
             String endYear = endMonthYear.substring(endMonthYear.indexOf("-")+1);
-            startDatePicker.updateDate(Integer.valueOf(endYear), Integer.valueOf(endMonth), Integer.valueOf(endDay));
+            startDatePicker.updateDate(Integer.valueOf(endYear), Integer.valueOf(endMonth)-1, Integer.valueOf(endDay));
         }
 
         butSetDateRange.setOnClickListener(this);
@@ -110,8 +110,8 @@ public class DateRangePickerFragment extends DialogFragment implements View.OnCl
     @Override
     public void onClick(View v) {
         dismiss();
-        onDateRangeSelectedListener.onDateRangeSelected(startDatePicker.getDayOfMonth(),startDatePicker.getMonth(),startDatePicker.getYear(),
-                endDatePicker.getDayOfMonth(),endDatePicker.getMonth(),endDatePicker.getYear());
+        onDateRangeSelectedListener.onDateRangeSelected(startDatePicker.getDayOfMonth(),startDatePicker.getMonth()+1,startDatePicker.getYear(),
+                endDatePicker.getDayOfMonth(),endDatePicker.getMonth()+1,endDatePicker.getYear());
     }
 
     public interface OnDateRangeSelectedListener {
