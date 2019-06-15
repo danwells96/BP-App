@@ -13,7 +13,6 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,6 +26,8 @@ public class Features extends Fragment implements DateRangePickerFragment.OnDate
     ListView listView;
     private FeatureAdapter adapter;
     private boolean init = true;
+    TextView noPatientTV;
+    TextView emptyListTV;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -34,6 +35,8 @@ public class Features extends Fragment implements DateRangePickerFragment.OnDate
         //Creating listview and populating it with flagged features
         View rootView = inflater.inflate(R.layout.features, container, false);
         listView = (ListView)rootView.findViewById(R.id.feature_listView);
+        noPatientTV = rootView.findViewById(R.id.tv_noPatient);
+        emptyListTV = rootView.findViewById(R.id.tv_emptyList);
         featureModels = new ArrayList<>();
         //Get actual data from database here once implemented
         featureModels.add(new FeatureModel("2019-01-25 10:03:12", "Systolic Pressure High", 150.4, "001"));
@@ -51,7 +54,7 @@ public class Features extends Fragment implements DateRangePickerFragment.OnDate
         featureModels.add(new FeatureModel("2018-01-21 10:03:12", "Systolic Pressure High", 150.4, "001"));
         featureModels.add(new FeatureModel("2018-01-25 10:03:12", "Systolic Pressure High", 150.4, "002"));
 
-        dataList = (ArrayList<FeatureModel>) featureModels.clone();
+        dataList = new ArrayList<>();
         //Sets adapters and data to date range pickers
         adapter = new FeatureAdapter(dataList, getContext());
         listView.setAdapter(adapter);
@@ -61,6 +64,7 @@ public class Features extends Fragment implements DateRangePickerFragment.OnDate
 
         //Populate with patient names from database here (once implemented) that doctor is allowed access to
         List<String> patientNames = new ArrayList<String>();
+        patientNames.add("No patient selected");
         patientNames.add("Patient A - 001");
         patientNames.add("Patient B - 002");
         patientNames.add("Patient C - 003");
@@ -77,18 +81,39 @@ public class Features extends Fragment implements DateRangePickerFragment.OnDate
         patientSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
+
                 if(init){
                     init = false;
+                    listView.setVisibility(View.INVISIBLE);
+                    noPatientTV.setVisibility(View.VISIBLE);
                 }else {
                     //Gets newly selected patient
                     String item = adapterView.getItemAtPosition(pos).toString();
                     //Applies filter to listview and updates data displayed
-                    String pId = item.substring(item.lastIndexOf(" ") + 1);
                     dataList.clear();
-                    for (int i = 0; i < featureModels.size(); i++) {
-                        if (featureModels.get(i).patientId.equals(pId)) {
-                            dataList.add(featureModels.get(i));
+
+                    if(!item.equals("No patient selected")) {
+                        String pId = item.substring(item.lastIndexOf(" ") + 1);
+                        for (int i = 0; i < featureModels.size(); i++) {
+                            if (featureModels.get(i).patientId.equals(pId)) {
+                                dataList.add(featureModels.get(i));
+                            }
                         }
+                        //If data to display
+                        if(dataList.size()>0){
+                            listView.setVisibility(View.VISIBLE);
+                            emptyListTV.setVisibility(View.INVISIBLE);
+                            noPatientTV.setVisibility(View.INVISIBLE);
+                        }else{
+                            listView.setVisibility(View.INVISIBLE);
+                            emptyListTV.setVisibility(View.VISIBLE);
+                            noPatientTV.setVisibility(View.GONE);
+                        }
+                    }else{
+                        //No patient is selected
+                        noPatientTV.setVisibility(View.VISIBLE);
+                        emptyListTV.setVisibility(View.INVISIBLE);
+                        listView.setVisibility(View.INVISIBLE);
                     }
                     adapter.notifyDataSetChanged();
                 }
