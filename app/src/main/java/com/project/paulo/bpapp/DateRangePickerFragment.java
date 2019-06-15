@@ -60,20 +60,20 @@ public class DateRangePickerFragment extends DialogFragment implements View.OnCl
         //Sets the start date initially to date previously selected
         startDatePicker = (DatePicker) root.findViewById(R.id.start_date_picker);
         if(!startDate.equals("-")) {
-            String startDay = startDate.substring(0, startDate.indexOf("/"));
-            String startMonthYear = startDate.substring(startDate.indexOf("/")+1);
-            String startMonth = startMonthYear.substring(0, startMonthYear.indexOf("/"));
-            String startYear = startMonthYear.substring(startMonthYear.indexOf("/")+1);
+            String startDay = startDate.substring(0, startDate.indexOf("-"));
+            String startMonthYear = startDate.substring(startDate.indexOf("-")+1);
+            String startMonth = startMonthYear.substring(0, startMonthYear.indexOf("-"));
+            String startYear = startMonthYear.substring(startMonthYear.indexOf("-")+1);
             startDatePicker.updateDate(Integer.valueOf(startYear), Integer.valueOf(startMonth), Integer.valueOf(startDay));
         }
 
         //Sets the end date initially to date previously selected
         endDatePicker = (DatePicker) root.findViewById(R.id.end_date_picker);
         if(!endDate.equals("-")) {
-            String endDay = endDate.substring(0, endDate.indexOf("/"));
-            String endMonthYear = endDate.substring(endDate.indexOf("/")+1);
-            String endMonth = endMonthYear.substring(0, endMonthYear.indexOf("/"));
-            String endYear = endMonthYear.substring(endMonthYear.indexOf("/")+1);
+            String endDay = endDate.substring(0, endDate.indexOf("-"));
+            String endMonthYear = endDate.substring(endDate.indexOf("-")+1);
+            String endMonth = endMonthYear.substring(0, endMonthYear.indexOf("-"));
+            String endYear = endMonthYear.substring(endMonthYear.indexOf("-")+1);
             startDatePicker.updateDate(Integer.valueOf(endYear), Integer.valueOf(endMonth), Integer.valueOf(endDay));
         }
 

@@ -4,11 +4,13 @@ public class FeatureModel {
     String date;
     String feature;
     Double value;
+    String patientId;
 
-    public FeatureModel(String date, String feature, Double value){
+    public FeatureModel(String date, String feature, Double value, String patientId){
         this.date = date;
         this.feature = feature;
         this.value = value;
+        this.patientId = patientId;
     }
 
     public String getDate(){
@@ -21,5 +23,9 @@ public class FeatureModel {
 
     public Double getValue() {
         return value;
+    }
+
+    public String getPatientId() {
+        return patientId;
     }
 }

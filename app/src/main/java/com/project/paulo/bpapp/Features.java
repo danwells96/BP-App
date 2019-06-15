@@ -13,14 +13,20 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.lang.reflect.Array;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Features extends Fragment implements DateRangePickerFragment.OnDateRangeSelectedListener {
 
     ArrayList<FeatureModel> featureModels;
+    ArrayList<FeatureModel> dataList;
     ListView listView;
-    private static FeatureAdapter adapter;
+    private FeatureAdapter adapter;
+    private boolean init = true;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -30,16 +36,24 @@ public class Features extends Fragment implements DateRangePickerFragment.OnDate
         listView = (ListView)rootView.findViewById(R.id.feature_listView);
         featureModels = new ArrayList<>();
         //Get actual data from database here once implemented
-        featureModels.add(new FeatureModel("1/1/19 22:55", "Systolic Pressure High", 150.4));
-        featureModels.add(new FeatureModel("1/1/19 21:12", "Systolic Pressure High", 150.4));
-        featureModels.add(new FeatureModel("1/1/19 15:55", "Systolic Pressure High", 150.4));
-        featureModels.add(new FeatureModel("1/1/19 15:54", "Systolic Pressure High", 150.4));
-        featureModels.add(new FeatureModel("1/1/19 14:30", "Systolic Pressure High", 150.4));
-        featureModels.add(new FeatureModel("1/1/19 12:04", "Systolic Pressure High", 150.4));
-        featureModels.add(new FeatureModel("1/1/19 11:17", "Systolic Pressure High", 150.4));
+        featureModels.add(new FeatureModel("2019-01-25 10:03:12", "Systolic Pressure High", 150.4, "001"));
+        featureModels.add(new FeatureModel("2019-01-20 10:03:12", "Systolic Pressure High", 150.4, "002"));
+        featureModels.add(new FeatureModel("2019-01-15 10:03:12", "Systolic Pressure High", 150.4, "002"));
+        featureModels.add(new FeatureModel("2019-01-25 10:03:12", "Systolic Pressure High", 150.4, "003"));
+        featureModels.add(new FeatureModel("2019-01-25 10:01:12", "Systolic Pressure High", 150.4, "002"));
+        featureModels.add(new FeatureModel("2019-01-18 10:03:12", "Systolic Pressure High", 150.4, "007"));
+        featureModels.add(new FeatureModel("2018-01-01 10:03:12", "Systolic Pressure High", 150.4, "005"));
+        featureModels.add(new FeatureModel("2018-01-12 10:03:12", "Systolic Pressure High", 150.4, "005"));
+        featureModels.add(new FeatureModel("2018-01-25 10:03:12", "Systolic Pressure High", 150.4, "005"));
+        featureModels.add(new FeatureModel("2018-01-24 10:03:12", "Systolic Pressure High", 150.4, "004"));
+        featureModels.add(new FeatureModel("2018-01-23 10:03:12", "Systolic Pressure High", 150.4, "007"));
+        featureModels.add(new FeatureModel("2018-01-25 10:03:12", "Systolic Pressure High", 150.4, "006"));
+        featureModels.add(new FeatureModel("2018-01-21 10:03:12", "Systolic Pressure High", 150.4, "001"));
+        featureModels.add(new FeatureModel("2018-01-25 10:03:12", "Systolic Pressure High", 150.4, "002"));
 
+        dataList = (ArrayList<FeatureModel>) featureModels.clone();
         //Sets adapters and data to date range pickers
-        adapter = new FeatureAdapter(featureModels, getContext());
+        adapter = new FeatureAdapter(dataList, getContext());
         listView.setAdapter(adapter);
         View datePicker = rootView.findViewById(R.id.datePickerView);
         datePicker.setOnClickListener(datePickerListener);
@@ -57,15 +71,27 @@ public class Features extends Fragment implements DateRangePickerFragment.OnDate
         patientNames.add("Patient H - 008");
         //Sets adapter and data for spinner
         Spinner patientSpinner = rootView.findViewById(R.id.patientSpinner);
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, patientNames);
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, patientNames);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         patientSpinner.setAdapter(spinnerAdapter);
         patientSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
-                //Gets newly selected patient
-                String item = adapterView.getItemAtPosition(pos).toString();
-                //Applies filter to listview and updates data displayed
+                if(init){
+                    init = false;
+                }else {
+                    //Gets newly selected patient
+                    String item = adapterView.getItemAtPosition(pos).toString();
+                    //Applies filter to listview and updates data displayed
+                    String pId = item.substring(item.lastIndexOf(" ") + 1);
+                    dataList.clear();
+                    for (int i = 0; i < featureModels.size(); i++) {
+                        if (featureModels.get(i).patientId.equals(pId)) {
+                            dataList.add(featureModels.get(i));
+                        }
+                    }
+                    adapter.notifyDataSetChanged();
+                }
             }
 
             @Override
@@ -95,10 +121,30 @@ public class Features extends Fragment implements DateRangePickerFragment.OnDate
         System.out.println(String.format("Start: %d/%d/%d End: %d/%d/%d", startDay, startMonth, startYear, endDay, endMonth, endYear));
         TextView startDateTV = getActivity().findViewById(R.id.tv_startDate);
         TextView endDateTV = getActivity().findViewById(R.id.tv_endDate);
-        startDateTV.setText(String.format("Start of Date Range\n%d/%d/%d", startDay, startMonth, startYear));
-        endDateTV.setText(String.format("End of Date Range\n%d/%d/%d", endDay, endMonth, endYear));
+        String startDateString = String.format("%d-%d-%d",startYear, startMonth, startDay);
+        String endDateString = String.format("%d-%d-%d", endYear, endMonth, endDay);
+        startDateTV.setText(String.format("Start of Date Range\n%d-%d-%d", startDay, startMonth, startYear));
+        endDateTV.setText(String.format("End of Date Range\n%d-%d-%d", endDay, endMonth, endYear));
 
-        //Apply filter to dataset displayed in listview and update listview adapter with updated data to refresh view
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            Date startDate = format.parse(startDateString);
+            Date endDate = format.parse(endDateString);
+
+            //Apply filter to dataset displayed in listview and update listview adapter with updated data to refresh view
+
+            dataList.clear();
+            for (int i = 0; i < featureModels.size(); i++) {
+                String featureDateString = featureModels.get(i).date.substring(0, 10);
+                Date featureDate = format.parse(featureDateString);
+                if (featureDate.before(endDate) && featureDate.after(startDate)) {
+                    dataList.add(featureModels.get(i));
+                }
+            }
+            adapter.notifyDataSetChanged();
+        }catch (ParseException e){
+            System.out.println("Dates failed to parse");
+        }
     }
 
 

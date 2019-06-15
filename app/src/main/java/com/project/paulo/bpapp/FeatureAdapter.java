@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FeatureAdapter extends ArrayAdapter<FeatureModel> {
     private ArrayList<FeatureModel> dataset;
@@ -58,5 +59,12 @@ public class FeatureAdapter extends ArrayAdapter<FeatureModel> {
         holder.tvValue.setText(featureModel.getValue().toString());
 
         return convertView;
+    }
+
+    public void refreshList(ArrayList<FeatureModel> features){
+        this.dataset.clear();
+        this.dataset = features;
+        System.out.println("In adapter: "+features.size());
+        notifyDataSetChanged();
     }
 }
