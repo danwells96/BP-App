@@ -398,7 +398,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
         leftAxis.setAxisMinimum(0f);
         leftAxis.setDrawGridLines(true);
         leftAxis.setGridColor(getResources().getColor(R.color.medicalGreen));
-        leftAxis.setTextColor(getResources().getColor(R.color.black));
+        leftAxis.setTextColor(getResources().getColor(R.color.medicalGreen));
 
         YAxis rightAxis = mChart.getAxisRight();
         rightAxis.setEnabled(false);
@@ -766,7 +766,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
         set.setLineWidth(2f);
         set.setCircleRadius(4f);
         set.setFillAlpha(65);
-        set.setFillColor(ColorTemplate.getHoloBlue());
+        set.setFillColor(R.color.medicalGreen);
         set.setHighLightColor(Color.rgb(244, 117, 117));
         set.setValueTextColor(Color.WHITE);
         set.setValueTextSize(9f);
