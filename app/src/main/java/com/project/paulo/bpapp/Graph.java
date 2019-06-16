@@ -369,9 +369,9 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
 
         LineData data = new LineData();
         data.setValueTextColor(getResources().getColor(R.color.medicalGreen));
-
         // add empty data
         mChart.setData(data);
+        mChart.setExtraOffsets(10, 10, 0, 10);
 
         // get the legend (only possible after setting data)
         Legend l = mChart.getLegend();
@@ -384,12 +384,12 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
         XAxis xl = mChart.getXAxis();
         mChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
         xl.setTypeface(mTfLight);
-        xl.setTextColor(Color.WHITE);
+        xl.setTextColor(getResources().getColor(R.color.medicalGreen));
         xl.setDrawGridLines(true);
+        xl.setDrawAxisLine(true);
         xl.setGridColor(getResources().getColor(R.color.medicalGreen));
         xl.setAvoidFirstLastClipping(true);
         xl.setEnabled(true);
-        xl.setTextColor(getResources().getColor(R.color.black));
 
         YAxis leftAxis = mChart.getAxisLeft();
         leftAxis.setTypeface(mTfLight);
@@ -607,7 +607,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
 
             TextView systolicTextView = getActivity().findViewById(R.id.systolicValue);
             //systolicTextView.setError(null);
-            systolicTextView.setText(Double.toString(features[0]));
+            systolicTextView.setText(String.format("%.1f", features[0]));
 
             /*if(isSystolicHigh && !isSystolicDifferingMuch){
                 systolicTextView.setError(isSystolicHighText);
@@ -623,7 +623,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
 */
             TextView diastolicTextView = getActivity().findViewById(R.id.diastolicValue);
             //diastolicTextView.setError(null);
-            diastolicTextView.setText(Double.toString(features[1]));
+            diastolicTextView.setText(String.format("%.1f", features[1]));
 
             /*if(isDiastolicLow && !isDiastolicDifferingMuch){
                 diastolicTextView.setError(isDiastolicLowText);
@@ -654,7 +654,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
 */
             TextView heartRateTextView = getActivity().findViewById(R.id.heartRate);
             //heartRateTextView.setError(null);
-            heartRateTextView.setText(Double.toString(features[3]));
+            heartRateTextView.setText(String.format("%.0f bpm", features[3]));
 
             /*if(isHeartRateHigh){
                 heartRateTextView.setError(isHeartRateHighText);
@@ -739,6 +739,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
 
             data.notifyDataChanged();
 
+
             // let the chart know it's data has changed
             mChart.notifyDataSetChanged();
 
@@ -763,7 +764,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
 
         LineDataSet set = new LineDataSet(null, "Pressure (mmHg)");
         set.setAxisDependency(YAxis.AxisDependency.LEFT);
-        set.setColor(ColorTemplate.getHoloBlue());
+        set.setColor(getResources().getColor(R.color.medicalGreen));
         set.setCircleColor(Color.WHITE);
         set.setLineWidth(2f);
         set.setCircleRadius(4f);

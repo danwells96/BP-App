@@ -122,7 +122,7 @@
                         android:layout_below="@id/textView_readerParamTitle"
                         android:layout_toRightOf="@id/textView_activeFrequency"
                         android:textSize="16dp"
-                        android:text="- MHz"/>
+                        android:text="916.3 MHz"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -131,7 +131,7 @@
                         android:layout_below="@id/textView_activeFrequency"
                         android:gravity="center"
                         android:text="Reference Frequency:"
-                        android:textSize="16dp"/>
+                        android:textSize="15dp"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -139,8 +139,8 @@
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@id/textView_referenceFrequency"
                         android:layout_below="@id/textView_activeFrequency"
-                        android:textSize="16dp"
-                        android:text="- MHz"/>
+                        android:textSize="15dp"
+                        android:text="919.9 MHz"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -158,7 +158,7 @@
                         android:layout_toRightOf="@id/textView_activeSample"
                         android:layout_below="@id/textView_referenceFrequency"
                         android:textSize="16dp"
-                        android:text="- ms"/>
+                        android:text="20 ms"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -176,7 +176,7 @@
                         android:layout_toRightOf="@id/textView_referenceSample"
                         android:layout_below="@id/textView_activeSample"
                         android:textSize="16dp"
-                        android:text="- s"/>
+                        android:text="1 s"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -194,7 +194,7 @@
                         android:layout_toRightOf="@id/textView_sweeps"
                         android:layout_below="@id/textView_referenceSample"
                         android:textSize="16dp"
-                        android:text="-"/>
+                        android:text="100"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -212,7 +212,7 @@
                         android:layout_toRightOf="@id/textView_samples"
                         android:layout_below="@id/textView_sweeps"
                         android:textSize="16dp"
-                        android:text="-"/>
+                        android:text="64"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -230,7 +230,7 @@
                         android:layout_toRightOf="@id/textView_average"
                         android:layout_below="@id/textView_samples"
                         android:textSize="16dp"
-                        android:text="-"/>
+                        android:text="63"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -248,7 +248,7 @@
                         android:layout_toRightOf="@id/textView_txPower"
                         android:layout_below="@id/textView_average"
                         android:textSize="16dp"
-                        android:text="-"/>
+                        android:text="511"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -266,7 +266,7 @@
                         android:layout_toRightOf="@id/textView_txTime"
                         android:layout_below="@id/textView_txPower"
                         android:textSize="16dp"
-                        android:text="-"/>
+                        android:text="114"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -284,7 +284,7 @@
                         android:layout_toRightOf="@id/textView_rxDelay"
                         android:layout_below="@id/textView_txTime"
                         android:textSize="16dp"
-                        android:text="-"/>
+                        android:text="22"/>
                 </RelativeLayout>
             </LinearLayout>
 
