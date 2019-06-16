@@ -605,11 +605,11 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
 
             // UPDATE UI
 
-            /*TextView systolicTextView = getActivity().findViewById(R.id.systolic);
-            systolicTextView.setError(null);
+            TextView systolicTextView = getActivity().findViewById(R.id.systolicValue);
+            //systolicTextView.setError(null);
             systolicTextView.setText(Double.toString(features[0]));
 
-            if(isSystolicHigh && !isSystolicDifferingMuch){
+            /*if(isSystolicHigh && !isSystolicDifferingMuch){
                 systolicTextView.setError(isSystolicHighText);
                 abnormalities = abnormalities + isSystolicHigh;
             } else if(!isSystolicHigh && isSystolicDifferingMuch){
@@ -620,11 +620,12 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
                 abnormalities = abnormalities + isSystolicHighText + " and " + isSystolicDifferingMuchText;
             }
 
-            TextView diastolicTextView = getActivity().findViewById(R.id.diastolic);
-            diastolicTextView.setError(null);
+*/
+            TextView diastolicTextView = getActivity().findViewById(R.id.diastolicValue);
+            //diastolicTextView.setError(null);
             diastolicTextView.setText(Double.toString(features[1]));
 
-            if(isDiastolicLow && !isDiastolicDifferingMuch){
+            /*if(isDiastolicLow && !isDiastolicDifferingMuch){
                 diastolicTextView.setError(isDiastolicLowText);
                 abnormalities = abnormalities + " and " + isDiastolicLowText;
             } else if(!isDiastolicLow && isDiastolicDifferingMuch){
@@ -650,11 +651,12 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
                 abnormalities = abnormalities + isMeanHighText + " and " + isMeanDifferingMuchText;
             }
 
-            TextView heartRateTextView = getActivity().findViewById(R.id.heart_rate);
-            heartRateTextView.setError(null);
+*/
+            TextView heartRateTextView = getActivity().findViewById(R.id.heartRate);
+            //heartRateTextView.setError(null);
             heartRateTextView.setText(Double.toString(features[3]));
 
-            if(isHeartRateHigh){
+            /*if(isHeartRateHigh){
                 heartRateTextView.setError(isHeartRateHighText);
                 abnormalities = abnormalities + " and " + isHeartRateHighText;
             }
