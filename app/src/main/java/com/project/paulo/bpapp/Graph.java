@@ -452,8 +452,8 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
             System.arraycopy(abp, 0, temp, 0, abp.length);
 
             // FILTERING
-            double[] bFilter = {0.4208, 0.4208};
-            double[] aFilter = {1, -0.1584};
+            double[] bFilter = {0.1509, 0.1509};
+            double[] aFilter = {1, -0.6981};
             temp = Filter.filter(bFilter, aFilter, temp);
 
             // BEAT ONSET DETECTION
