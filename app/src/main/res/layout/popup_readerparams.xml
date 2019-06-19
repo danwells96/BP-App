@@ -13,7 +13,7 @@
         android:text="Active Resonator Frequency (MHz)"
         android:layout_centerHorizontal="true"/>
     <EditText
-        android:layout_width="40dp"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:id="@+id/edit_active_frequency"
         android:layout_toRightOf="@+id/active_frequency"
@@ -34,7 +34,7 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/active_frequency"/>
     <EditText
-        android:layout_width="40dp"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:id="@+id/edit_reference_frequency"
         android:layout_toRightOf="@+id/reference_frequency"
@@ -55,7 +55,7 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/reference_frequency"/>
     <EditText
-        android:layout_width="40dp"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:id="@+id/edit_active_sample"
         android:layout_toRightOf="@+id/active_sample"
@@ -76,7 +76,7 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/active_sample"/>
     <EditText
-        android:layout_width="40dp"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:id="@+id/edit_reference_sample"
         android:layout_toRightOf="@+id/reference_sample"
@@ -97,7 +97,7 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/reference_sample"/>
     <EditText
-        android:layout_width="40dp"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:id="@+id/edit_sweeps"
         android:layout_toRightOf="@+id/sweeps"
@@ -118,7 +118,7 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/sweeps"/>
     <EditText
-        android:layout_width="40dp"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:id="@+id/edit_samples"
         android:layout_margin="5dp"
@@ -139,7 +139,7 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/samples"/>
     <EditText
-        android:layout_width="40dp"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:id="@+id/edit_averages"
         android:layout_margin="5dp"
@@ -160,7 +160,7 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/averages"/>
     <EditText
-        android:layout_width="40dp"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:id="@+id/edit_tx_pwr"
         android:layout_toRightOf="@+id/tx_pwr"
@@ -181,7 +181,7 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/tx_pwr"/>
     <EditText
-        android:layout_width="40dp"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:id="@+id/edit_tx_t"
         android:layout_margin="5dp"
@@ -202,7 +202,7 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/tx_t"/>
     <EditText
-        android:layout_width="40dp"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:id="@+id/edit_rx_delay"
         android:layout_toRightOf="@id/rx_delay"

@@ -127,6 +127,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
         tvList.add(((TextView)readerParams.findViewById(R.id.textView_txTimeValue)).getText().toString());
         tvList.add(((TextView)readerParams.findViewById(R.id.textView_rxDelayValue)).getText().toString());
 
+        //On click listener creates popup window to edit reader parameters
         readerParams.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -144,6 +145,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
             }
         });
 
+        //Set activity title
         getActivity().setTitle("Graph");
     }
 
@@ -152,6 +154,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
     public void onFinishDialog(List<EditText> etList) {
         View v = getActivity().findViewById(R.id.readerParams);
 
+        //Updates reader parameter view in main UI for graph
         ((TextView)v.findViewById(R.id.textView_activeFrequencyValue)).setText(etList.get(0).getText()+" MHz");
         ((TextView)v.findViewById(R.id.textView_referenceFrequencyValue)).setText(etList.get(1).getText()+" MHz");
         ((TextView)v.findViewById(R.id.textView_activeSampleValue)).setText(etList.get(2).getText()+" ms");
@@ -163,6 +166,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
         ((TextView)v.findViewById(R.id.textView_txTimeValue)).setText(etList.get(8).getText());
         ((TextView)v.findViewById(R.id.textView_rxDelayValue)).setText(etList.get(9).getText());
 
+        //Gets list of values saved in popup window
         tvList.clear();
         tvList.add(((TextView)v.findViewById(R.id.textView_activeFrequencyValue)).getText().toString());
         tvList.add(((TextView)v.findViewById(R.id.textView_referenceFrequencyValue)).getText().toString());
@@ -286,30 +290,6 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
                     Log.e(TAG, chartValue.getChartTime2());
                     Log.e(TAG, chartValue.getChartValue2());
 
-//                    matcher = regex.matcher(chartValue.getChartTime2());
-//                    while(matcher.find()){
-//                        x = matcher.group(1);
-//                    }
-//                    matcher = regex.matcher(chartValue.getChartValue2());
-//                    while(matcher.find()){
-//                        y = matcher.group(1);update
-//                    }
-
-//                    addEntry(Float.parseFloat(chartValue.getChartTime2())/1000, Float.parseFloat(chartValue.getChartValue2()));
-
-//                    matcher = regex.matcher(chartValue.getChartTime3());
-//                    while(matcher.find()){
-//                        x = matcher.group(1);
-//                    }
-//                    matcher = regex.matcher(chartValue.getChartValue3());
-//                    while(matcher.find()){
-//                        y = matcher.group(1);
-//                    }
-
-//                    addEntry(Float.parseFloat(chartValue.getChartTime3())/1000, Float.parseFloat(chartValue.getChartValue3()));
-
-//                    Log.w(TAG, Arrays.toString(databaseHandler.getAllData().toArray()));
-
                     // FEATURE EXTRACTION
                     if (pap.size() < windowLength*(1000/arsr)) {
                         pap.add(Double.parseDouble(y));
@@ -369,9 +349,9 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
 
         LineData data = new LineData();
         data.setValueTextColor(getResources().getColor(R.color.medicalGreen));
-
         // add empty data
         mChart.setData(data);
+        mChart.setExtraOffsets(10, 10, 0, 10);
 
         // get the legend (only possible after setting data)
         Legend l = mChart.getLegend();
@@ -381,16 +361,18 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
         l.setTypeface(mTfLight);
         l.setTextColor(Color.WHITE);
 
+        //Sets x-axis
         XAxis xl = mChart.getXAxis();
         mChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
         xl.setTypeface(mTfLight);
-        xl.setTextColor(Color.WHITE);
+        xl.setTextColor(getResources().getColor(R.color.medicalGreen));
         xl.setDrawGridLines(true);
+        xl.setDrawAxisLine(true);
         xl.setGridColor(getResources().getColor(R.color.medicalGreen));
         xl.setAvoidFirstLastClipping(true);
         xl.setEnabled(true);
-        xl.setTextColor(getResources().getColor(R.color.black));
 
+        //Sets y-axis
         YAxis leftAxis = mChart.getAxisLeft();
         leftAxis.setTypeface(mTfLight);
         leftAxis.setTextColor(Color.WHITE);
@@ -398,7 +380,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
         leftAxis.setAxisMinimum(0f);
         leftAxis.setDrawGridLines(true);
         leftAxis.setGridColor(getResources().getColor(R.color.medicalGreen));
-        leftAxis.setTextColor(getResources().getColor(R.color.black));
+        leftAxis.setTextColor(getResources().getColor(R.color.medicalGreen));
 
         YAxis rightAxis = mChart.getAxisRight();
         rightAxis.setEnabled(false);
@@ -452,8 +434,8 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
             System.arraycopy(abp, 0, temp, 0, abp.length);
 
             // FILTERING
-            double[] bFilter = {0.4208, 0.4208};
-            double[] aFilter = {1, -0.1584};
+            double[] bFilter = {0.1509, 0.1509};
+            double[] aFilter = {1, -0.6981};
             temp = Filter.filter(bFilter, aFilter, temp);
 
             // BEAT ONSET DETECTION
@@ -597,6 +579,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
             super.onProgressUpdate(values);
         }
 
+        //Updates UI with extracted feature values and abnormality detection is also performed here
         @Override
         protected void onPostExecute(double[] features) {
             super.onPostExecute(features);
@@ -605,11 +588,11 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
 
             // UPDATE UI
 
-            /*TextView systolicTextView = getActivity().findViewById(R.id.systolic);
-            systolicTextView.setError(null);
-            systolicTextView.setText(Double.toString(features[0]));
+            TextView systolicTextView = getActivity().findViewById(R.id.systolicValue);
+            //systolicTextView.setError(null);
+            systolicTextView.setText(String.format("%.1f", features[0]));
 
-            if(isSystolicHigh && !isSystolicDifferingMuch){
+            /*if(isSystolicHigh && !isSystolicDifferingMuch){
                 systolicTextView.setError(isSystolicHighText);
                 abnormalities = abnormalities + isSystolicHigh;
             } else if(!isSystolicHigh && isSystolicDifferingMuch){
@@ -620,11 +603,12 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
                 abnormalities = abnormalities + isSystolicHighText + " and " + isSystolicDifferingMuchText;
             }
 
-            TextView diastolicTextView = getActivity().findViewById(R.id.diastolic);
-            diastolicTextView.setError(null);
-            diastolicTextView.setText(Double.toString(features[1]));
+*/
+            TextView diastolicTextView = getActivity().findViewById(R.id.diastolicValue);
+            //diastolicTextView.setError(null);
+            diastolicTextView.setText(String.format("%.1f", features[1]));
 
-            if(isDiastolicLow && !isDiastolicDifferingMuch){
+            /*if(isDiastolicLow && !isDiastolicDifferingMuch){
                 diastolicTextView.setError(isDiastolicLowText);
                 abnormalities = abnormalities + " and " + isDiastolicLowText;
             } else if(!isDiastolicLow && isDiastolicDifferingMuch){
@@ -650,11 +634,12 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
                 abnormalities = abnormalities + isMeanHighText + " and " + isMeanDifferingMuchText;
             }
 
-            TextView heartRateTextView = getActivity().findViewById(R.id.heart_rate);
-            heartRateTextView.setError(null);
-            heartRateTextView.setText(Double.toString(features[3]));
+*/
+            TextView heartRateTextView = getActivity().findViewById(R.id.heartRate);
+            //heartRateTextView.setError(null);
+            heartRateTextView.setText(String.format("%.0f bpm", features[3]));
 
-            if(isHeartRateHigh){
+            /*if(isHeartRateHigh){
                 heartRateTextView.setError(isHeartRateHighText);
                 abnormalities = abnormalities + " and " + isHeartRateHighText;
             }
@@ -737,6 +722,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
 
             data.notifyDataChanged();
 
+
             // let the chart know it's data has changed
             mChart.notifyDataSetChanged();
 
@@ -759,14 +745,15 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
 
     private LineDataSet createSet() {
 
+        //Sets parameters for graph data line
         LineDataSet set = new LineDataSet(null, "Pressure (mmHg)");
         set.setAxisDependency(YAxis.AxisDependency.LEFT);
-        set.setColor(ColorTemplate.getHoloBlue());
+        set.setColor(getResources().getColor(R.color.medicalGreen));
         set.setCircleColor(Color.WHITE);
         set.setLineWidth(2f);
         set.setCircleRadius(4f);
         set.setFillAlpha(65);
-        set.setFillColor(ColorTemplate.getHoloBlue());
+        set.setFillColor(R.color.medicalGreen);
         set.setHighLightColor(Color.rgb(244, 117, 117));
         set.setValueTextColor(Color.WHITE);
         set.setValueTextSize(9f);

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+//Class used to instantiate the popup window to edit reader parameters
 public class ReaderDialog extends DialogFragment {
     public List<EditText> etList = new ArrayList<>();
 
@@ -70,6 +71,7 @@ public class ReaderDialog extends DialogFragment {
         return builder.create();
     }
 
+    //Checks entered values are acceptable when save button is clicked on popup window
     @Override
     public void onResume() {
         super.onResume();
@@ -102,6 +104,7 @@ public class ReaderDialog extends DialogFragment {
         });
     }
 
+    //Check parameter values are valid
     public boolean checkParameterValues(){
 
         Boolean isThereAnErrorInParams = false;
@@ -232,6 +235,7 @@ public class ReaderDialog extends DialogFragment {
 
     }
 
+    //Interface to return saved parameters to graph fragment
     public interface ParameterListener{
         void onFinishDialog(List<EditText> etList);
     }

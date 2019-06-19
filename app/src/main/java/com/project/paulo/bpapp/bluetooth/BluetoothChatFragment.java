@@ -16,6 +16,7 @@
 
 package com.project.paulo.bpapp.bluetooth;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -296,6 +297,7 @@ public class BluetoothChatFragment extends Fragment {
     /**
      * The Handler that gets information back from the BluetoothChatService
      */
+    @SuppressLint("HandlerLeak")
     private final Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -404,7 +406,7 @@ public class BluetoothChatFragment extends Fragment {
                 }
                 break;
             case REQUEST_CONNECT_DEVICE_INSECURE:
-                // When DeviceListActivity returns with a device to connect
+                // When DeviceListActivity returns with an insecure device to connect
                 if (resultCode == Activity.RESULT_OK) {
                     connectDevice(data, false);
                 }

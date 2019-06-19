@@ -10,7 +10,9 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
+//Custom listview adapter to handle cutom listview rows and featuremodel datatype
 public class FeatureAdapter extends ArrayAdapter<FeatureModel> {
     private ArrayList<FeatureModel> dataset;
     Context ctxt;
@@ -29,6 +31,7 @@ public class FeatureAdapter extends ArrayAdapter<FeatureModel> {
 
     private int lastPosition = -1;
 
+    //Sets row views
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -58,5 +61,12 @@ public class FeatureAdapter extends ArrayAdapter<FeatureModel> {
         holder.tvValue.setText(featureModel.getValue().toString());
 
         return convertView;
+    }
+
+    //Updates listview UI with new data
+    public void refreshList(ArrayList<FeatureModel> features){
+        this.dataset.clear();
+        this.dataset = features;
+        notifyDataSetChanged();
     }
 }
