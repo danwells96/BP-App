@@ -37,13 +37,15 @@ public class Features extends Fragment implements DateRangePickerFragment.OnDate
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        //Sets title of activity for continuity
+        getActivity().setTitle("Features");
         //Creating listview and populating it with flagged features
         View rootView = inflater.inflate(R.layout.features, container, false);
         listView = (ListView)rootView.findViewById(R.id.feature_listView);
         noPatientTV = rootView.findViewById(R.id.tv_noPatient);
         emptyListTV = rootView.findViewById(R.id.tv_emptyList);
         featureModels = new ArrayList<>();
-        //Get actual data from database here once implemented
+        //Get actual data from database here once implemented but placeholder data for now
         featureModels.add(new FeatureModel("2019-01-25 10:03:12", "Systolic Pressure High", 150.4, "001"));
         featureModels.add(new FeatureModel("2019-01-20 10:03:12", "Systolic Pressure High", 150.4, "002"));
         featureModels.add(new FeatureModel("2019-01-15 10:03:12", "Systolic Pressure High", 150.4, "002"));
@@ -60,9 +62,10 @@ public class Features extends Fragment implements DateRangePickerFragment.OnDate
         featureModels.add(new FeatureModel("2018-01-25 10:03:12", "Systolic Pressure High", 150.4, "002"));
 
         dataList = new ArrayList<>();
-        //Sets adapters and data to date range pickers
+        //Sets adapters and data for listview
         adapter = new FeatureAdapter(dataList, getContext());
         listView.setAdapter(adapter);
+        //Sets on click listener for date range picker
         View datePicker = rootView.findViewById(R.id.datePickerView);
         datePicker.setOnClickListener(datePickerListener);
 
@@ -78,7 +81,7 @@ public class Features extends Fragment implements DateRangePickerFragment.OnDate
         patientNames.add("Patient F - 006");
         patientNames.add("Patient G - 007");
         patientNames.add("Patient H - 008");
-        //Sets adapter and data for spinner
+        //Sets adapter and data for patient spinner
         Spinner patientSpinner = rootView.findViewById(R.id.patientSpinner);
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, patientNames);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -87,6 +90,7 @@ public class Features extends Fragment implements DateRangePickerFragment.OnDate
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
 
+                //Prevents view being updated on instantiation
                 if(init){
                     init = false;
                     listView.setVisibility(View.INVISIBLE);
@@ -96,7 +100,7 @@ public class Features extends Fragment implements DateRangePickerFragment.OnDate
                     String item = adapterView.getItemAtPosition(pos).toString();
                     //Applies filter to listview and updates data displayed
                     dataList.clear();
-
+                    //Filters data based on selected spinner item
                     if(!item.equals("No patient selected")) {
                         String pId = item.substring(item.lastIndexOf(" ") + 1);
                         patientFilter = pId;
@@ -141,7 +145,7 @@ public class Features extends Fragment implements DateRangePickerFragment.OnDate
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
+                //Should do nothing if nothing selected
             }
         });
 
@@ -173,12 +177,13 @@ public class Features extends Fragment implements DateRangePickerFragment.OnDate
 
         try {
 
+            //Gets previously selected date range
             Date startDate = format.parse(startDateString);
             Date endDate = format.parse(endDateString);
             start = startDate;
             end = endDate;
             dataList.clear();
-            //Apply filter to dataset displayed in listview and update listview adapter with updated data to refresh view
+            //Apply filter to dataset displayed in listview and update listview adapter with filtered data to refresh view
             if(noPatientTV.getVisibility()!=View.VISIBLE) {
 
                 for (int i = 0; i < featureModels.size(); i++) {
@@ -207,6 +212,7 @@ public class Features extends Fragment implements DateRangePickerFragment.OnDate
     }
 
 
+    //Parses previously selected dates to set initial values of date range picker
     public StringTuple parseDates(){
         View v = getView().findViewById(R.id.datePickerView);
         String s1 = ((TextView)v.findViewById(R.id.tv_startDate)).getText().toString();

@@ -18,6 +18,7 @@ public class SettingsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.settings, container, false);
+        getActivity().setTitle("Settings");
         login = v.findViewById(R.id.button_login);
         login.setOnClickListener(loginListener);
         return v;

@@ -127,6 +127,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
         tvList.add(((TextView)readerParams.findViewById(R.id.textView_txTimeValue)).getText().toString());
         tvList.add(((TextView)readerParams.findViewById(R.id.textView_rxDelayValue)).getText().toString());
 
+        //On click listener creates popup window to edit reader parameters
         readerParams.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -144,6 +145,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
             }
         });
 
+        //Set activity title
         getActivity().setTitle("Graph");
     }
 
@@ -152,6 +154,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
     public void onFinishDialog(List<EditText> etList) {
         View v = getActivity().findViewById(R.id.readerParams);
 
+        //Updates reader parameter view in main UI for graph
         ((TextView)v.findViewById(R.id.textView_activeFrequencyValue)).setText(etList.get(0).getText()+" MHz");
         ((TextView)v.findViewById(R.id.textView_referenceFrequencyValue)).setText(etList.get(1).getText()+" MHz");
         ((TextView)v.findViewById(R.id.textView_activeSampleValue)).setText(etList.get(2).getText()+" ms");
@@ -163,6 +166,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
         ((TextView)v.findViewById(R.id.textView_txTimeValue)).setText(etList.get(8).getText());
         ((TextView)v.findViewById(R.id.textView_rxDelayValue)).setText(etList.get(9).getText());
 
+        //Gets list of values saved in popup window
         tvList.clear();
         tvList.add(((TextView)v.findViewById(R.id.textView_activeFrequencyValue)).getText().toString());
         tvList.add(((TextView)v.findViewById(R.id.textView_referenceFrequencyValue)).getText().toString());
@@ -286,30 +290,6 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
                     Log.e(TAG, chartValue.getChartTime2());
                     Log.e(TAG, chartValue.getChartValue2());
 
-//                    matcher = regex.matcher(chartValue.getChartTime2());
-//                    while(matcher.find()){
-//                        x = matcher.group(1);
-//                    }
-//                    matcher = regex.matcher(chartValue.getChartValue2());
-//                    while(matcher.find()){
-//                        y = matcher.group(1);update
-//                    }
-
-//                    addEntry(Float.parseFloat(chartValue.getChartTime2())/1000, Float.parseFloat(chartValue.getChartValue2()));
-
-//                    matcher = regex.matcher(chartValue.getChartTime3());
-//                    while(matcher.find()){
-//                        x = matcher.group(1);
-//                    }
-//                    matcher = regex.matcher(chartValue.getChartValue3());
-//                    while(matcher.find()){
-//                        y = matcher.group(1);
-//                    }
-
-//                    addEntry(Float.parseFloat(chartValue.getChartTime3())/1000, Float.parseFloat(chartValue.getChartValue3()));
-
-//                    Log.w(TAG, Arrays.toString(databaseHandler.getAllData().toArray()));
-
                     // FEATURE EXTRACTION
                     if (pap.size() < windowLength*(1000/arsr)) {
                         pap.add(Double.parseDouble(y));
@@ -381,6 +361,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
         l.setTypeface(mTfLight);
         l.setTextColor(Color.WHITE);
 
+        //Sets x-axis
         XAxis xl = mChart.getXAxis();
         mChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
         xl.setTypeface(mTfLight);
@@ -391,6 +372,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
         xl.setAvoidFirstLastClipping(true);
         xl.setEnabled(true);
 
+        //Sets y-axis
         YAxis leftAxis = mChart.getAxisLeft();
         leftAxis.setTypeface(mTfLight);
         leftAxis.setTextColor(Color.WHITE);
