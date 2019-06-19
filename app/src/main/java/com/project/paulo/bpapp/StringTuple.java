@@ -1,6 +1,7 @@
 package com.project.paulo.bpapp;
 
 
+//Class used for utility in sending dates between Feature fragment and date range picker
 public class StringTuple{
     String startDate;
     String endDate;

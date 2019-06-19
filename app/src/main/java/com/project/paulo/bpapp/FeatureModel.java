@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+//Class to handle abnormal feature values in feature fragment or receiving database data
 public class FeatureModel implements Comparable<FeatureModel>{
     String date;
     String feature;
@@ -35,6 +36,7 @@ public class FeatureModel implements Comparable<FeatureModel>{
         return patientId;
     }
 
+    //Function to order featuremodels by date in descending order
     @Override
     public int compareTo(@NonNull FeatureModel featureModel) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");

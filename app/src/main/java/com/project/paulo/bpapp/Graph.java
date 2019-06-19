@@ -579,6 +579,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
             super.onProgressUpdate(values);
         }
 
+        //Updates UI with extracted feature values and abnormality detection is also performed here
         @Override
         protected void onPostExecute(double[] features) {
             super.onPostExecute(features);
@@ -744,6 +745,7 @@ public class Graph extends Fragment implements OnChartValueSelectedListener, Rea
 
     private LineDataSet createSet() {
 
+        //Sets parameters for graph data line
         LineDataSet set = new LineDataSet(null, "Pressure (mmHg)");
         set.setAxisDependency(YAxis.AxisDependency.LEFT);
         set.setColor(getResources().getColor(R.color.medicalGreen));

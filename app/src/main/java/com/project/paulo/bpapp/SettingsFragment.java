@@ -24,6 +24,7 @@ public class SettingsFragment extends Fragment {
         return v;
     }
 
+    //On click listener for login button which updates UI
     View.OnClickListener loginListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
